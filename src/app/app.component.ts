@@ -51,12 +51,16 @@ export class AppComponent {
         this.checked = true;
     }
 
-    private isEqual(expected: string, actual: string) {
-        if (actual === null) {return;}
-        let result = expected === actual;
-        result = result || expected.toUpperCase() === actual.toUpperCase();
-        result = result || this.removeUnnecessaryCharacters(expected).toUpperCase() ===
-            this.removeUnnecessaryCharacters(actual).toUpperCase();
+    private isEqual(expectedArray: string[], actual: string) {
+        if (actual === null) { return; }
+        let result = false;
+        for (let expected of expectedArray) {
+            result = expected === actual;
+            result = result || expected.toUpperCase() === actual.toUpperCase();
+            result = result || this.removeUnnecessaryCharacters(expected).toUpperCase() ===
+                this.removeUnnecessaryCharacters(actual).toUpperCase();
+            if (result) { return result; }
+        }
         return result;
     }
 

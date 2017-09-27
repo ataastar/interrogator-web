@@ -32,12 +32,13 @@ export class AppComponent {
         this.wordService.getWords().then(words => {
             this.words = words;
             this.actualWords = words;
+            // let's get the first one
             this.next();
         });
     }
 
     check() {
-        if (this.english === this.word.english) {
+        if (this.isEqual(this.word.english, this.english)) {
             this.word.incrementCorrectAnswer();
             // if this is the last, then remove from the array
             if (!this.word.lastAnswerWrong || this.actualWords.length === 1) {
@@ -50,11 +51,40 @@ export class AppComponent {
         this.checked = true;
     }
 
+    private isEqual(expected: string, actual: string) {
+        if (actual === null) {return;}
+        let result = expected === actual;
+        result = result || expected.toUpperCase() === actual.toUpperCase();
+        result = result || this.removeUnnecessaryCharacters(expected).toUpperCase() ===
+            this.removeUnnecessaryCharacters(actual).toUpperCase();
+        return result;
+    }
+
+    private removeUnnecessaryCharacters(text: any) {
+        let result = '';
+        for (let char of text) {
+            switch (char) {
+                case '?':
+                case '.':
+                case '!':
+                case ':':
+                case ',':
+                case ';':
+                case ' ':
+                    break;
+                default:
+                    result = result + char;
+            }
+        }
+        return result;
+    }
+
     next() {
         let word = this.getRandomWord(this.word && this.word.getWrongAnswerNumber() > 0);
         if (word instanceof GuessedWord || word == null) {
             this.word = word;
         } else {
+            // if the word is not GuessedWord, then we create one and replace
             let newWord = new GuessedWord();
             this.clone(word, newWord);
             this.word = newWord;
@@ -66,6 +96,7 @@ export class AppComponent {
     }
 
     private clone(source: any, target: any) {
+        // tslint:disable-next-line:forin
         for (let prop in source) {
             target[prop] = source[prop];
         }
@@ -91,7 +122,7 @@ export class AppComponent {
     }
 
     getRandomIndex(length: number): number {
-       return Math.floor(Math.random() * length);
+        return Math.floor(Math.random() * length);
     }
 
     getImageUrl() {

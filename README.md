@@ -14,3 +14,6 @@ Execute the following commands to run the sample.
  -  npm install
  -  npm run start:webpack
  -  Open a browser window and navigate to http:\\\\localhost:8080 to access the app.
+
+TODO tasks
+ - refactor the equal. It should be more grade: full equal, non case sensitive equal, character equals without glyph, ...

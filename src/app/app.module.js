@@ -12,8 +12,8 @@ var platform_browser_1 = require("@angular/platform-browser");
 var animations_1 = require("@angular/platform-browser/animations");
 require("rxjs/add/operator/toPromise");
 var app_component_1 = require("./app.component");
-var carservice_1 = require("./cars/carservice");
-var primeng_1 = require("primeng/primeng");
+var word_service_1 = require("./services/word-service");
+var interrogator_module_1 = require("./interrogator/interrogator.module");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -26,17 +26,13 @@ AppModule = __decorate([
             animations_1.BrowserAnimationsModule,
             forms_1.FormsModule,
             http_1.HttpModule,
-            primeng_1.InputTextModule,
-            primeng_1.DataTableModule,
-            primeng_1.ButtonModule,
-            primeng_1.DialogModule,
-            primeng_1.DropdownModule
+            interrogator_module_1.InterrogatorModule
         ],
         declarations: [
             app_component_1.AppComponent
         ],
         bootstrap: [app_component_1.AppComponent],
-        providers: [carservice_1.CarService]
+        providers: [word_service_1.WordService]
     })
 ], AppModule);
 exports.AppModule = AppModule;

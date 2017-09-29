@@ -9,91 +9,135 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var carservice_1 = require("./cars/carservice");
 require("../assets/css/styles.css");
 require("../../node_modules/primeng/resources/themes/omega/theme.css");
 require("../../node_modules/primeng/resources/primeng.min.css");
 require("../../node_modules/font-awesome/css/font-awesome.min.css");
-var PrimeCar = (function () {
-    function PrimeCar(vin, year, brand, color) {
-        this.vin = vin;
-        this.year = year;
-        this.brand = brand;
-        this.color = color;
-    }
-    return PrimeCar;
-}());
+var word_service_1 = require("./services/word-service");
+var guessed_word_1 = require("./models/guessed-word");
 var AppComponent = (function () {
-    function AppComponent(carService) {
-        this.carService = carService;
-        this.car = new PrimeCar();
+    function AppComponent(wordService) {
+        this.wordService = wordService;
+        this.actualWords = null;
+        this.word = null;
+        this.checked = false;
+        this.wrong = false;
     }
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.carService.getCarsMedium().then(function (cars) { return _this.cars = cars; });
-        this.cols = [
-            { field: 'vin', header: 'Vin', filter: 'true' },
-            { field: 'year', header: 'Year', filter: 'true' },
-            { field: 'brand', header: 'Brand', filter: 'true' },
-            { field: 'color', header: 'Color' }
-        ];
-        this.brands = [];
-        this.brands.push({ label: 'All', value: null });
-        this.brands.push({ label: 'Audi', value: 'Audi' });
-        this.brands.push({ label: 'BMW', value: 'BMW' });
-        this.brands.push({ label: 'Fiat', value: 'Fiat' });
-        this.brands.push({ label: 'Ford', value: 'Ford' });
-        this.brands.push({ label: 'Honda', value: 'Honda' });
-        this.brands.push({ label: 'Jaguar', value: 'Jaguar' });
-        this.brands.push({ label: 'Mercedes', value: 'Mercedes' });
-        this.brands.push({ label: 'Renault', value: 'Renault' });
-        this.brands.push({ label: 'VW', value: 'VW' });
-        this.brands.push({ label: 'Volvo', value: 'Volvo' });
+        this.wordService.getWords().then(function (words) {
+            _this.words = words;
+            _this.actualWords = words;
+            // let's get the first one
+            _this.next();
+        });
     };
-    AppComponent.prototype.showDialogToAdd = function () {
-        this.newCar = true;
-        this.car = new PrimeCar();
-        this.displayDialog = true;
-    };
-    AppComponent.prototype.save = function () {
-        if (this.newCar) {
-            this.cars.push(this.car);
+    AppComponent.prototype.check = function () {
+        if (this.isEqual(this.word.english, this.english)) {
+            this.word.incrementCorrectAnswer();
+            // if this is the last, then remove from the array
+            if (!this.word.lastAnswerWrong || this.actualWords.length === 1) {
+                this.actualWords.splice(this.index, 1);
+            }
         }
         else {
-            this.cars[this.findSelectedCarIndex()] = this.car;
+            this.word.incrementWrongAnswer();
+            this.wrong = true;
         }
-        this.car = null;
-        this.displayDialog = false;
+        this.checked = true;
     };
-    AppComponent.prototype.delete = function () {
-        this.cars.splice(this.findSelectedCarIndex(), 1);
-        this.car = null;
-        this.displayDialog = false;
-    };
-    AppComponent.prototype.onRowSelect = function (event) {
-        this.newCar = false;
-        this.car = this.cloneCar(event.data);
-        this.displayDialog = true;
-    };
-    AppComponent.prototype.cloneCar = function (c) {
-        var car = new PrimeCar();
-        for (var prop in c) {
-            car[prop] = c[prop];
+    AppComponent.prototype.isEqual = function (expectedArray, actual) {
+        if (actual === null) {
+            return;
         }
-        return car;
+        var result = false;
+        for (var _i = 0, expectedArray_1 = expectedArray; _i < expectedArray_1.length; _i++) {
+            var expected = expectedArray_1[_i];
+            result = expected === actual;
+            result = result || expected.toUpperCase() === actual.toUpperCase();
+            result = result || this.removeUnnecessaryCharacters(expected).toUpperCase() ===
+                this.removeUnnecessaryCharacters(actual).toUpperCase();
+            if (result) {
+                return result;
+            }
+        }
+        return result;
     };
-    AppComponent.prototype.findSelectedCarIndex = function () {
-        return this.cars.indexOf(this.selectedCar);
+    AppComponent.prototype.removeUnnecessaryCharacters = function (text) {
+        var result = '';
+        for (var _i = 0, text_1 = text; _i < text_1.length; _i++) {
+            var char = text_1[_i];
+            switch (char) {
+                case '?':
+                case '.':
+                case '!':
+                case ':':
+                case ',':
+                case ';':
+                case ' ':
+                    break;
+                default:
+                    result = result + char;
+            }
+        }
+        return result;
+    };
+    AppComponent.prototype.next = function () {
+        var word = this.getRandomWord(this.word && this.word.getWrongAnswerNumber() > 0);
+        if (word instanceof guessed_word_1.GuessedWord || word == null) {
+            this.word = word;
+        }
+        else {
+            // if the word is not GuessedWord, then we create one and replace
+            var newWord = new guessed_word_1.GuessedWord();
+            this.clone(word, newWord);
+            this.word = newWord;
+            this.actualWords[this.index] = this.word;
+        }
+        this.checked = false;
+        this.wrong = false;
+        this.english = null;
+    };
+    AppComponent.prototype.clone = function (source, target) {
+        // tslint:disable-next-line:forin
+        for (var prop in source) {
+            target[prop] = source[prop];
+        }
+        return target;
+    };
+    AppComponent.prototype.getRandomWord = function (checkSameIndex) {
+        var remainingWordsNumber = this.actualWords.length;
+        // if no more words, then return null
+        if (remainingWordsNumber === 0) {
+            return null;
+        }
+        else {
+            var tempIndex = this.getRandomIndex(remainingWordsNumber);
+            // if this is the last, then no need to get new random number
+            if (checkSameIndex && remainingWordsNumber > 1) {
+                while (this.index === tempIndex) {
+                    tempIndex = this.getRandomIndex(remainingWordsNumber);
+                }
+            }
+            this.index = tempIndex;
+            return this.actualWords[this.index];
+        }
+    };
+    AppComponent.prototype.getRandomIndex = function (length) {
+        return Math.floor(Math.random() * length);
+    };
+    AppComponent.prototype.getImageUrl = function () {
+        return require('../assets/images/' + this.word.imageUrl);
     };
     return AppComponent;
 }());
 AppComponent = __decorate([
     core_1.Component({
-        selector: 'my-app',
+        selector: 'learn-english-app',
         templateUrl: './app.component.html',
         styleUrls: ['./app.component.css'],
     }),
-    __metadata("design:paramtypes", [carservice_1.CarService])
+    __metadata("design:paramtypes", [word_service_1.WordService])
 ], AppComponent);
 exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.component.js.map

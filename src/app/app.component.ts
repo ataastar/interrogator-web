@@ -39,11 +39,11 @@ export class AppComponent {
 
     check() {
         if (this.isEqual(this.word.english, this.english)) {
-            this.word.incrementCorrectAnswer();
             // if this is the last, then remove from the array
             if (!this.word.lastAnswerWrong || this.actualWords.length === 1) {
                 this.actualWords.splice(this.index, 1);
             }
+            this.word.incrementCorrectAnswer();
         } else {
             this.word.incrementWrongAnswer();
             this.wrong = true;

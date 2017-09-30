@@ -1,0 +1,19 @@
+{
+    "data":[
+        {"hungarian":"osztályterem","english":["classroom"],"imageUrl":"classroom.jpg","pronunciation":""},
+        {"hungarian":"tábla","english":["board"],"imageUrl":"board.jpg","pronunciation":""},
+        {"hungarian":"íróasztal","english":["desk"],"imageUrl":"desk.jpg","pronunciation":""},
+        {"hungarian":"vonalzó","english":["ruler"],"imageUrl":"ruler.png","pronunciation":""},
+        {"hungarian":"számítógép","english":["computer"],"imageUrl":"computer.jpg","pronunciation":""},
+        {"hungarian":"szék","english":["chair"],"imageUrl":"chair.jpg","pronunciation":""},
+        {"hungarian":"Mi ez?","english":["What's this?"],"imageUrl":"whats_this.jpg","pronunciation":""},
+        {"hungarian":"Mi az?","english":["What's that?"],"imageUrl":"whats_that.jpg","pronunciation":""},
+        {"hungarian":"Hallgasd és olvasd","english":["Listen and read"],"imageUrl":"listen_read.jpg","pronunciation":""},
+        {"hungarian":"Ez egy","english":["This is","This is a","It's a","It is a"],"imageUrl":"","pronunciation":""},
+        {"hungarian":"Mutass rá és mond!","english":["Point and say"],"imageUrl":"","pronunciation":""},
+        {"hungarian":"Hogy hívnak?","english":["What's your name?"],"imageUrl":"","pronunciation":""},
+        {"hungarian":"Mennyi idős vagy? / Hány éves vagy?","english":["How old are you?"],"imageUrl":"","pronunciation":""},
+        {"hungarian":"Kilenc éves vagyok","english":["I'm nine years old"],"imageUrl":"","pronunciation":""},
+        {"hungarian":"Az én nevem Vince","english":["My name is Vince"],"imageUrl":"","pronunciation":""}
+    ]
+}

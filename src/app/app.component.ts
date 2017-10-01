@@ -49,6 +49,11 @@ export class AppComponent {
             this.wrong = true;
         }
         this.checked = true;
+        // play the audio if available
+        if (this.word.audio) {
+            let player: any = document.getElementById('audioplayer');
+            player.play();
+        }
     }
 
     private isEqual(expectedArray: string[], actual: string) {
@@ -133,4 +138,7 @@ export class AppComponent {
         return require('../assets/images/' + this.word.imageUrl);
     }
 
+    getAudio() {
+        return require('../assets/audios/' + this.word.audio);
+    }
 }

@@ -3,9 +3,5 @@ export class Word {
     english;
     imageUrl?;
     pronunciation?;
-
-    lastAnswerWrong: boolean = false;
-    wrongAnswerNumber: number = 0;
-    correctAnswerNumber: number = 0;
-
+    audio?;
 }

@@ -18,6 +18,7 @@
         <div>
             <img *ngIf="word.imageUrl" [src]="getImageUrl()" />
         </div>
+        <audio [src]="getAudio()" *ngIf="word.audio" id="audioplayer"></audio>
     </div>
     <div *ngIf="words && !word">
         Gratulálunk! Sikeresen befejezted.

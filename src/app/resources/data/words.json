@@ -1,7 +1,30 @@
 {
-    "data":[
-        {"hungarian":"ország","english":["country"],"imageUrl":"","pronunciation":"ˈkəntrē"},
-        {"hungarian":"kör","english":["circle"],"imageUrl":"","pronunciation":"ˈsərkəl"},
-        {"hungarian":"toll","english":["pen"],"imageUrl":"","pronunciation":""}
+    "data": [
+        {
+            "hungarian": "kör",
+            "english": [
+                "circle"
+            ],
+            "imageUrl": "circle.png",
+            "pronunciation": "ˈsərkəl",
+            "audio": "circle.mp3"
+        },
+        {
+            "hungarian": "toll",
+            "english": [
+                "pen"
+            ],
+            "imageUrl": "pen.jpg",
+            "pronunciation": "pen",
+            "audio": "pen.mp3"
+        },
+        {
+            "hungarian": "szó",
+            "english": [
+                "word"
+            ],
+            "imageUrl": "",
+            "pronunciation": "wərd"
+        }
     ]
 }

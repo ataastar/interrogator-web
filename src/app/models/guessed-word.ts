@@ -3,6 +3,7 @@ export class GuessedWord {
     english;
     imageUrl?;
     pronunciation?;
+    audio?;
 
     lastAnswerWrong: boolean = false;
     wrongAnswerNumber: number = 0;

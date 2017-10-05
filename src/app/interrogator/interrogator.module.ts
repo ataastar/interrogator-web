@@ -1,15 +1,20 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { InterrogatorComponent } from './interrogator.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    ReactiveFormsModule,
+    FormsModule,
+    HttpModule,
   ],
   declarations: [
+    InterrogatorComponent
   ],
   exports: [
+    InterrogatorComponent
   ],
   entryComponents: [
   ]

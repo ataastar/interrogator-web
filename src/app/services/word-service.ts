@@ -7,8 +7,8 @@ export class WordService {
 
     constructor(private http: Http) {}
 
-    getWords() {
-        return this.http.get('src/app/resources/data/words.json')
+    getWords(key: string) {
+        return this.http.get('src/app/resources/data/words' + key + '.json')
                     .toPromise()
                     .then(res => <Word[]> res.json().data)
                     .then(data => { return data; });

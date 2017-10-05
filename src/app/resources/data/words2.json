@@ -1,0 +1,70 @@
+{
+    "data": [
+        {
+            "hungarian": "Játsszunk!",
+            "english": [
+                "Let's play!"
+            ],
+            "imageUrl": "",
+            "pronunciation": "",
+            "audio": ""
+        },
+        {
+            "hungarian": "Álljatok fel! / Állj",
+            "english": [
+                "Stand up!"
+            ],
+            "imageUrl": "",
+            "pronunciation": "",
+            "audio": ""
+        },
+        {
+            "hungarian": "Üljetek le! / Ülj",
+            "english": [
+                "Sit down!"
+            ],
+            "imageUrl": "",
+            "pronunciation": ""
+        },
+        {
+            "hungarian": "fut",
+            "english": [
+                "run"
+            ],
+            "imageUrl": "",
+            "pronunciation": ""
+        },
+        {
+            "hungarian": "megáll",
+            "english": [
+                "stop"
+            ],
+            "imageUrl": "",
+            "pronunciation": ""
+        },
+        {
+            "hungarian": "mászik / felmászik",
+            "english": [
+                "climb"
+            ],
+            "imageUrl": "",
+            "pronunciation": ""
+        },
+        {
+            "hungarian": "csúszda",
+            "english": [
+                "slide"
+            ],
+            "imageUrl": "",
+            "pronunciation": ""
+        },
+        {
+            "hungarian": "Péter mondja.",
+            "english": [
+                "Peter says."
+            ],
+            "imageUrl": "",
+            "pronunciation": ""
+        }
+    ]
+}

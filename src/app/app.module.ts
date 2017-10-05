@@ -11,13 +11,16 @@ import { WordService } from './services/word-service';
 
 import { InterrogatorModule } from './interrogator/interrogator.module';
 
+import { routing } from './app.routing';
+
 @NgModule({
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
     HttpModule,
-    InterrogatorModule
+    InterrogatorModule,
+    routing
   ],
   declarations: [
     AppComponent

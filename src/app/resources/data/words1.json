@@ -1,7 +1,7 @@
 {
     "data":[
         {"hungarian":"osztályterem","english":["classroom"],"imageUrl":"classroom.jpg","pronunciation":""},
-        {"hungarian":"tábla","english":["board"],"imageUrl":"board.jpg","pronunciation":""},
+        {"hungarian":"tábla","english":["blackboard"],"imageUrl":"board.jpg","pronunciation":""},
         {"hungarian":"íróasztal","english":["desk"],"imageUrl":"desk.jpg","pronunciation":""},
         {"hungarian":"vonalzó","english":["ruler"],"imageUrl":"ruler.png","pronunciation":""},
         {"hungarian":"számítógép","english":["computer"],"imageUrl":"computer.jpg","pronunciation":""},

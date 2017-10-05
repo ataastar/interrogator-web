@@ -1,0 +1,28 @@
+    <form>
+        <div *ngIf="word">
+            <div>
+    
+                <div *ngIf="checked && !wrong"><b><label style="color:green">Helyes! ({{word.english}})</label></b></div>
+                <div *ngIf="checked && wrong"><b><label style="color:red">A helyes válasz: {{word.english}}</label></b></div>
+                <div *ngIf="!checked"><b><label>&nbsp;</label></b></div>
+                <div>{{word.hungarian}}</div>
+                <input type="text" [(ngModel)]="english" name="english" autofocus [readonly]="checked" autocomplete="off" id="english" />
+                <label *ngIf="checked">{{word.pronunciation}}</label>
+                <div>
+                    <input type="submit" (click)="check()" value="Ellenőrzés" *ngIf="!checked">
+                </div>
+                
+                
+                <input type="submit" (click)="next()" value="Tovább" *ngIf="checked">
+            </div>
+            <div>
+                <img *ngIf="word.imageUrl" [src]="getImageUrl()" />
+            </div>
+            <audio [src]="getAudio()" *ngIf="word.audio" id="audioplayer"></audio>
+        </div>
+        <div *ngIf="actualWords && !word">
+            Gratulálunk! Sikeresen befejezted.
+            <!--<input type="button" (click)="back()" value="Vissza">-->
+        </div>
+    </form>
+    

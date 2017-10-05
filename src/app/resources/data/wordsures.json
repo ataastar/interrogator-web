@@ -1,0 +1,13 @@
+{
+    "data": [
+        {
+            "hungarian": "toll",
+            "english": [
+                "pen"
+            ],
+            "imageUrl": "pen.jpg",
+            "pronunciation": "pen",
+            "audio": "pen.mp3"
+        }
+    ]
+}

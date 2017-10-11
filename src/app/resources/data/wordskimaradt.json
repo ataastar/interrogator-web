@@ -1,0 +1,121 @@
+{
+    "data": [
+        {
+            "hungarian": "Viszlát!",
+            "english": [
+                "Goodbye"
+            ],
+            "imageUrl": "",
+            "pronunciation": "",
+            "audio": ""
+        },
+        {
+            "hungarian": "Vince vagyok.",
+            "english": [
+                "I'm Vince."
+            ],
+            "imageUrl": "",
+            "pronunciation": "",
+            "audio": ""
+        },
+        {
+            "hungarian": "énekel",
+            "english": [
+                "sign"
+            ],
+            "imageUrl": "",
+            "pronunciation": "",
+            "audio": ""
+        },
+        {
+            "hungarian": "játszik",
+            "english": [
+                "play"
+            ],
+            "imageUrl": "",
+            "pronunciation": "",
+            "audio": ""
+        },
+        {
+            "hungarian": "Az én zászlóm.",
+            "english": [
+                "My flag."
+            ],
+            "imageUrl": "",
+            "pronunciation": "",
+            "audio": ""
+        },
+        {
+            "hungarian": "van",
+            "english": [
+                "is"
+            ],
+            "imageUrl": "",
+            "pronunciation": "",
+            "audio": ""
+        },
+        {
+            "hungarian": "és",
+            "english": [
+                "and"
+            ],
+            "imageUrl": "",
+            "pronunciation": "",
+            "audio": ""
+        },
+        {
+            "hungarian": "Ki?, Kik? Kit? Kiket?",
+            "english": [
+                "Who?"
+            ],
+            "imageUrl": "",
+            "pronunciation": "",
+            "audio": ""
+        },
+        {
+            "hungarian": "Hogy vagy?",
+            "english": [
+                "How are you?"
+            ],
+            "imageUrl": "",
+            "pronunciation": "",
+            "audio": ""
+        },
+        {
+            "hungarian": "Jól vagyok, köszönöm.",
+            "english": [
+                "I'm fine, thank you."
+            ],
+            "imageUrl": "",
+            "pronunciation": "",
+            "audio": ""
+        },
+        {
+            "hungarian": "Honnan származol?",
+            "english": [
+                "Where are you from?"
+            ],
+            "imageUrl": "",
+            "pronunciation": "",
+            "audio": ""
+        },
+        {
+            "hungarian": "Az Egyesült Királyságból származom.",
+            "english": [
+                "I'm from the U.K."
+            ],
+            "imageUrl": "",
+            "pronunciation": "",
+            "audio": ""
+        },
+        {
+            "hungarian": "kisasszony",
+            "english": [
+                "Miss"
+            ],
+            "imageUrl": "",
+            "pronunciation": "",
+            "audio": ""
+        }
+    ]
+}

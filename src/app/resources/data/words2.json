@@ -6,8 +6,8 @@
                 "Let's play!"
             ],
             "imageUrl": "",
-            "pronunciation": "",
-            "audio": ""
+            "pronunciation": "lets plā",
+            "audio": "lets_play.mp3"
         },
         {
             "hungarian": "Álljatok fel! / Állj",
@@ -15,8 +15,8 @@
                 "Stand up!"
             ],
             "imageUrl": "",
-            "pronunciation": "",
-            "audio": ""
+            "pronunciation": "stand əp",
+            "audio": "stand_up.mp3"
         },
         {
             "hungarian": "Üljetek le! / Ülj",
@@ -24,7 +24,8 @@
                 "Sit down!"
             ],
             "imageUrl": "",
-            "pronunciation": ""
+            "pronunciation": "sit doun",
+            "audio": "sit_down.mp3"
         },
         {
             "hungarian": "fut",
@@ -32,7 +33,8 @@
                 "run"
             ],
             "imageUrl": "",
-            "pronunciation": ""
+            "pronunciation": "rən",
+            "audio": "run.mp3"
         },
         {
             "hungarian": "megáll",

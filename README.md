@@ -16,4 +16,10 @@ Execute the following commands to run the sample.
  -  Open a browser window and navigate to http:\\\\localhost:8080 to access the app.
 
 TODO tasks
- - refactor the equal. It should be more grade: full equal, non case sensitive equal, character equals without glyph, ...
+ - refactor the equal. these should be equals: I'm-I am; You are-You're, They are-They're;It's-It is; What's-What is;Isn't-Is not; Aren't-Are not, Don't Do not; Doesn't-Does not
+ - server side 
+   - CORS?!
+   - put the word in database
+   - get the word from database
+   - get the pronunciation from google translate and store in to the words in database
+   - get the audio file from google translate and store in to the words in database

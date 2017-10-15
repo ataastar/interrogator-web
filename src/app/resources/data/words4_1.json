@@ -19,7 +19,7 @@
             ]
         },
         {
-            "hungarian": "nö",
+            "hungarian": "nő",
             "english": [
                 "woman"
             ]
@@ -45,7 +45,8 @@
         {
             "hungarian": "Te tanuló vagy.",
             "english": [
-                "You're a student."
+                "You're a student.",
+                "You are a student."
             ]
         },
         {

@@ -1,0 +1,198 @@
+{ "units" : [
+    {
+        "name": "unit 3 C",
+        "words": [
+            {
+                "hungarian": "erdő",
+                "english": [
+                    "forest"
+                ]
+            },
+            {
+                "hungarian": "fa",
+                "english": [
+                    "tree"
+                ]
+            },
+            {
+                "hungarian": "kígyó",
+                "english": [
+                    "snake"
+                ]
+            },
+            {
+                "hungarian": "virág",
+                "english": [
+                    "flower"
+                ]
+            },
+            {
+                "hungarian": "madár",
+                "english": [
+                    "bird"
+                ]
+            },
+            {
+                "hungarian": "papagáj",
+                "english": [
+                    "parrot"
+                ]
+            },
+            {
+                "hungarian": "Mi van egy erdőben?",
+                "english": [
+                    "What is in a forest?",
+                    "What's in a forest?"
+                ]
+            },
+            {
+                "hungarian": "ők / ezek",
+                "english": [
+                    "they are"
+                ]
+            },
+            {
+                "hungarian": "Ez egy madár.",
+                "english": [
+                    "This is a bird."
+                ]
+            },
+            {
+                "hungarian": "Ezek madarak.",
+                "english": [
+                    "These are birds."
+                ]
+            }
+        ]
+    },
+    {
+        "name": "unit 4 A",
+        "words": [
+            {
+                "hungarian": "fiú",
+                "english": [
+                    "boy"
+                ]
+            },
+            {
+                "hungarian": "lány",
+                "english": [
+                    "girl"
+                ]
+            },
+            {
+                "hungarian": "férfi",
+                "english": [
+                    "man"
+                ]
+            },
+            {
+                "hungarian": "nő",
+                "english": [
+                    "woman"
+                ]
+            },
+            {
+                "hungarian": "hableány",
+                "english": [
+                    "mermaid"
+                ]
+            },
+            {
+                "hungarian": "Mi?, Mik?, Mit?, Miket?",
+                "english": [
+                    "What?"
+                ]
+            },
+            {
+                "hungarian": "Én tanár vagyok.",
+                "english": [
+                    "I'm a teacher."
+                ]
+            },
+            {
+                "hungarian": "Te tanuló vagy.",
+                "english": [
+                    "You're a student.",
+                    "You are a student."
+                ]
+            },
+            {
+                "hungarian": "tanuló",
+                "english": [
+                    "student"
+                ]
+            },
+            {
+                "hungarian": "Menjünk az én házamba.",
+                "english": [
+                    "Let's go to my house"
+                ]
+            },
+            {
+                "hungarian": "ház",
+                "english": [
+                    "house"
+                ]
+            }
+        ]
+    },
+    {
+        "name": "unit 4 A",
+        "words": [
+            {
+                "hungarian": "táncos",
+                "english": [
+                    "dancer"
+                ]
+            },
+            {
+                "hungarian": "pincér",
+                "english": [
+                    "waiter"
+                ]
+            },
+            {
+                "hungarian": "kalóz",
+                "english": [
+                    "pirate"
+                ]
+            },
+            {
+                "hungarian": "doktor",
+                "english": [
+                    "doctor"
+                ]
+            },
+            {
+                "hungarian": "Ő egy ... (nőnemű)",
+                "english": [
+                    "She is ...",
+                    "She's ..."
+                ]
+            },
+            {
+                "hungarian": "Ő egy ... (hímnemű)",
+                "english": [
+                    "He is ...",
+                    "He's ..."
+                ]
+            },
+            {
+                "hungarian": "Ő táncos. (nőnemű)",
+                "english": [
+                    "She is a dancer.",
+                    "She's a dancer."
+                ]
+            },
+            {
+                "hungarian": "Ez egy ...",
+                "english": [
+                    "It is",
+                    "It's"
+                ]
+            }
+        ]
+    }
+]
+}

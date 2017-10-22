@@ -1,7 +1,7 @@
 {
     "data":[
         {"hungarian":"ország","english":["country"],"imageUrl":"","pronunciation":"ˈkəntrē"},
-        {"hungarian":"kör","english":["circle"],"imageUrl":"","pronunciation":"ˈsərkəl"},
+        {"hungarian":"kör","english":["circle"],"imageUrl":"","pronunciation":"ˈsərkəl", "audio": "circle.mp3"},
         {"hungarian":"szó","english":["word"],"imageUrl":"","pronunciation":"wərd"},
         {"hungarian":"talál / keres","english":["find"],"imageUrl":"","pronunciation":""},
         {"hungarian":"térkép","english":["map"],"imageUrl":"","pronunciation":""},
@@ -14,7 +14,7 @@
         {"hungarian":"táska","english":["bag"],"imageUrl":"","pronunciation":""},
         {"hungarian":"könyv","english":["book"],"imageUrl":"","pronunciation":""},
         {"hungarian":"ceruza","english":["pencil"],"imageUrl":"","pronunciation":""},
-        {"hungarian":"toll","english":["pen"],"imageUrl":"","pronunciation":""},
+        {"hungarian":"toll","english":["pen"],"imageUrl":"","pronunciation":"pen", "audio": "pen.mp3"},
         {"hungarian":"radír","english":["rubber"],"imageUrl":"","pronunciation":""}
     ]
 }

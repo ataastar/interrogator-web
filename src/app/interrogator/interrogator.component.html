@@ -10,10 +10,10 @@
                 <label *ngIf="checked">{{word.pronunciation}}</label>
                 <div>
                     <input type="submit" (click)="check()" value="Ellenőrzés" *ngIf="!checked">
+                    <input type="submit" (click)="next()" value="Tovább" *ngIf="checked">
                 </div>
                 
                 
-                <input type="submit" (click)="next()" value="Tovább" *ngIf="checked">
             </div>
             <div>
                 <img *ngIf="word.imageUrl" [src]="getImageUrl()" />

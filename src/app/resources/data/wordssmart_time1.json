@@ -1,0 +1,28 @@
+{
+    "data": [
+        {
+            "hungarian": "matematika",
+            "english": [
+                "Maths"
+            ]
+        },
+        {
+            "hungarian": "minusz",
+            "english": [
+                "minus"
+            ]
+        },
+        {
+            "hungarian": "plusz",
+            "english": [
+                "plus"
+            ]
+        },
+        {
+            "hungarian": "egyenlő",
+            "english": [
+                "equals"
+            ]
+        }
+    ]
+}

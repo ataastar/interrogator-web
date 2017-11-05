@@ -1,9 +1,5 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import '../../assets/css/styles.css';
-import '../../../node_modules/primeng/resources/themes/omega/theme.css';
-import '../../../node_modules/primeng/resources/primeng.min.css';
-import '../../../node_modules/font-awesome/css/font-awesome.min.css';
 
 import { WordService } from '../services/word-service';
 import { Word } from '../models/word';

@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import '../assets/css/styles.css';
-import '../../node_modules/primeng/resources/themes/omega/theme.css';
-import '../../node_modules/primeng/resources/primeng.min.css';
-import '../../node_modules/font-awesome/css/font-awesome.min.css';
 
 import { Router, ActivatedRoute } from '@angular/router';
 

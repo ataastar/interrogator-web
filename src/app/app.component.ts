@@ -3,6 +3,7 @@ import '../assets/css/styles.css';
 
 import { Router, ActivatedRoute } from '@angular/router';
 
+
 @Component({
     selector: 'learn-english-app',
     templateUrl: './app.component.html',
@@ -16,13 +17,11 @@ export class AppComponent implements OnInit {
         private router: Router, private activatedRoute: ActivatedRoute) { }
 
     ngOnInit(): void {
-        this.activatedRoute.url.subscribe(url => { this.hasActiveRoute = true; console.log(url); });
-        console.log(this.router.url);
+        this.activatedRoute.url.subscribe(url => { this.hasActiveRoute = true; });
     }
 
     ngOnChange() {
-        this.activatedRoute.url.subscribe(url => { this.hasActiveRoute = true; console.log(url); });
-        console.log(this.router.url);
+        this.activatedRoute.url.subscribe(url => { this.hasActiveRoute = true; });
     }
 
     interrogate(key): void {

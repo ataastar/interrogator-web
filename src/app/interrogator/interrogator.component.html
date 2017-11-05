@@ -2,15 +2,18 @@
         <div *ngIf="word">
             <div>
     
+                <ngb-alert [dismissible]="false" type="success">Helyes! ({{word.english}})</ngb-alert>
                 <div *ngIf="checked && !wrong"><b><label style="color:green">Helyes! ({{word.english}})</label></b></div>
                 <div *ngIf="checked && wrong"><b><label style="color:red">A helyes válasz: {{word.english}}</label></b></div>
                 <div *ngIf="!checked"><b><label>&nbsp;</label></b></div>
                 <div>{{word.hungarian}}</div>
-                <input type="text" [(ngModel)]="english" name="english" autofocus [readonly]="checked" autocomplete="off" id="english" />
+                <div class="form-group">
+                    <input type="text" [(ngModel)]="english" name="english" autofocus [readonly]="checked" autocomplete="off" id="english" class="form-control" />
+                </div>
                 <label *ngIf="checked">{{word.pronunciation}}</label>
                 <div>
-                    <input type="submit" (click)="check()" value="Ellenőrzés" *ngIf="!checked">
-                    <input type="submit" (click)="next()" value="Tovább" *ngIf="checked">
+                    <input type="submit" (click)="check()" value="Ellenőrzés" *ngIf="!checked" class="btn btn-primary">
+                    <input type="submit" (click)="next()" value="Tovább" *ngIf="checked" class="btn btn-primary">
                 </div>
                 
                 

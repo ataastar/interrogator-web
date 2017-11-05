@@ -1,8 +1,8 @@
 {
-  "name": "angular-examples-master",
+  "name": "learn-english",
   "version": "1.0.0",
-  "private": true,
-  "description": "Master package.json, the superset of all dependencies for all of the _example package.json files. See _boilerplate/package.json for example npm scripts.",
+  "private": false,
+  "description": "learn-english test project",
   "scripts": {
     "build": "tsc -p src/",
     "build:watch": "tsc -p src/ -w",
@@ -34,6 +34,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@angular/animations": "~4.0.0",
     "@angular/common": "~4.0.0",
     "@angular/compiler": "~4.0.0",
     "@angular/core": "~4.0.0",
@@ -42,14 +43,15 @@
     "@angular/platform-browser": "~4.0.0",
     "@angular/platform-browser-dynamic": "~4.0.0",
     "@angular/router": "~4.0.0",
-    "@angular/animations": "~4.0.0",
+    "@ng-bootstrap/ng-bootstrap": "^1.0.0-beta.5",
     "angular-in-memory-web-api": "~0.2.4",
+    "bootstrap": "^4.0.0-beta",
     "core-js": "^2.4.1",
+    "font-awesome": "^4.7.0",
     "primeng": "^4.2.1",
     "rxjs": "^5.2.0",
     "systemjs": "0.19.39",
-    "zone.js": "^0.8.4",
-    "font-awesome": "^4.7.0"
+    "zone.js": "^0.8.4"
   },
   "devDependencies": {
     "@angular/cli": "^1.0.0",

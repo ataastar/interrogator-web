@@ -30,7 +30,7 @@ export class InterrogatorComponent {
             .switchMap((params: ParamMap) =>
                 this.wordService.getWords(params.get('id')))
             .subscribe(words => { this.actualWords = words; this.next(); });
-        this.route.url.subscribe(url => { console.log(url[0].path); });
+        // this.route.url.subscribe(url => { console.log(url[0].path); });
     }
 
     check() {

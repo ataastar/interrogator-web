@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { CommonModule } from '@angular/common';
+
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 import { InterrogatorComponent } from './interrogator.component';
 
 @NgModule({
@@ -9,12 +12,14 @@ import { InterrogatorComponent } from './interrogator.component';
     CommonModule,
     FormsModule,
     HttpModule,
+    NgbModule
   ],
   declarations: [
     InterrogatorComponent
   ],
   exports: [
-    InterrogatorComponent
+    InterrogatorComponent,
+    NgbModule
   ],
   entryComponents: [
   ]

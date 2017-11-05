@@ -11,6 +11,8 @@ import { WordService } from './services/word-service';
 
 import { InterrogatorModule } from './interrogator/interrogator.module';
 
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 import { routing } from './app.routing';
 
 @NgModule({
@@ -20,6 +22,7 @@ import { routing } from './app.routing';
     FormsModule,
     HttpModule,
     InterrogatorModule,
+    NgbModule.forRoot(),
     routing
   ],
   declarations: [

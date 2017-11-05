@@ -6,8 +6,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var core_1 = require("@angular/core");
-var common_1 = require("@angular/common");
 var forms_1 = require("@angular/forms");
+var http_1 = require("@angular/http");
+var common_1 = require("@angular/common");
+var interrogator_component_1 = require("./interrogator.component");
 var InterrogatorModule = (function () {
     function InterrogatorModule() {
     }
@@ -17,10 +19,15 @@ InterrogatorModule = __decorate([
     core_1.NgModule({
         imports: [
             common_1.CommonModule,
-            forms_1.ReactiveFormsModule,
+            forms_1.FormsModule,
+            http_1.HttpModule,
         ],
-        declarations: [],
-        exports: [],
+        declarations: [
+            interrogator_component_1.InterrogatorComponent
+        ],
+        exports: [
+            interrogator_component_1.InterrogatorComponent
+        ],
         entryComponents: []
     })
 ], InterrogatorModule);

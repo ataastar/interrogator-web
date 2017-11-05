@@ -14,8 +14,8 @@ var WordService = (function () {
     function WordService(http) {
         this.http = http;
     }
-    WordService.prototype.getWords = function () {
-        return this.http.get('src/app/resources/data/words.json')
+    WordService.prototype.getWords = function (key) {
+        return this.http.get('src/app/resources/data/words' + key + '.json')
             .toPromise()
             .then(function (res) { return res.json().data; })
             .then(function (data) { return data; });

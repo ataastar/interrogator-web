@@ -13,4 +13,10 @@ export class WordService {
                     .then(res => <Word[]> res.json().data)
                     .then(data => { return data; });
     }
+
+    getGroups() {
+        return this.http.get('http://localhost:3000/word_groups')
+                    .toPromise()
+                    .then(res => {return <Word[]> res.json(); });
+    }
 }

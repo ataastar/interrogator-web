@@ -1,0 +1,52 @@
+{
+    "data": [
+        {
+            "hungarian": "tudomány",
+            "english": [
+                "science"
+            ]
+        },
+        {
+            "hungarian": "csiga",
+            "english": [
+                "snail"
+            ]
+        },
+        {
+            "hungarian": "kacsa",
+            "english": [
+                "duck"
+            ]
+        },
+        {
+            "hungarian": "béka",
+            "english": [
+                "frog"
+            ]
+        },
+        {
+            "hungarian": "szúnyog",
+            "english": [
+                "mosquito"
+            ]
+        },
+        {
+            "hungarian": "hal",
+            "english": [
+                "fish"
+            ]
+        },
+        {
+            "hungarian": "tavacska",
+            "english": [
+                "pond"
+            ]
+        },
+        {
+            "hungarian": "sok",
+            "english": [
+                "many"
+            ]
+        }
+    ]
+}

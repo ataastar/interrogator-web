@@ -1,0 +1,41 @@
+{
+    "data": [
+        {
+            "hungarian": "taxi",
+            "english": [
+                "taxi"
+            ]
+        },
+        {
+            "hungarian": "busz",
+            "english": [
+                "bus"
+            ]
+        },
+        {
+            "hungarian": "London",
+            "english": [
+                "London"
+            ]
+        },
+        {
+            "hungarian": "metró",
+            "english": [
+                "underground"
+            ]
+        },
+        {
+            "hungarian": "ezt ...-nak/nek hívják",
+            "english": [
+                "it's called",
+                "it is called"
+            ]
+        },
+        {
+            "hungarian": "metró Londonban (szó szerint: cső)",
+            "english": [
+                "tube"
+            ]
+        }
+    ]
+}

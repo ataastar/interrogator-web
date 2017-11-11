@@ -1,0 +1,33 @@
+<div class="row">
+        <div *ngFor="let group of groups">
+          <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>{{group.name}}</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+              <button *ngFor="let subGroup of group.group" class="dropdown-item" (click)="interrogate(subGroup.code)">{{subGroup.name}}</button>
+            </div>
+          </div>
+        </div>
+</div>
+<nav class="navbar">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">WebSiteName</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <ng-container *ngFor="let group of groups">
+            <li *ngIf="!group.group"><a href="#">{{group.name}}</a></li>
+            <li *ngIf="group.group" class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1
+                    <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li *ngFor="let subGroup of group.group" (click)="interrogate(subGroup.name)"><a href="#">{{subGroup.name}}</a></li>
+                    </ul>
+                </li>
+        </ng-container>
+      </ul>
+    </div>
+  </nav>
+
+<div class="row">
+    <input *ngFor="let group of groups" type="button" (click)="interrogate(group.name)" [value]="group.name" class="btn">
+</div>

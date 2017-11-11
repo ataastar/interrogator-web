@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
     }
 
     interrogate(key): void {
-        this.router.navigate(['/test', key]);
+        this.router.navigate(['/interrogator', key]);
     }
 
 }

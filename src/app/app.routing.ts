@@ -5,7 +5,7 @@ import { InterrogatorComponent } from './interrogator/interrogator.component';
 
 const appRoutes: Routes = [
   {
-    path: 'test/:id',
+    path: 'interrogator/:id',
     component: InterrogatorComponent
   }
 ];

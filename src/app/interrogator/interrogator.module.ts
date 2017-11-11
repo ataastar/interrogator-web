@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { InterrogatorComponent } from './interrogator.component';
+import { GroupSelectorComponent } from './group-selector.component';
 
 @NgModule({
   imports: [
@@ -15,10 +16,12 @@ import { InterrogatorComponent } from './interrogator.component';
     NgbModule
   ],
   declarations: [
-    InterrogatorComponent
+    InterrogatorComponent,
+    GroupSelectorComponent
   ],
   exports: [
     InterrogatorComponent,
+    GroupSelectorComponent,
     NgbModule
   ],
   entryComponents: [

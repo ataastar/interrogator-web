@@ -14,9 +14,15 @@ export class WordService {
                     .then(data => { return data; });
     }
 
+    getWords2(key: string) {
+        return this.http.get('http://localhost:3000/words/' + key)
+                    .toPromise()
+                    .then(res => {return res.json(); });
+    }
+
     getGroups() {
         return this.http.get('http://localhost:3000/word_groups')
                     .toPromise()
-                    .then(res => {return <Word[]> res.json(); });
+                    .then(res => {return res.json(); });
     }
 }

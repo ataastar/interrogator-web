@@ -1,5 +1,5 @@
 <div class="row">
-        <div *ngFor="let group of groups">
+        <div *ngFor="let group of groups" style="margin-left: 5px">
           <div ngbDropdown class="d-inline-block">
             <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>{{group.name}}</button>
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
@@ -8,7 +8,7 @@
           </div>
         </div>
 </div>
-<nav class="navbar">
+<!--<nav class="navbar">
     <div class="container-fluid">
       <div class="navbar-header">
         <a class="navbar-brand" href="#">WebSiteName</a>
@@ -26,8 +26,4 @@
         </ng-container>
       </ul>
     </div>
-  </nav>
-
-<div class="row">
-    <input *ngFor="let group of groups" type="button" (click)="interrogate(group.name)" [value]="group.name" class="btn">
-</div>
+  </nav>-->

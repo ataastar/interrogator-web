@@ -29,8 +29,8 @@ export class InterrogatorComponent {
         this.route.paramMap
             .switchMap((params: ParamMap) =>
                 this.wordService.getWords(params.get('id')))
-                .subscribe(words => { this.actualWords = words; this.next(); });
-                // .subscribe(group => { this.actualWords = group[0].words; console.log(group[0]); this.next(); });
+            .subscribe(words => { this.actualWords = words; this.next(); });
+        // .subscribe(group => { this.actualWords = group[0].words; console.log(group[0]); this.next(); });
         // this.wordService.getGroups().then(groups => console.log(groups));
         // this.route.url.subscribe(url => { console.log(url[0].path); });
     }
@@ -58,13 +58,32 @@ export class InterrogatorComponent {
         if (actual === null) { return; }
         let result = false;
         for (let expected of expectedArray) {
-            result = expected === actual;
-            result = result || expected.toUpperCase() === actual.toUpperCase();
-            result = result || this.removeUnnecessaryCharacters(expected).toUpperCase() ===
-                this.removeUnnecessaryCharacters(actual).toUpperCase();
-            if (result) { return result; }
+            if (expected === actual) { return true; }
+            let expectedModified = expected.toUpperCase();
+            let actualModified = actual.toUpperCase();
+            if (expectedModified === actualModified) { return true; }
+
+            expectedModified = this.replaceAbbreviation(expectedModified);
+            actualModified = this.replaceAbbreviation(actualModified);
+            if (expectedModified === actualModified) { return true; }
+
+            expectedModified = this.removeUnnecessaryCharacters(expectedModified);
+            actualModified = this.removeUnnecessaryCharacters(actualModified);
+            if (expectedModified === actualModified) { return true; }
+
+            return false;
         }
         return result;
+    }
+
+    private replaceAbbreviation(source) {
+        let result = this.replace(source, 'WHAT\'S', 'WHAT IS');
+        result = this.replace(source, 'WHAT\'S', 'WHAT IS');
+        return result;
+    }
+
+    private replace(source, search, replace) {
+        return source.replace(new RegExp(search, 'g'), replace);
     }
 
     private removeUnnecessaryCharacters(text: any) {

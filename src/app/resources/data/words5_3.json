@@ -5,6 +5,15 @@
             "english": [
                 "work"
             ]
+        },
+        {
+            "hungarian": "Ez kicsi? Nem, nem az.",
+            "english": [
+                "Is it small? No, it is not.",
+                "Is it small? No, it isn't.",
+                "Is it small? No, is not.",
+                "Is it small? No, isn't."
+            ]
         }
     ]
 }

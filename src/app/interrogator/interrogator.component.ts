@@ -56,7 +56,6 @@ export class InterrogatorComponent {
 
     private isEqual(expectedArray: string[], actual: string) {
         if (actual === null) { return; }
-        let result = false;
         for (let expected of expectedArray) {
             if (expected === actual) { return true; }
             let expectedModified = expected.toUpperCase();
@@ -71,9 +70,8 @@ export class InterrogatorComponent {
             actualModified = this.removeUnnecessaryCharacters(actualModified);
             if (expectedModified === actualModified) { return true; }
 
-            return false;
         }
-        return result;
+        return false;
     }
 
     private replaceAbbreviation(source) {

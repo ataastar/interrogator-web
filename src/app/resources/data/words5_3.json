@@ -1,11 +1,27 @@
 {
     "data": [
         {
-            "hungarian": "munka",
+            "hungarian": "Mi van a tengerben?",
             "english": [
-                "work"
+                "What's in the sea?",
+                "What is in the sea?"
             ]
         },
+        {
+            "hungarian": "nagy",
+            "english": ["big"]
+        },
+        {
+            "hungarian": "kicsi, kis",
+            "english": ["small"]
+        },
+        {"hungarian": "hal", "english": ["fish"]},
+        {"hungarian": "fóka", "english": ["seal"]},
+        {"hungarian": "kedves, aranyos", "english": ["cute"]},
+        {"hungarian": "(meg)néz valamit, odanéz valamire", "english": ["look at"]},
+        {"hungarian": "Ők nagyok? Igen, ők azok.", "english": ["Are they big? Yes, they are"]},
+        {"hungarian": "Ők kicsik? Nem, ők nem azok.", "english": ["Are they small? No, they aren't.", "Are they small? No, they are not."]},
+        {"hungarian": "Mi fókák vagyunk? Nem, mi nem.", "english": ["Are we seal? No, we aren't.", "Are we seal? No, we are not."]},
         {
             "hungarian": "Ez kicsi? Nem, nem az.",
             "english": [

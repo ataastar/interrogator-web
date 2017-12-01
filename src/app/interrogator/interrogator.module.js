@@ -9,7 +9,9 @@ var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
 var http_1 = require("@angular/http");
 var common_1 = require("@angular/common");
+var ng_bootstrap_1 = require("@ng-bootstrap/ng-bootstrap");
 var interrogator_component_1 = require("./interrogator.component");
+var group_selector_component_1 = require("./group-selector.component");
 var InterrogatorModule = (function () {
     function InterrogatorModule() {
     }
@@ -21,12 +23,16 @@ InterrogatorModule = __decorate([
             common_1.CommonModule,
             forms_1.FormsModule,
             http_1.HttpModule,
+            ng_bootstrap_1.NgbModule
         ],
         declarations: [
-            interrogator_component_1.InterrogatorComponent
+            interrogator_component_1.InterrogatorComponent,
+            group_selector_component_1.GroupSelectorComponent
         ],
         exports: [
-            interrogator_component_1.InterrogatorComponent
+            interrogator_component_1.InterrogatorComponent,
+            group_selector_component_1.GroupSelectorComponent,
+            ng_bootstrap_1.NgbModule
         ],
         entryComponents: []
     })

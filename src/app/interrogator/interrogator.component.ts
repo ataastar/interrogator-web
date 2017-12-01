@@ -74,9 +74,10 @@ export class InterrogatorComponent {
         return false;
     }
 
-    private replaceAbbreviation(source) {
+    replaceAbbreviation(source) {
         let result = this.replace(source, 'WHAT\'S', 'WHAT IS');
-        result = this.replace(source, 'WHAT\'S', 'WHAT IS');
+        result = this.replace(source, 'I\'M', 'I AM');
+        // result = this.replace(source, 'I\'M', 'I AM');
         return result;
     }
 

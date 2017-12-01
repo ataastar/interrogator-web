@@ -1,0 +1,16 @@
+{
+    "data": [
+        {
+            "hungarian": "Tudok teniszezni.",
+            "english": ["I can play tennis."]
+        },
+        {"hungarian":"tud (valamit csinálni)", "english":["can"]},
+        {"hungarian":"ugrik","english":["jump"]},
+        {"hungarian":"repül","english":["fly"]},
+        {"hungarian":"tengeri csikón lovagol","english":["ride a seahorse"]},
+        {"hungarian":"úszik","english":["swim"]},
+        {"hungarian":"Hol van ...?","english":["Where is ...?"]},
+        {"hungarian":"teniszezik","english":["play tennis"]},
+        {"hungarian":"Ki tud úszni?", "english":["Who can swim?"]}
+    ]
+}

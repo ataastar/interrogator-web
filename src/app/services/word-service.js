@@ -20,6 +20,16 @@ var WordService = (function () {
             .then(function (res) { return res.json().data; })
             .then(function (data) { return data; });
     };
+    WordService.prototype.getWords2 = function (key) {
+        return this.http.get('http://localhost:3000/words/' + key)
+            .toPromise()
+            .then(function (res) { return res.json(); });
+    };
+    WordService.prototype.getGroups = function () {
+        return this.http.get('http://localhost:3000/word_groups')
+            .toPromise()
+            .then(function (res) { return res.json(); });
+    };
     return WordService;
 }());
 WordService = __decorate([

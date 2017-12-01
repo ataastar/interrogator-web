@@ -9,34 +9,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-require("../assets/css/styles.css");
 var router_1 = require("@angular/router");
-var AppComponent = (function () {
-    function AppComponent(router, activatedRoute) {
+var word_service_1 = require("../services/word-service");
+var GroupSelectorComponent = (function () {
+    function GroupSelectorComponent(wordService, route, router) {
+        this.wordService = wordService;
+        this.route = route;
         this.router = router;
-        this.activatedRoute = activatedRoute;
-        this.hasActiveRoute = false;
     }
-    AppComponent.prototype.ngOnInit = function () {
+    GroupSelectorComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.activatedRoute.url.subscribe(function (url) { _this.hasActiveRoute = true; });
+        this.wordService.getGroups().then(function (groups) { return _this.groups = groups; });
     };
-    AppComponent.prototype.ngOnChange = function () {
-        var _this = this;
-        this.activatedRoute.url.subscribe(function (url) { _this.hasActiveRoute = true; });
-    };
-    AppComponent.prototype.interrogate = function (key) {
+    GroupSelectorComponent.prototype.interrogate = function (key) {
         this.router.navigate(['/interrogator', key]);
     };
-    return AppComponent;
+    return GroupSelectorComponent;
 }());
-AppComponent = __decorate([
+GroupSelectorComponent = __decorate([
     core_1.Component({
-        selector: 'learn-english-app',
-        templateUrl: './app.component.html',
-        styleUrls: ['./app.component.css'],
+        selector: 'group-selector',
+        templateUrl: './group-selector.html',
     }),
-    __metadata("design:paramtypes", [router_1.Router, router_1.ActivatedRoute])
-], AppComponent);
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+    __metadata("design:paramtypes", [word_service_1.WordService, router_1.ActivatedRoute, router_1.Router])
+], GroupSelectorComponent);
+exports.GroupSelectorComponent = GroupSelectorComponent;
+//# sourceMappingURL=group-selector.component.js.map

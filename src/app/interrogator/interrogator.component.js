@@ -10,10 +10,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
-require("../../assets/css/styles.css");
-require("../../../node_modules/primeng/resources/themes/omega/theme.css");
-require("../../../node_modules/primeng/resources/primeng.min.css");
-require("../../../node_modules/font-awesome/css/font-awesome.min.css");
 var word_service_1 = require("../services/word-service");
 var guessed_word_1 = require("../models/guessed-word");
 var InterrogatorComponent = (function () {
@@ -33,7 +29,9 @@ var InterrogatorComponent = (function () {
             return _this.wordService.getWords(params.get('id'));
         })
             .subscribe(function (words) { _this.actualWords = words; _this.next(); });
-        this.route.url.subscribe(function (url) { console.log(url[0].path); });
+        // .subscribe(group => { this.actualWords = group[0].words; console.log(group[0]); this.next(); });
+        // this.wordService.getGroups().then(groups => console.log(groups));
+        // this.route.url.subscribe(url => { console.log(url[0].path); });
     };
     InterrogatorComponent.prototype.check = function () {
         if (this.isEqual(this.word.english, this.english)) {
@@ -58,18 +56,37 @@ var InterrogatorComponent = (function () {
         if (actual === null) {
             return;
         }
-        var result = false;
         for (var _i = 0, expectedArray_1 = expectedArray; _i < expectedArray_1.length; _i++) {
             var expected = expectedArray_1[_i];
-            result = expected === actual;
-            result = result || expected.toUpperCase() === actual.toUpperCase();
-            result = result || this.removeUnnecessaryCharacters(expected).toUpperCase() ===
-                this.removeUnnecessaryCharacters(actual).toUpperCase();
-            if (result) {
-                return result;
+            if (expected === actual) {
+                return true;
+            }
+            var expectedModified = expected.toUpperCase();
+            var actualModified = actual.toUpperCase();
+            if (expectedModified === actualModified) {
+                return true;
+            }
+            expectedModified = this.replaceAbbreviation(expectedModified);
+            actualModified = this.replaceAbbreviation(actualModified);
+            if (expectedModified === actualModified) {
+                return true;
+            }
+            expectedModified = this.removeUnnecessaryCharacters(expectedModified);
+            actualModified = this.removeUnnecessaryCharacters(actualModified);
+            if (expectedModified === actualModified) {
+                return true;
             }
         }
+        return false;
+    };
+    InterrogatorComponent.prototype.replaceAbbreviation = function (source) {
+        var result = this.replace(source, 'WHAT\'S', 'WHAT IS');
+        result = this.replace(source, 'I\'M', 'I AM');
+        result = this.replace(source, 'I\'M', 'I AM');
         return result;
+    };
+    InterrogatorComponent.prototype.replace = function (source, search, replace) {
+        return source.replace(new RegExp(search, 'g'), replace);
     };
     InterrogatorComponent.prototype.removeUnnecessaryCharacters = function (text) {
         var result = '';

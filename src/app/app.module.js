@@ -14,6 +14,7 @@ require("rxjs/add/operator/toPromise");
 var app_component_1 = require("./app.component");
 var word_service_1 = require("./services/word-service");
 var interrogator_module_1 = require("./interrogator/interrogator.module");
+var ng_bootstrap_1 = require("@ng-bootstrap/ng-bootstrap");
 var app_routing_1 = require("./app.routing");
 var AppModule = (function () {
     function AppModule() {
@@ -28,6 +29,7 @@ AppModule = __decorate([
             forms_1.FormsModule,
             http_1.HttpModule,
             interrogator_module_1.InterrogatorModule,
+            ng_bootstrap_1.NgbModule.forRoot(),
             app_routing_1.routing
         ],
         declarations: [

@@ -3,7 +3,7 @@ var router_1 = require("@angular/router");
 var interrogator_component_1 = require("./interrogator/interrogator.component");
 var appRoutes = [
     {
-        path: 'test/:id',
+        path: 'interrogator/:id',
         component: interrogator_component_1.InterrogatorComponent
     }
 ];

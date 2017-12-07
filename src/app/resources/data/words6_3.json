@@ -8,39 +8,61 @@
         },
         {
             "hungarian": "Mi/Mik/Mit/Miket?",
-            "english": "What?"
+            "english": [
+                "What?"
+            ]
         },
         {
             "hungarian": "Te tudsz...?",
-            "english": "Can you...?"
+            "english": [
+                "Can you...?"
+            ]
         },
         {
             "hungarian": "számol",
-            "english": "count"
+            "english": [
+                "count"
+            ]
         },
         {
             "hungarian": "ír",
-            "english": "write"
+            "english": [
+                "write"
+            ]
         },
         {
             "hungarian": "betűz",
-            "english": "spell"
+            "english": [
+                "spell"
+            ]
         },
         {
             "hungarian": "olvas",
-            "english": "read"
+            "english": [
+                "read"
+            ]
         },
         {
             "hungarian": "rajzol",
-            "english": "draw"
+            "english": [
+                "draw"
+            ]
         },
         {
             "hungarian": "-ig",
-            "english": "to"
+            "english": [
+                "to"
+            ]
         },
         {
             "hungarian": "az övé (nőnemű)",
-            "english": "her"
+            "english": [
+                "her"
+            ]
+        },
+        {
+            "hungarian": "csinál",
+            "english": "do"
         }
     ]
 }

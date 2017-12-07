@@ -1,8 +1,46 @@
 {
     "data": [
         {
-            "hungarian": "A",
-            "english": ["A"]
+            "hungarian": "Mit/miket tudsz csinálni?",
+            "english": [
+                "What can you do?"
+            ]
+        },
+        {
+            "hungarian": "Mi/Mik/Mit/Miket?",
+            "english": "What?"
+        },
+        {
+            "hungarian": "Te tudsz...?",
+            "english": "Can you...?"
+        },
+        {
+            "hungarian": "számol",
+            "english": "count"
+        },
+        {
+            "hungarian": "ír",
+            "english": "write"
+        },
+        {
+            "hungarian": "betűz",
+            "english": "spell"
+        },
+        {
+            "hungarian": "olvas",
+            "english": "read"
+        },
+        {
+            "hungarian": "rajzol",
+            "english": "draw"
+        },
+        {
+            "hungarian": "-ig",
+            "english": "to"
+        },
+        {
+            "hungarian": "az övé (nőnemű)",
+            "english": "her"
         }
     ]
 }

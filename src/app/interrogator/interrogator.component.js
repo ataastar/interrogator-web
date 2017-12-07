@@ -82,7 +82,7 @@ var InterrogatorComponent = (function () {
     InterrogatorComponent.prototype.replaceAbbreviation = function (source) {
         var result = this.replace(source, 'WHAT\'S', 'WHAT IS');
         result = this.replace(source, 'I\'M', 'I AM');
-        result = this.replace(source, 'I\'M', 'I AM');
+        // result = this.replace(source, 'I\'M', 'I AM');
         return result;
     };
     InterrogatorComponent.prototype.replace = function (source, search, replace) {

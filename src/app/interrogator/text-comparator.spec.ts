@@ -1,11 +1,11 @@
-import { InterrogatorComponent } from './interrogator.component';
+import { TextComparator } from './text-comparator';
 
 describe('Service: Auth', () => {
 
-    let component: InterrogatorComponent;
+    let component: TextComparator;
 
     beforeEach(() => {
-        component = new InterrogatorComponent(null, null, null);
+        component = new TextComparator();
     });
 
     afterEach(() => {

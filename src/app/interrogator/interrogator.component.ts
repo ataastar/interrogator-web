@@ -26,10 +26,18 @@ export class InterrogatorComponent {
     }
 
     ngOnInit() {
-        this.route.paramMap
-            .switchMap((params: ParamMap) =>
-                this.wordService.getWords(params.get('id')))
-            .subscribe(words => { this.actualWords = words; this.next(); });
+        /*if (this.route.paramMap
+            .switchMap((params: ParamMap) => params.get('type')) == null) {*/
+            this.route.paramMap
+                .switchMap((params: ParamMap) =>
+                    this.wordService.getWords(params.get('id')))
+                .subscribe(words => { this.actualWords = words; this.next(); });
+       /* } else {
+            this.route.paramMap
+                .switchMap((params: ParamMap) =>
+                    this.wordService.getWords2(params.get('id')))
+                .subscribe(words => { this.actualWords = words; this.next(); });
+        }*/
         // .subscribe(group => { this.actualWords = group[0].words; console.log(group[0]); this.next(); });
         // this.wordService.getGroups().then(groups => console.log(groups));
         // this.route.url.subscribe(url => { console.log(url[0].path); });

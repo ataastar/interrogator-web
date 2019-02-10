@@ -19,8 +19,8 @@ export class GroupSelectorComponent {
         this.wordService.getGroups().then(groups => this.groups = groups);
     }
 
-    interrogate(key): void {
-        this.router.navigate(['/interrogator', key]);
+    interrogate(key: String): void {
+        this.router.navigate(['/interrogator', key, 'db']);
     }
 
 }

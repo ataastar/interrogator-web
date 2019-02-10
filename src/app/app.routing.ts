@@ -5,6 +5,10 @@ import { InterrogatorComponent } from './interrogator/interrogator.component';
 
 const appRoutes: Routes = [
   {
+    path: 'interrogator/:id/:type',
+    component: InterrogatorComponent
+  },
+  {
     path: 'interrogator/:id',
     component: InterrogatorComponent
   }

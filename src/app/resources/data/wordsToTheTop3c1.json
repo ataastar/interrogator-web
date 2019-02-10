@@ -1,0 +1,94 @@
+{
+    "data": [
+        {
+            "hungarian": "zenét hallgat",
+            "english": [
+                "listen to music"
+            ]
+        },
+        {
+            "hungarian": "szeret",
+            "english": [
+                "love", "like"
+            ]
+        },
+        {
+            "hungarian": "hangszer",
+            "english": [
+                "musical instrument"
+            ]
+        },
+        {
+            "hungarian": "előadó",
+            "english": [
+                "performer"
+            ]
+        },
+        {
+            "hungarian": "zongora",
+            "english": [
+                "piano"
+            ]
+        },
+        {
+            "hungarian": "pop",
+            "english": [
+                "pop"
+            ]
+        },
+        {
+            "hungarian": "rock",
+            "english": [
+                "rock"
+            ]
+        },
+        {
+            "hungarian": "szaxofon",
+            "english": [
+                "saxophone"
+            ]
+        },
+        {
+            "hungarian": "énekel",
+            "english": [
+                "sing"
+            ]
+        },
+        {
+            "hungarian": "sztár",
+            "english": [
+                "star"
+            ]
+        },
+        {
+            "hungarian": "tehetségkutató verseny",
+            "english": [
+                "talent contest"
+            ]
+        },
+        {
+            "hungarian": "hegedű",
+            "english": [
+                "violin"
+            ]
+        },
+        {
+            "hungarian": "mikor?",
+            "english": [
+                "when?"
+            ]
+        },
+        {
+            "hungarian": "nyer, győz",
+            "english": [
+                "win"
+            ]
+        },
+        {
+            "hungarian": "nyertes, győztes",
+            "english": [
+                "winner"
+            ]
+        }
+    ]
+}

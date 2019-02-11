@@ -1,0 +1,112 @@
+{
+    "data": [
+        {
+            "hungarian": "segít",
+            "english": [
+                "help"
+            ]
+        },
+        {
+            "hungarian": "ló",
+            "english": [
+                "horse"
+            ]
+        },
+        {
+            "hungarian": "óra (időtartam)",
+            "english": [
+                "hour"
+            ]
+        },
+        {
+            "hungarian": "késő, későn",
+            "english": [
+                "late"
+            ]
+        },
+        {
+            "hungarian": "reggel, délelőtt",
+            "english": [
+                "morning"
+            ]
+        },
+        {
+            "hungarian": "soha",
+            "english": [
+                "never"
+            ]
+        },
+        {
+            "hungarian": "gyakran",
+            "english": [
+                "often"
+            ]
+        },
+        {
+            "hungarian": "kissállat kereskedés",
+            "english": [
+                "pet shop"
+            ]
+        },
+        {
+            "hungarian": "néha",
+            "english": [
+                "sometimes"
+            ]
+        },
+        {
+            "hungarian": "ébren marad, fennmarad",
+            "english": [
+                "stay up"
+            ]
+        },
+        {
+            "hungarian": "buszra száll",
+            "english": [
+                "take the bus"
+            ]
+        },
+        {
+            "hungarian": "telefonon cseveg",
+            "english": [
+                "talk on the phone"
+            ]
+        },
+        {
+            "hungarian": "azután",
+            "english": [
+                "then"
+            ]
+        },
+        {
+            "hungarian": "fáradt",
+            "english": [
+                "tired"
+            ]
+        },
+        {
+            "hungarian": "rendszeresen",
+            "english": [
+                "usually"
+            ]
+        },
+        {
+            "hungarian": "meglátogat, ellátogat",
+            "english": [
+                "visit"
+            ]
+        },
+        {
+            "hungarian": "sétál, gyalogol",
+            "english": [
+                "walk"
+            ]
+        },
+        {
+            "hungarian": "Milyen időben...? (mikor)",
+            "english": [
+                "What time...?"
+            ]
+        }
+    ]
+}

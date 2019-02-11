@@ -1,0 +1,112 @@
+{
+    "data": [
+        {
+            "hungarian": "beszél valamiről",
+            "english": [
+                "talk about"
+            ]
+        },
+        {
+            "hungarian": "délután",
+            "english": [
+                "afternoon"
+            ]
+        },
+        {
+            "hungarian": "mindig",
+            "english": [
+                "always"
+            ]
+        },
+        {
+            "hungarian": "(óra)kor",
+            "english": [
+                "at..."
+            ]
+        },
+        {
+            "hungarian": "... előtt",
+            "english": [
+                "before"
+            ]
+        },
+        {
+            "hungarian": "(nagy)város",
+            "english": [
+                "city"
+            ]
+        },
+        {
+            "hungarian": "belváros",
+            "english": [
+                "city center"
+            ]
+        },
+        {
+            "hungarian": "korán",
+            "english": [
+                "early"
+            ]
+        },
+        {
+            "hungarian": "este",
+            "english": [
+                "evening"
+            ]
+        },
+        {
+            "hungarian": "messze",
+            "english": [
+                "far", "far away"
+            ]
+        },
+        {
+            "hungarian": "farm",
+            "english": [
+                "farm"
+            ]
+        },
+        {
+            "hungarian": "etet",
+            "english": [
+                "feed"
+            ]
+        },
+        {
+            "hungarian": "hazaér",
+            "english": [
+                "get home"
+            ]
+        },
+        {
+            "hungarian": "felkel (ágyból)",
+            "english": [
+                "get up"
+            ]
+        },
+        {
+            "hungarian": "lefekszik",
+            "english": [
+                "go to bed"
+            ]
+        },
+        {
+            "hungarian": "reggelizik",
+            "english": [
+                "have breakfast"
+            ]
+        },
+        {
+            "hungarian": "ebédel",
+            "english": [
+                "have lunch"
+            ]
+        },
+        {
+            "hungarian": "vacsorázik",
+            "english": [
+                "have dinner"
+            ]
+        }
+    ]
+}

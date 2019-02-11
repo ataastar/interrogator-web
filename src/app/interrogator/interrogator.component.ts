@@ -26,21 +26,13 @@ export class InterrogatorComponent {
     }
 
     ngOnInit() {
-        /*if (this.route.paramMap
-            .switchMap((params: ParamMap) => params.get('type')) == null) {*/
-            this.route.paramMap
-                .switchMap((params: ParamMap) =>
-                    this.wordService.getWords(params.get('id')))
-                .subscribe(words => { this.actualWords = words; this.next(); });
-       /* } else {
-            this.route.paramMap
-                .switchMap((params: ParamMap) =>
-                    this.wordService.getWords2(params.get('id')))
-                .subscribe(words => { this.actualWords = words; this.next(); });
-        }*/
-        // .subscribe(group => { this.actualWords = group[0].words; console.log(group[0]); this.next(); });
-        // this.wordService.getGroups().then(groups => console.log(groups));
-        // this.route.url.subscribe(url => { console.log(url[0].path); });
+        this.route.paramMap
+            .switchMap((params: ParamMap) => {
+                if (params.get('type') != null) {
+                    return this.wordService.getWords2(params.get('id'));
+                }
+                return this.wordService.getWords(params.get('id'));
+            }).subscribe(words => { this.actualWords = words; this.next(); });
     }
 
     check() {
@@ -140,7 +132,7 @@ export class InterrogatorComponent {
     }
 
     getRandomWord(checkSameIndex: boolean): any {
-        let remainingWordsNumber = this.actualWords.length;
+        let remainingWordsNumber = this.actualWords != null ? this.actualWords.length : 0;
         // if no more words, then return null
         if (remainingWordsNumber === 0) {
             return null;

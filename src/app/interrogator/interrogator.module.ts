@@ -7,6 +7,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { InterrogatorComponent } from './interrogator.component';
 import { GroupSelectorComponent } from './group-selector.component';
+import { GroupSelectorJsonComponent } from './group-selector-json.component';
 
 @NgModule({
   imports: [
@@ -17,11 +18,13 @@ import { GroupSelectorComponent } from './group-selector.component';
   ],
   declarations: [
     InterrogatorComponent,
-    GroupSelectorComponent
+    GroupSelectorComponent,
+    GroupSelectorJsonComponent
   ],
   exports: [
     InterrogatorComponent,
     GroupSelectorComponent,
+    GroupSelectorJsonComponent,
     NgbModule
   ],
   entryComponents: [

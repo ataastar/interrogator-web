@@ -10,10 +10,9 @@ import { AppComponent } from './app.component';
 import { WordService } from './services/word-service';
 
 import { InterrogatorModule } from './interrogator/interrogator.module';
+import { AdminModule } from './admin/admin.module';
 
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-
-import { routing } from './app.routing';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   imports: [
@@ -22,8 +21,9 @@ import { routing } from './app.routing';
     FormsModule,
     HttpModule,
     InterrogatorModule,
-    NgbModule.forRoot(),
-    routing
+    AdminModule,
+//    NgbModule.forRoot(),
+    CoreModule
   ],
   declarations: [
     AppComponent

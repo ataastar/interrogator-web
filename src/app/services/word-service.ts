@@ -8,10 +8,14 @@ export class WordService {
     constructor(private http: Http) { }
 
     getWords(key: string) {
+        if (key != null) {
         return this.http.get('src/app/resources/data/words' + key + '.json')
             .toPromise()
             .then(res => <Word[]>res.json().data)
             .then(data => { return data; });
+        } else {
+            return [];
+        }
     }
 
     getWords2(key: string) {

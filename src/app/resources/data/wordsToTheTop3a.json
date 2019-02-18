@@ -39,7 +39,8 @@
         {
             "hungarian": "parkba jár",
             "english": [
-                "go to the park"
+                "go to the park",
+                "go to park"
             ]
         },
         {
@@ -69,7 +70,8 @@
         {
             "hungarian": "számítógépes játékot játszik",
             "english": [
-                "play computer games"
+                "play computer games",
+                "play computer game"
             ]
         },
         {

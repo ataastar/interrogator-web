@@ -1,7 +1,9 @@
 export class Word {
-    hungarian;
-    english;
-    imageUrl?;
-    pronunciation?;
-    audio?;
+    hungarian: String;
+    english: any;
+    imageUrl?: String;
+    pronunciation?: String;
+    audio?: String;
+    exampleInHungarian?: String;
+    exampleInEnglish?: String;
 }

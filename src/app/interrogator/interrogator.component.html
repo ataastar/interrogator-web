@@ -1,37 +1,42 @@
 <group-selector></group-selector>
 <group-selector-json></group-selector-json>
-    <form>
-        <div *ngIf="word">
-            <div>
-    
-                <ngb-alert [dismissible]="false" *ngIf="checked && !wrong" type="success">Helyes! ({{word.english}})</ngb-alert>
-                <ngb-alert [dismissible]="false" *ngIf="checked && wrong" type="danger">A helyes válasz: ({{word.english}})</ngb-alert>
-                <div *ngIf="!checked" style="height: 66px"><b><label>&nbsp;</label></b></div>
+<form>
+    <div *ngIf="word">
+        <div>
+
+            <ngb-alert [dismissible]="false" *ngIf="checked && !wrong" type="success">Helyes! ({{word.english}})<div *ngIf="word.exampleInEnglish">[{{word.exampleInEnglish}}]</div>
+            </ngb-alert>
+            <ngb-alert [dismissible]="false" *ngIf="checked && wrong" type="danger"><div>helyes válasz: {{word.english}}</div><div *ngIf="word.exampleInEnglish">[{{word.exampleInEnglish}}]</div>
+            </ngb-alert>
+            <div *ngIf="!checked && word.exampleInEnglish" style="height: 90px"><b><label>&nbsp;</label></b></div>
+            <div *ngIf="!checked && !word.exampleInEnglish" style="height: 66px"><b><label>&nbsp;</label></b></div>
+            <div style="display: flex">
                 <div>{{word.hungarian}}</div>
-                <div class="form-group row">
-                    <div class="col-9">
-                        <input type="text" [(ngModel)]="english" name="english" autofocus [readonly]="checked" autocomplete="off" 
-                        id="english" class="form-control form-control-sm" />
-                    </div>
-                    <label *ngIf="checked" class="col-form-label" class="col-3">
-                        {{word.pronunciation}}
-                    </label>
+                <div *ngIf="word.exampleInHungarian" style="margin-left: 5px">[Példa mondat: {{word.exampleInHungarian}}]</div>
+            </div>
+            <div class="form-group row">
+                <div class="col-9">
+                    <input type="text" [(ngModel)]="english" name="english" autofocus [readonly]="checked"
+                        autocomplete="off" id="english" class="form-control form-control-sm" />
                 </div>
-                <div>
-                    <input type="submit" (click)="check()" value="Ellenőrzés" *ngIf="!checked" class="btn btn-primary">
-                    <input type="submit" (click)="next()" value="Tovább" *ngIf="checked" class="btn btn-primary">
-                </div>
-                
-                
+                <label *ngIf="checked" class="col-form-label" class="col-3">
+                    {{word.pronunciation}}
+                </label>
             </div>
             <div>
-                <img *ngIf="word.imageUrl" [src]="getImageUrl()" />
+                <input type="submit" (click)="check()" value="Ellenőrzés" *ngIf="!checked" class="btn btn-primary">
+                <input type="submit" (click)="next()" value="Tovább" *ngIf="checked" class="btn btn-primary">
             </div>
-            <audio [src]="getAudio()" *ngIf="word.audio" id="audioplayer"></audio>
+
+
         </div>
-        <div *ngIf="actualWords && !word">
-            Gratulálunk! Sikeresen befejezted.
-            <!--<input type="button" (click)="back()" value="Vissza">-->
+        <div>
+            <img *ngIf="word.imageUrl" [src]="getImageUrl()" />
         </div>
-    </form>
-    
+        <audio [src]="getAudio()" *ngIf="word.audio" id="audioplayer"></audio>
+    </div>
+    <div *ngIf="actualWords && !word">
+        Gratulálunk! Sikeresen befejezted.
+        <!--<input type="button" (click)="back()" value="Vissza">-->
+    </div>
+</form>

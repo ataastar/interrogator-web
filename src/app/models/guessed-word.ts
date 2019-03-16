@@ -1,13 +1,15 @@
 export class GuessedWord {
-    hungarian;
-    english;
-    imageUrl?;
-    pronunciation?;
-    audio?;
+    hungarian: String;
+    english: any;
+    imageUrl?: String;
+    pronunciation?: String;
+    audio?: String;
+    exampleInHungarian?: String;
+    exampleInEnglish?: String;
 
     lastAnswerWrong: boolean = false;
-    wrongAnswerNumber: number = 0;
-    correctAnswerNumber: number = 0;
+    private wrongAnswerNumber: number = 0;
+    private correctAnswerNumber: number = 0;
 
     public getWrongAnswerNumber(): number {
         return this.wrongAnswerNumber;

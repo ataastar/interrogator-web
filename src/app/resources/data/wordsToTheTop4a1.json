@@ -1,0 +1,84 @@
+{
+    "data": [
+        {
+            "hungarian": "fotel",
+            "english": [
+                "armchair"
+            ],
+            "exampleInHungarian": "",
+            "exampleInEnglish": ""
+        },
+        {
+            "hungarian": "ágy",
+            "english": [
+                "bed"
+            ],
+            "exampleInHungarian": "",
+            "exampleInEnglish": ""
+        },
+        {
+            "hungarian": "mögött",
+            "english": [
+                "behind"
+            ],
+            "exampleInHungarian": "A fotel mögött van az asztal. Az asztal a fotel mögött van.",
+            "exampleInEnglish": "There is the table behind the armchair. The table is behind the armchair."
+        },
+        {
+            "hungarian": "között",
+            "english": [
+                "between"
+            ],
+            "exampleInHungarian": "A 2 fotel között van az asztal. Az asztal a 2 fotel között van.",
+            "exampleInEnglish": "There is the table between the 2 armchairs. The table is between the 2 armchairs."
+        },
+        {
+            "hungarian": "könyvesszekrény",
+            "english": [
+                "bookcase"
+            ],
+            "exampleInHungarian": "",
+            "exampleInEnglish": ""
+        },
+        {
+            "hungarian": "falióra",
+            "english": [
+                "clock"
+            ],
+            "exampleInHungarian": "",
+            "exampleInEnglish": ""
+        },
+        {
+            "hungarian": "tűzhely",
+            "english": [
+                "cooker"
+            ],
+            "exampleInHungarian": "",
+            "exampleInEnglish": ""
+        },
+        {
+            "hungarian": "hűtőszekrény",
+            "english": [
+                "fridge"
+            ],
+            "exampleInHungarian": "",
+            "exampleInEnglish": ""
+        },
+        {
+            "hungarian": "aranyhal(ak)",
+            "english": [
+                "goldfish"
+            ],
+            "exampleInHungarian": "",
+            "exampleInEnglish": ""
+        },
+        {
+            "hungarian": "-ban, -ben",
+            "english": [
+                "in"
+            ],
+            "exampleInHungarian": "A hűtőszekrényben van az étel. Az étel a hűtőszekrényben van.",
+            "exampleInEnglish": "There is the food in the fridge. The food is in the fridge."
+        }
+    ]
+}

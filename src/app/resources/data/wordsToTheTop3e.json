@@ -44,11 +44,11 @@
         },
         {
             "hungarian": "gördeszkázik",
-            "english": "go skateboarding"
+            "english": ["go skateboarding"]
         },
         {
             "hungarian": "bevásárol",
-            "english": "go shopping"
+            "english": ["go shopping"]
         },
         {
             "hungarian": "jól szórakozik, jól érzi magát",

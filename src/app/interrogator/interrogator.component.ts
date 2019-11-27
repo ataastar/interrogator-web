@@ -128,6 +128,10 @@ export class InterrogatorComponent {
         for (let prop in source) {
             target[prop] = source[prop];
         }
+        // convert the from array to string
+        if (Array.isArray(target.hungarian)) {
+            target.hungarian = target.hungarian.join("; ");
+        }
         return target;
     }
 

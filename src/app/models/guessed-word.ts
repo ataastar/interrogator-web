@@ -1,5 +1,5 @@
 export class GuessedWord {
-    hungarian: String;
+    hungarian: any;
     english: any;
     imageUrl?: String;
     pronunciation?: String;

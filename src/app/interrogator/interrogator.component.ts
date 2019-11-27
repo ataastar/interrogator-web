@@ -18,7 +18,7 @@ export class InterrogatorComponent {
 
     word: GuessedWord = null;
     index: number;
-    english: string;
+    to: string;
     checked: boolean = false;
     wrong: boolean = false;
 
@@ -36,7 +36,7 @@ export class InterrogatorComponent {
     }
 
     check() {
-        if (this.isEqual(this.word.english, this.english)) {
+        if (this.isEqual(this.word.to, this.to)) {
             // if this is the last, then remove from the array
             if (!this.word.lastAnswerWrong || this.actualWords.length === 1) {
                 this.actualWords.splice(this.index, 1);
@@ -117,9 +117,9 @@ export class InterrogatorComponent {
         }
         this.checked = false;
         this.wrong = false;
-        this.english = null;
-        if (this.word != null && document.getElementById('english') != null) {
-            document.getElementById('english').focus();
+        this.to = null;
+        if (this.word != null && document.getElementById('to') != null) {
+            document.getElementById('to').focus();
         }
     }
 
@@ -128,9 +128,15 @@ export class InterrogatorComponent {
         for (let prop in source) {
             target[prop] = source[prop];
         }
-        // convert the from array to string
-        if (Array.isArray(target.hungarian)) {
-            target.hungarian = target.hungarian.join("; ");
+        if (source.from != null) {
+            // convert the from array to string
+            if (Array.isArray(target.from)) {
+                target.from = target.from.join("; ");
+            }
+        } else {
+            // if source 'from' is null, then the old version of json is came in the response
+            target.from = source.hungarian;
+            target.to = source.english;
         }
         return target;
     }

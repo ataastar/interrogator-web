@@ -1,11 +1,8 @@
-export class GuessedWord {
-    hungarian: any;
-    english: any;
-    imageUrl?: String;
-    pronunciation?: String;
-    audio?: String;
-    exampleInHungarian?: String;
-    exampleInEnglish?: String;
+import { Word } from "./word";
+
+export class GuessedWord extends Word {
+    from: any;
+    to: any;
 
     lastAnswerWrong: boolean = false;
     private wrongAnswerNumber: number = 0;

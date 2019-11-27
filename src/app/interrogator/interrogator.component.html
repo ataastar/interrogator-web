@@ -6,8 +6,8 @@
 
             <div style="display: flex">
                 <div>{{word.from}}</div>
-                <div *ngIf="word.exampleInHungarian" style="margin-left: 5px">[Példa mondat:
-                    {{word.exampleInHungarian}}]</div>
+                <div *ngIf="word.example" style="margin-left: 5px">[Példa mondat:
+                    {{word.example}}]</div>
             </div>
             <div class="form-group row">
                 <div class="col-9">
@@ -23,11 +23,11 @@
                 {{word.pronunciation}}
             </label>
             <ngb-alert [dismissible]="false" *ngIf="checked && !wrong" type="success">Helyes! ({{word.to}})<div
-                    *ngIf="word.exampleInEnglish">[{{word.exampleInEnglish}}]</div>
+                    *ngIf="word.translatedExample">[{{word.translatedExample}}]</div>
             </ngb-alert>
             <ngb-alert [dismissible]="false" *ngIf="checked && wrong" type="danger">
                 <div>helyes válasz: {{word.to}}</div>
-                <div *ngIf="word.exampleInEnglish">[{{word.exampleInEnglish}}]</div>
+                <div *ngIf="word.translatedExample">[{{word.translatedExample}}]</div>
             </ngb-alert>
 
 

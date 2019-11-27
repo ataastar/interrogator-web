@@ -137,6 +137,8 @@ export class InterrogatorComponent {
             // if source 'from' is null, then the old version of json is came in the response
             target.from = source.hungarian;
             target.to = source.english;
+            target.example = source.exampleInHungarian;
+            target.translatedExample = source.exampleInEnglish;
         }
         return target;
     }

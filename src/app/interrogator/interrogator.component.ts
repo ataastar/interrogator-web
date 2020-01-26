@@ -34,6 +34,7 @@ export class InterrogatorComponent {
     }
 
     private convertToGuessed(words: Word[]): GuessedWord[] {
+        if (words == null) { return null; }
         let actualWords = new Array(words.length);
         let i = 0;
         for (let word of words) {

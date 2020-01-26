@@ -1,8 +1,14 @@
 import { Word } from "./word";
 
-export class GuessedWord extends Word {
-    from: any;
-    to: any;
+export class GuessedWord {
+    id: Number;
+    from: String;
+    to: String[];
+    imageUrl?: String;
+    pronunciation?: String;
+    audio?: String;
+    example?: String;
+    translatedExample?: String;
 
     lastAnswerWrong: boolean = false;
     private wrongAnswerNumber: number = 0;
@@ -21,4 +27,5 @@ export class GuessedWord extends Word {
         this.correctAnswerNumber++;
         this.lastAnswerWrong = false;
     }
+
 }

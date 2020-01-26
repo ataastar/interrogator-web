@@ -1,10 +1,13 @@
+import { Phrase } from "./phrase";
+
 export class Word {
-    from: any;
-    to: any;
+    id: Number;
+    from: Phrase[];
+    to: Phrase[];
     imageUrl?: String;
     pronunciation?: String;
     audio?: String;
-    example?: string;
+    example?: String;
     translatedExample?: String;
 
     // @deprecated

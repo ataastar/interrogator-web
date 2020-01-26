@@ -13,9 +13,7 @@ import { GuessedWord } from '../models/guessed-word';
 })
 export class InterrogatorComponent {
 
-    words: Word[];
-    actualWords: Word[] = null;
-
+    actualWords: GuessedWord[] = null;
     word: GuessedWord = null;
     index: number;
     to: string;
@@ -32,12 +30,22 @@ export class InterrogatorComponent {
                     return this.wordService.getWords2(params.get('id'));
                 }
                 return this.wordService.getWords(params.get('id'));
-            }).subscribe(words => { this.actualWords = words; this.next(); });
+            }).subscribe(words => { this.actualWords = this.convertToGuessed(words); this.next(); });
     }
 
-    check() {
+    private convertToGuessed(words: Word[]): GuessedWord[] {
+        let actualWords = new Array(words.length);
+        let i = 0;
+        for (let word of words) {
+            actualWords[i] = this.clone(word);
+            i++;
+        }
+        return actualWords;
+    }
+
+    check(): void {
         if (this.isEqual(this.word.to, this.to)) {
-            // if this is the last, then remove from the array
+            // if this is the last or the last answer was not wrong, then remove from the array
             if (!this.word.lastAnswerWrong || this.actualWords.length === 1) {
                 this.actualWords.splice(this.index, 1);
             }
@@ -54,8 +62,8 @@ export class InterrogatorComponent {
         }
     }
 
-    private isEqual(expectedArray: string[], actual: string) {
-        if (actual === null) { return; }
+    private isEqual(expectedArray: String[], actual: String): boolean {
+        if (actual === null) { return false; }
         for (let expected of expectedArray) {
             if (expected === actual) { return true; }
             let expectedModified = expected.toUpperCase();
@@ -69,23 +77,22 @@ export class InterrogatorComponent {
             expectedModified = this.removeUnnecessaryCharacters(expectedModified);
             actualModified = this.removeUnnecessaryCharacters(actualModified);
             if (expectedModified === actualModified) { return true; }
-
         }
         return false;
     }
 
-    replaceAbbreviation(source) {
+    replaceAbbreviation(source: String) {
         let result = this.replace(source, 'WHAT\'S', 'WHAT IS');
         result = this.replace(source, 'I\'M', 'I AM');
         // result = this.replace(source, 'I\'M', 'I AM');
         return result;
     }
 
-    private replace(source, search, replace) {
+    private replace(source: String, search: any, replace: string): string {
         return source.replace(new RegExp(search, 'g'), replace);
     }
 
-    private removeUnnecessaryCharacters(text: any) {
+    private removeUnnecessaryCharacters(text: any): string {
         let result = '';
         for (let char of text) {
             switch (char) {
@@ -104,17 +111,8 @@ export class InterrogatorComponent {
         return result;
     }
 
-    next() {
-        let word = this.getRandomWord(this.word && this.word.getWrongAnswerNumber() > 0);
-        if (word instanceof GuessedWord || word == null) {
-            this.word = word;
-        } else {
-            // if the word is not GuessedWord, then we create one and replace
-            let newWord = new GuessedWord();
-            this.clone(word, newWord);
-            this.word = newWord;
-            this.actualWords[this.index] = this.word;
-        }
+    next(): void {
+        this.word = this.getRandomWord(this.word && this.word.lastAnswerWrong);
         this.checked = false;
         this.wrong = false;
         this.to = null;
@@ -123,27 +121,30 @@ export class InterrogatorComponent {
         }
     }
 
-    private clone(source: any, target: any) {
+    private clone(source: Word): GuessedWord {
+        let cloned = new GuessedWord();
         // tslint:disable-next-line:forin
         for (let prop in source) {
-            target[prop] = source[prop];
+            cloned[prop] = source[prop];
         }
-        if (source.from != null) {
-            // convert the from array to string
-            if (Array.isArray(target.from)) {
-                target.from = target.from.join("; ");
-            }
-        } else {
-            // if source 'from' is null, then the old version of json is came in the response
-            target.from = source.hungarian;
-            target.to = source.english;
-            target.example = source.exampleInHungarian;
-            target.translatedExample = source.exampleInEnglish;
+        // convert the from and to arrays to string
+        cloned.from = "";
+        for (const phrase of source.from) {
+            cloned.from = phrase.phrase + ";";
         }
-        return target;
+        cloned.to = new Array(source.to.length);
+        let i = 0;
+        for (const phrase of source.to) {
+            cloned.to[i] = phrase.phrase;
+            i++;
+        }
+        return cloned;
     }
 
-    getRandomWord(checkSameIndex: boolean): any {
+    /**
+     * @param checkSameIndex true, if must not get the same word as it was answered now
+     */
+    getRandomWord(checkSameIndex: boolean): GuessedWord {
         let remainingWordsNumber = this.actualWords != null ? this.actualWords.length : 0;
         // if no more words, then return null
         if (remainingWordsNumber === 0) {

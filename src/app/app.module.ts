@@ -3,7 +3,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import 'rxjs/add/operator/toPromise';
 
 import { AppComponent } from './app.component';
 
@@ -22,7 +21,6 @@ import { CoreModule } from './core/core.module';
     HttpModule,
     InterrogatorModule,
     AdminModule,
-//    NgbModule.forRoot(),
     CoreModule
   ],
   declarations: [

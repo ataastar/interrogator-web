@@ -5,6 +5,8 @@ import { WordService } from '../services/word-service';
 import { Word } from '../models/word';
 import { GuessedWord } from '../models/guessed-word';
 
+import { switchMap } from 'rxjs/operators';
+
 
 @Component({
     selector: 'interrogator',
@@ -25,12 +27,12 @@ export class InterrogatorComponent {
 
     ngOnInit() {
         this.route.paramMap
-            .switchMap((params: ParamMap) => {
+            .pipe(switchMap((params: ParamMap) => {
                 if (params.get('type') != null) {
                     return this.wordService.getWords2(params.get('id'));
                 }
                 return this.wordService.getWords(params.get('id'));
-            }).subscribe(words => { this.actualWords = this.convertToGuessed(words); this.next(); });
+            })).subscribe(words => { this.actualWords = this.convertToGuessed(words); this.next(); });
     }
 
     private convertToGuessed(words: Word[]): GuessedWord[] {
@@ -168,11 +170,11 @@ export class InterrogatorComponent {
     }
 
     getImageUrl() {
-        return require('../../assets/images/' + this.word.imageUrl);
+        return //require('../../assets/images/' + this.word.imageUrl);
     }
 
     getAudio() {
-        return require('../../assets/audios/' + this.word.audio);
+        return //require('../../assets/audios/' + this.word.audio);
     }
 
     back(): void {

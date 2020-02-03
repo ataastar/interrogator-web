@@ -14,9 +14,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   imports: [
     CommonModule,
     CoreRoutingModule,
-    InterrogatorModule,
-    NgbModule.forRoot()
-
+    InterrogatorModule
   ],
   declarations: [LoginComponent, NotFoundComponent],
   exports: [

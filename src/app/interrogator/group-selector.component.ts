@@ -20,7 +20,7 @@ export class GroupSelectorComponent {
     }
 
     interrogate(key: String): void {
-        this.router.navigate(['/interrogator', key]);
+        this.router.navigate(['/interrogator/show', key]);
     }
 
 }

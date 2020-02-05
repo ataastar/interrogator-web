@@ -1,0 +1,11 @@
+<input type="button" (click)="interrogateHere()" value="Kikérdez">
+<input type="button" (click)="interrogate()" value="Kikérdez írásban">
+<table>
+    <tr *ngFor="let word of words">
+        <td style="width: 45%;">{{word.from}}</td>
+        <td style="width: 10%;">&nbsp;</td>
+        <td style="width: 45%;">{{word.to}}</td>
+    </tr>
+</table>
+<input type="button" (click)="interrogateHere()" value="Kikérdez">
+<input type="button" (click)="interrogate()" value="Kikérdez írásban">

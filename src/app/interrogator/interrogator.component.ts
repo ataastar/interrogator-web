@@ -28,7 +28,7 @@ export class InterrogatorComponent {
     ngOnInit() {
         this.route.paramMap
             .pipe(switchMap((params: ParamMap) => {
-                return this.wordService.getWords(params.get('id'));
+                    return this.wordService.getWords(params.get('id'));
             })).subscribe(words => { this.actualWords = this.convertToGuessed(words); this.next(); });
     }
 

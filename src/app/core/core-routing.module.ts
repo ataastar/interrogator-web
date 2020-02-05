@@ -4,6 +4,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { AuthGuardService } from '../auth-services/auth-guard.service';
 import { LoginComponent } from './login/login.component';
 import { InterrogatorComponent } from '../interrogator/interrogator.component';
+import { ShowPhrasesComponent } from '../interrogator/show-phrases/show-phrases.component';
 
 const routes: Routes = [
   {
@@ -21,8 +22,8 @@ const routes: Routes = [
     loadChildren: '../admin/admin.module#AdminModule'
   },
   {
-    path: 'interrogator/:id/:type',
-    component: InterrogatorComponent
+    path: 'interrogator/show/:id',
+    component: ShowPhrasesComponent
   },
   {
     path: 'interrogator/:id',

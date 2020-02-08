@@ -26,10 +26,18 @@ export class InterrogatorComponent {
     }
 
     ngOnInit() {
-        this.route.paramMap
-            .pipe(switchMap((params: ParamMap) => {
+        this.actualWords = this.convertToGuessed(this.wordService.getActualWords());
+        if (this.actualWords) {
+            this.next();
+        } else {
+            this.route.paramMap
+                .pipe(switchMap((params: ParamMap) => {
                     return this.wordService.getWords(params.get('id'));
-            })).subscribe(words => { this.actualWords = this.convertToGuessed(words); this.next(); });
+                })).subscribe(words => {
+                    this.actualWords = this.convertToGuessed(words);
+                    this.next();
+                });
+        }
     }
 
     private convertToGuessed(words: Word[]): GuessedWord[] {
@@ -130,8 +138,9 @@ export class InterrogatorComponent {
         // convert the from and to arrays to string
         cloned.from = "";
         for (const phrase of source.from) {
-            cloned.from = phrase.phrase + ";";
+          cloned.from = cloned.from + ";" + phrase.phrase;
         }
+        cloned.from = cloned.from.substr(1);
         cloned.to = new Array(source.to.length);
         let i = 0;
         for (const phrase of source.to) {

@@ -5,6 +5,7 @@ import { AuthGuardService } from '../auth-services/auth-guard.service';
 import { LoginComponent } from './login/login.component';
 import { InterrogatorComponent } from '../interrogator/interrogator.component';
 import { ShowPhrasesComponent } from '../interrogator/show-phrases/show-phrases.component';
+import { AddUnitContentComponent } from '../admin/add-unit-content/add-unit-content.component';
 
 const routes: Routes = [
   {
@@ -16,12 +17,15 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent
   },
-  {
+  /*{
     path: 'admin',
     canActivate: [AuthGuardService],
     loadChildren: '../admin/admin.module#AdminModule'
-  },
+  },*/
   {
+    path: 'admin/addUnitContent/:id',
+    component: AddUnitContentComponent
+  },  {
     path: 'interrogator/show/:id',
     component: ShowPhrasesComponent
   },

@@ -5,6 +5,8 @@ import { Word } from '../models/word';
 @Injectable()
 export class WordService {
 
+    actualPhrases: Word[];
+
     constructor(private http: Http) { }
 
     getWords(key: string) {
@@ -13,8 +15,13 @@ export class WordService {
             .then(res => {
                 var json = res != null ? res.json() : null;
                 var unit = json != null ? (json[0].content != null ? json[0].content : json[0]) : null;
-                return unit != null ? unit.words : null;
+                this.actualPhrases = unit != null ? unit.words : null;
+                return this.actualPhrases;
             });
+    }
+
+    getActualWords(): Word[] {
+        return this.actualPhrases;
     }
 
     getGroups() {

@@ -1,5 +1,3 @@
-import { Word } from "./word";
-
 export class GuessedWord {
     id: Number;
     from: String;

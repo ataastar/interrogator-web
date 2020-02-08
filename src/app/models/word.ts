@@ -9,10 +9,4 @@ export class Word {
     audio?: String;
     example?: String;
     translatedExample?: String;
-
-    // @deprecated
-    hungarian: any;
-    english: any;
-    exampleInHungarian?: String;
-    exampleInEnglish?: String;
 }

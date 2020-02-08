@@ -1,0 +1,35 @@
+<table>
+    <tr *ngFor="let word of unitWords">
+        <td style="width: 40;">{{toString( word.from)}}</td>
+        <td style="width: 10%;">&nbsp;</td>
+        <td style="width: 40%;">{{toString( word.to)}}</td>
+        <td style="width: 10%;"></td>
+    </tr>
+    <tr>
+        <td>
+            <div *ngFor="let phrase of fromPhrases; let in=index" class="col-sm-6">
+                <div class="form-group">
+                    <input type="text" [(ngModel)]="fromPhrases[in].value" name="from{{in}}" autofocus id="from{{in}}"
+                        class="form-control" #name="ngModel" />
+                </div>
+            </div>
+            <input type="button" (click)="addFrom()" name="addFrom" id="addFrom" class="btn btn-secondary" value="+" />
+            <input type="text" [(ngModel)]="example" name="example" id="example" class="form-control form-control-sm" />
+        </td>
+        <td></td>
+        <td>
+            <div *ngFor="let phrase of toPhrases; let in=index" class="col-sm-6">
+                <div class="form-group">
+                    <input type="text" [(ngModel)]="toPhrases[in].value" name="to{{in}}" id="to{{in}}"
+                        class="form-control" #name="ngModel" />
+                </div>
+            </div>
+            <input type="button" (click)="addTo()" name="addTo" id="addTo" class="btn btn-secondary" value="+" />
+            <input type="text" [(ngModel)]="translatedExample" name="translatedExample" id="translatedExample"
+                class="form-control form-control-sm" />
+        </td>
+        <td>
+            <input type="button" (click)="add()" name="add" id="add" class="btn btn-primary" value="Hozzáad" />
+        </td>
+    </tr>
+</table>

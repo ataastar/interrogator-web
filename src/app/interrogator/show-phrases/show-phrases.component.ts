@@ -24,7 +24,9 @@ export class ShowPhrasesComponent implements OnInit {
     this.route.paramMap
       .pipe(switchMap((params: ParamMap) => {
         return this.wordService.getWords(params.get('id'));
-      })).subscribe(words => { this.words = this.convertToGuessed(words); });
+      })).subscribe(words => {
+        this.words = this.convertToGuessed(words);
+      });
   }
 
   private convertToGuessed(words: Word[]): GuessedWord[] {
@@ -64,7 +66,11 @@ export class ShowPhrasesComponent implements OnInit {
   }
 
   interrogateHere(): void {
-    
+
+  }
+
+  addNew(): void {
+    this.router.navigate(['/admin/addUnitContent', this.key]);
   }
 
 }

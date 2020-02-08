@@ -13,6 +13,7 @@ import { AdminModule } from './admin/admin.module';
 
 import { CoreModule } from './core/core.module';
 import { ShowPhrasesComponent } from './interrogator/show-phrases/show-phrases.component';
+import { AddUnitContentComponent } from './admin/add-unit-content/add-unit-content.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { ShowPhrasesComponent } from './interrogator/show-phrases/show-phrases.c
   ],
   declarations: [
     AppComponent,
-    ShowPhrasesComponent
+    ShowPhrasesComponent,
+    AddUnitContentComponent
   ],
   bootstrap: [AppComponent],
   providers: [WordService]

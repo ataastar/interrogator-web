@@ -30,8 +30,9 @@ TODO tasks
    - get the pronunciation from google translate and store in to the words in database
    - get the audio file from google translate and store in to the words in database
    - configure and run tests
-TODO refactor
+TODO missing features
  - focus on created element when adding new phrase to unit content
+ - required when no phrases filled and add button pressed
    
 # Angular-cli
 

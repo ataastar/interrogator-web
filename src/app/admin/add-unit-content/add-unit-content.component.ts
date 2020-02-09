@@ -1,4 +1,4 @@
-import { Component, OnInit, QueryList, ViewChildren, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Word } from 'src/app/models/word';
 import { WordService } from 'src/app/services/word-service';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
@@ -11,15 +11,12 @@ import { Subscription } from 'rxjs';
   templateUrl: './add-unit-content.component.html',
   styleUrls: ['./add-unit-content.component.css']
 })
-export class AddUnitContentComponent implements OnInit, AfterViewInit, OnDestroy {
+export class AddUnitContentComponent implements OnInit {
 
-  // for focus to the last created input
-  @ViewChildren('froms') froms: QueryList<any>;
-  private fromSub:Subscription = new Subscription();
-
+  unitId: String;
   unitWords: Word[];
-  fromPhrases: any[] = [{ value: '' }];
-  toPhrases: any[] = [{ value: '' }];
+  fromPhrases: Phrase[] = [new Phrase('')];
+  toPhrases: Phrase[] = [new Phrase('')];
   example: String;
   translatedExample: String;
 
@@ -30,21 +27,13 @@ export class AddUnitContentComponent implements OnInit, AfterViewInit, OnDestroy
     this.unitWords = this.wordService.getActualWords();
     if (!this.unitWords) {
       this.route.paramMap.pipe(switchMap((params: ParamMap) => {
-        return this.wordService.getWords(params.get('id'));
+        this.unitId = params.get('id');
+        return this.wordService.getWords(this.unitId);
       })).subscribe(words => {
         this.unitWords = words;
       });
     }
   }
-
-  ngAfterViewInit() {
-    console.log(this.froms);
-   }
- 
-   //memory leak avoidance
-   ngOnDestroy(){
-     this.fromSub.unsubscribe();
-   }
 
   public toString(phraseArray: Phrase[]): String {
     let result = "";
@@ -56,16 +45,40 @@ export class AddUnitContentComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   addFrom() {
-    this.fromPhrases.push({ value: '' });
+    this.fromPhrases.push(new Phrase(''));
     
   }
 
   addTo() {
-    this.toPhrases.push({ value: '' });
+    this.toPhrases.push(new Phrase(''));
   }
 
   add(): void {
-    console.log(this.fromPhrases, this.toPhrases, this.example, this.translatedExample);
+    if (!this.isPhrasesFilled(this.fromPhrases) || !this.isPhrasesFilled(this.toPhrases)) {
+      return;
+    }
+    let word = new Word(this.unitId, this.fromPhrases, this.toPhrases, this.example, this.translatedExample);
+    this.fromPhrases = [new Phrase('')];
+    this.toPhrases = [new Phrase('')];
+    this.example = '';
+    this.translatedExample = '';
+    this.unitWords.push(word);
+    console.log(word);
+    this.wordService.addUnitContent(word);
+  }
+
+  private isPhrasesFilled(phrases: Phrase[]): boolean {
+    let result = true;
+    phrases.forEach(phrase => {
+      if (phrase === undefined || phrase == null) {
+        result = false;
+        return;
+      } else if (phrase.phrase == undefined || phrase.phrase == null || phrase.phrase.trim() == '') {
+        result = false;
+        return;
+      }
+    });
+    return result;
   }
 
 }

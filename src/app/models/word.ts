@@ -1,7 +1,7 @@
 import { Phrase } from "./phrase";
 
 export class Word {
-    id: Number;
+    id: String;
     from: Phrase[];
     to: Phrase[];
     imageUrl?: String;
@@ -9,4 +9,12 @@ export class Word {
     audio?: String;
     example?: String;
     translatedExample?: String;
+
+    constructor(id: String, from: Phrase[], to: Phrase[], example?: String, translatedExample?: String) {
+        this.id = id;
+        this.from = from;  
+        this.to = to;
+        this.example = example;
+        this.translatedExample = translatedExample;  
+    }
 }

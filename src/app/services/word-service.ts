@@ -9,7 +9,7 @@ export class WordService {
 
     constructor(private http: Http) { }
 
-    getWords(key: string) {
+    getWords(key: String) {
         return this.http.get('http://localhost:3000/words/' + key)
             .toPromise()
             .then(res => {
@@ -28,5 +28,18 @@ export class WordService {
         return this.http.get('http://localhost:3000/word_groups')
             .toPromise()
             .then(res => res.json()[0].groups);
+    }
+
+    addUnitContent(word: Word) {
+        console.log(word);
+        return this.http.put('http://localhost:3000/word/', word).toPromise()
+            .then(
+                res => {
+                    return;
+                }
+            ).catch(onrejected =>
+                console.error(onrejected)
+            )
+
     }
 }

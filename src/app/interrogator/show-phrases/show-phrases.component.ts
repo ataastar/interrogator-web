@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { GuessedWord } from 'src/app/models/guessed-word';
 import { WordService } from 'src/app/services/word-service';
-import { Word } from 'src/app/models/word';
+import { GuessedWordConverter } from '../guessed-word-converter';
 
 @Component({
   selector: 'app-show-phrases',
@@ -25,40 +25,8 @@ export class ShowPhrasesComponent implements OnInit {
       .pipe(switchMap((params: ParamMap) => {
         return this.wordService.getWords(params.get('id'));
       })).subscribe(words => {
-        this.words = this.convertToGuessed(words);
+        this.words = new GuessedWordConverter().convertToGuessed(words);
       });
-  }
-
-  private convertToGuessed(words: Word[]): GuessedWord[] {
-    if (words == null) { return null; }
-    let actualWords = new Array(words.length);
-    let i = 0;
-    for (let word of words) {
-      actualWords[i] = this.clone(word);
-      i++;
-    }
-    return actualWords;
-  }
-
-  private clone(source: Word): GuessedWord {
-    let cloned = new GuessedWord();
-    // tslint:disable-next-line:forin
-    for (let prop in source) {
-      cloned[prop] = source[prop];
-    }
-    // convert the from and to arrays to string
-    cloned.from = "";
-    for (const phrase of source.from) {
-      cloned.from = cloned.from + ";" + phrase.phrase;
-    }
-    cloned.from = cloned.from.substr(1);
-    cloned.to = new Array(source.to.length);
-    let i = 0;
-    for (const phrase of source.to) {
-      cloned.to[i] = phrase.phrase;
-      i++;
-    }
-    return cloned;
   }
 
   interrogate(): void {

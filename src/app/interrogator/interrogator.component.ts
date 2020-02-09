@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 import { WordService } from '../services/word-service';
-import { Word } from '../models/word';
 import { GuessedWord } from '../models/guessed-word';
 
 import { switchMap } from 'rxjs/operators';
+import { GuessedWordConverter } from './guessed-word-converter';
 
 
 @Component({
@@ -26,7 +26,7 @@ export class InterrogatorComponent {
     }
 
     ngOnInit() {
-        this.actualWords = this.convertToGuessed(this.wordService.getActualWords());
+        this.actualWords = new GuessedWordConverter().convertToGuessed(this.wordService.getActualWords());
         if (this.actualWords) {
             this.next();
         } else {
@@ -34,22 +34,12 @@ export class InterrogatorComponent {
                 .pipe(switchMap((params: ParamMap) => {
                     return this.wordService.getWords(params.get('id'));
                 })).subscribe(words => {
-                    this.actualWords = this.convertToGuessed(words);
+                    this.actualWords = new GuessedWordConverter().convertToGuessed(words);
                     this.next();
                 });
         }
     }
 
-    private convertToGuessed(words: Word[]): GuessedWord[] {
-        if (words == null) { return null; }
-        let actualWords = new Array(words.length);
-        let i = 0;
-        for (let word of words) {
-            actualWords[i] = this.clone(word);
-            i++;
-        }
-        return actualWords;
-    }
 
     check(): void {
         if (this.isEqual(this.word.to, this.to)) {
@@ -127,27 +117,6 @@ export class InterrogatorComponent {
         if (this.word != null && document.getElementById('to') != null) {
             document.getElementById('to').focus();
         }
-    }
-
-    private clone(source: Word): GuessedWord {
-        let cloned = new GuessedWord();
-        // tslint:disable-next-line:forin
-        for (let prop in source) {
-            cloned[prop] = source[prop];
-        }
-        // convert the from and to arrays to string
-        cloned.from = "";
-        for (const phrase of source.from) {
-          cloned.from = cloned.from + ";" + phrase.phrase;
-        }
-        cloned.from = cloned.from.substr(1);
-        cloned.to = new Array(source.to.length);
-        let i = 0;
-        for (const phrase of source.to) {
-            cloned.to[i] = phrase.phrase;
-            i++;
-        }
-        return cloned;
     }
 
     /**

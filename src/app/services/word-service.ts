@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Word } from '../models/word';
+import { TranslationToSave } from '../models/translation-to-save';
 
 @Injectable()
 export class WordService {
@@ -30,9 +31,8 @@ export class WordService {
             .then(res => res.json()[0].groups);
     }
 
-    addUnitContent(word: Word) {
-        console.log(word);
-        return this.http.put('http://localhost:3000/word/', word).toPromise()
+    addUnitContent(translation: TranslationToSave) {
+        return this.http.put('http://localhost:3000/word/', translation).toPromise()
             .then(
                 res => {
                     return;

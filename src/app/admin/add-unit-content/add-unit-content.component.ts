@@ -5,6 +5,7 @@ import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { Phrase } from 'src/app/models/phrase';
 import { Subscription } from 'rxjs';
+import { TranslationToSave } from 'src/app/models/translation-to-save';
 
 @Component({
   selector: 'app-add-unit-content',
@@ -46,7 +47,6 @@ export class AddUnitContentComponent implements OnInit {
 
   addFrom() {
     this.fromPhrases.push(new Phrase(''));
-    
   }
 
   addTo() {
@@ -58,13 +58,24 @@ export class AddUnitContentComponent implements OnInit {
       return;
     }
     let word = new Word(this.unitId, this.fromPhrases, this.toPhrases, this.example, this.translatedExample);
+    this.unitWords.push(word);
+    let translation = new TranslationToSave(this.unitId, this.getPhraseStrings(this.fromPhrases),
+      this.getPhraseStrings(this.toPhrases), this.example, this.translatedExample)
+    this.wordService.addUnitContent(translation);
+
+    // clear the inputs
     this.fromPhrases = [new Phrase('')];
     this.toPhrases = [new Phrase('')];
     this.example = '';
     this.translatedExample = '';
-    this.unitWords.push(word);
-    console.log(word);
-    this.wordService.addUnitContent(word);
+  }
+
+  private getPhraseStrings(phrases: Phrase[]): String[] {
+    let strings: String[] = new Array();
+    phrases.forEach(phrase => {
+      strings.push(phrase.phrase);
+    });
+    return strings;
   }
 
   private isPhrasesFilled(phrases: Phrase[]): boolean {

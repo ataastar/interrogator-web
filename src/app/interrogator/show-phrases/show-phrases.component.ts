@@ -13,6 +13,7 @@ import { GuessedWordConverter } from '../guessed-word-converter';
 export class ShowPhrasesComponent implements OnInit {
 
   words: GuessedWord[] = null;
+  wordsDisplayed: boolean[];
   key: string;
 
   constructor(private wordService: WordService, private route: ActivatedRoute, private router: Router) { }
@@ -26,6 +27,12 @@ export class ShowPhrasesComponent implements OnInit {
         return this.wordService.getWords(params.get('id'));
       })).subscribe(words => {
         this.words = new GuessedWordConverter().convertToGuessed(words);
+        if (this.words != null) {
+          this.wordsDisplayed = new Array(this.words.length);
+          for (let index = 0; index < this.wordsDisplayed.length; index++) {
+            this.wordsDisplayed[index] = true;
+          }
+        }
       });
   }
 
@@ -34,7 +41,13 @@ export class ShowPhrasesComponent implements OnInit {
   }
 
   interrogateHere(): void {
+    for (let index = 0; index < this.wordsDisplayed.length; index++) {
+      this.wordsDisplayed[index] = false;
+    }
+  }
 
+  display(i: number): void {
+    this.wordsDisplayed[i] = true;
   }
 
   addNew(): void {

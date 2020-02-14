@@ -2,12 +2,13 @@
     <input type="button" (click)="interrogateHere()" value="Kikérdez" class="btn btn-secondary">
     <input type="button" (click)="interrogate()" value="Kikérdez írásban" class="btn btn-secondary">
     <input type="button" (click)="addNew()" value="Hozzáad" class="btn btn-secondary">
-    <table align="center">
-        <tr *ngFor="let word of words">
-            <td style="width: 45%;">{{word.from}}</td>
-            <td style="width: 10%;">&nbsp;</td>
-            <td style="width: 45%;">{{word.to}}</td>
-        </tr>
+    <table align="center" class="table table-sm table-striped table-bordered table-hover">
+        <tbody>
+            <tr *ngFor="let word of words; let i=index" (click)="display(i)">
+                <td style="width: 50%;">{{word.from}}</td>
+                <td style="width: 50%;"><span *ngIf="wordsDisplayed[i]">{{word.to}}</span></td>
+            </tr>
+        </tbody>
     </table>
     <input type="button" (click)="interrogateHere()" value="Kikérdez" class="btn btn-secondary">
     <input type="button" (click)="interrogate()" value="Kikérdez írásban" class="btn btn-secondary">

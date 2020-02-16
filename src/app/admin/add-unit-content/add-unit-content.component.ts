@@ -70,6 +70,10 @@ export class AddUnitContentComponent implements OnInit {
     this.translatedExample = '';
   }
 
+  remove(): void {
+    
+  }
+
   private getPhraseStrings(phrases: Phrase[]): String[] {
     let strings: String[] = new Array();
     phrases.forEach(phrase => {

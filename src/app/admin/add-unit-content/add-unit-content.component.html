@@ -1,36 +1,42 @@
-<div *ngFor="let word of unitWords" class="form-group row">
-    <div class="col-4">
-        {{toString( word.from)}}
-    </div>
-    <div class="col-4">
-        {{toString( word.to)}}
-    </div>
-</div>
-<div class="form-group row">
-    <div class="col-4">
-        <div *ngFor="let phrase of fromPhrases; let in=index">
-            <input type="text" [(ngModel)]="fromPhrases[in].phrase" name="from{{in}}" autofocus id="from{{in}}"
-                class="form-control" #name="ngModel" required />
+<form>
+
+    <div *ngFor="let word of unitWords" class="form-group row">
+        <div class="col-4">
+            {{toString( word.from)}}
+        </div>
+        <div class="col-4">
+            {{toString( word.to)}}
         </div>
     </div>
-    <div class="col-4">
-        <div *ngFor="let phrase of toPhrases; let in=index">
-            <input type="text" [(ngModel)]="toPhrases[in].phrase" name="to{{in}}" autofocus id="to{{in}}"
-                class="form-control" #name="ngModel" required />
+    <div class="form-group row">
+        <div class="col-4">
+            <div *ngFor="let phrase of fromPhrases; let in=index">
+                <input type="text" [(ngModel)]="fromPhrases[in].phrase" name="from{{in}}" autofocus id="from{{in}}"
+                    class="form-control" #name="ngModel" required />
+            </div>
+        </div>
+        <div class="col-4">
+            <div *ngFor="let phrase of toPhrases; let in=index">
+                <input type="text" [(ngModel)]="toPhrases[in].phrase" name="to{{in}}" autofocus id="to{{in}}"
+                    class="form-control" #name="ngModel" required />
+            </div>
+        </div>
+        <div>
+            <input type="button" (click)="remove()" name="remove" id="remove" class="btn btn-secondary" value="Töröl" />
         </div>
     </div>
-</div>
-<div class="form-group row">
-    <div class="col-4">
-        <input type="button" (click)="addFrom()" name="addFrom" id="addFrom" class="btn btn-secondary" value="+" />
-        <input type="text" [(ngModel)]="example" name="example" id="example" class="form-control form-control-sm" />
+    <div class="form-group row">
+        <div class="col-4">
+            <input type="button" (click)="addFrom()" name="addFrom" id="addFrom" class="btn btn-secondary" value="+" />
+            <input type="text" [(ngModel)]="example" name="example" id="example" class="form-control form-control-sm" />
+        </div>
+        <div class="col-4">
+            <input type="button" (click)="addTo()" name="addTo" id="addTo" class="btn btn-secondary" value="+" />
+            <input type="text" [(ngModel)]="translatedExample" name="translatedExample" id="translatedExample"
+                class="form-control form-control-sm" />
+        </div>
+        <div class="col-2">
+            <input type="submit" (click)="add()" name="add" id="add" class="btn btn-primary" value="Hozzáad" />
+        </div>
     </div>
-    <div class="col-4">
-        <input type="button" (click)="addTo()" name="addTo" id="addTo" class="btn btn-secondary" value="+" />
-        <input type="text" [(ngModel)]="translatedExample" name="translatedExample" id="translatedExample"
-            class="form-control form-control-sm" />
-    </div>
-    <div class="col-2">
-        <input type="button" (click)="add()" name="add" id="add" class="btn btn-primary" value="Hozzáad" />
-    </div>
-</div>
+</form>

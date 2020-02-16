@@ -14,7 +14,7 @@ import { TranslationToSave } from 'src/app/models/translation-to-save';
 })
 export class AddUnitContentComponent implements OnInit {
 
-  unitId: String;
+  unitId: string;
   unitWords: Word[];
   fromPhrases: Phrase[] = [new Phrase('')];
   toPhrases: Phrase[] = [new Phrase('')];
@@ -70,8 +70,12 @@ export class AddUnitContentComponent implements OnInit {
     this.translatedExample = '';
   }
 
-  remove(): void {
-    
+  remove(wordToRemove: Word): void {
+    this.wordService.removeUnitContent(parseInt(wordToRemove.id));
+    const index = this.unitWords.indexOf(wordToRemove, 0);
+    if (index > -1) {
+      this.unitWords.splice(index, 1);
+    }
   }
 
   private getPhraseStrings(phrases: Phrase[]): String[] {

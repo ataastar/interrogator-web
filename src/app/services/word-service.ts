@@ -31,15 +31,24 @@ export class WordService {
             .then(res => res.json()[0].groups);
     }
 
-    addUnitContent(translation: TranslationToSave) {
-        return this.http.put('http://localhost:3000/word/', translation).toPromise()
-            .then(
-                res => {
-                    return;
-                }
-            ).catch(onrejected =>
-                console.error(onrejected)
-            )
+    async addUnitContent(translation: TranslationToSave) {
+        try {
+            const res = await this.http.put('http://localhost:3000/word/', translation).toPromise();
+            return;
+        }
+        catch (onrejected) {
+            return console.error(onrejected);
+        }
+    }
 
+    async removeUnitContent(unitContentId: number) {
+        try {
+            let body = { unitContentId: (unitContentId + 100) };
+            const res = await this.http.put('http://localhost:3000/word/remove', body).toPromise();
+            return;
+        }
+        catch (onrejected) {
+            return console.error(onrejected);
+        }
     }
 }

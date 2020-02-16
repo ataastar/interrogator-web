@@ -33,22 +33,22 @@ export class WordService {
 
     async addUnitContent(translation: TranslationToSave) {
         try {
-            const res = await this.http.put('http://localhost:3000/word/', translation).toPromise();
-            return;
+            return await this.http.put('http://localhost:3000/word/', translation).toPromise();
         }
         catch (onrejected) {
-            return console.error(onrejected);
+            console.error(onrejected);
+            return null;
         }
     }
 
     async removeUnitContent(unitContentId: number) {
         try {
-            let body = { unitContentId: (unitContentId + 100) };
-            const res = await this.http.put('http://localhost:3000/word/remove', body).toPromise();
-            return;
+            let body = { unitContentId: (unitContentId) };
+            return await this.http.put('http://localhost:3000/word/remove', body).toPromise();
         }
         catch (onrejected) {
-            return console.error(onrejected);
+            console.error(onrejected);
+            return null;
         }
     }
 }

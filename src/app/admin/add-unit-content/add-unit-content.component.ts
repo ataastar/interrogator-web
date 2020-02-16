@@ -57,25 +57,33 @@ export class AddUnitContentComponent implements OnInit {
     if (!this.isPhrasesFilled(this.fromPhrases) || !this.isPhrasesFilled(this.toPhrases)) {
       return;
     }
-    let word = new Word(this.unitId, this.fromPhrases, this.toPhrases, this.example, this.translatedExample);
-    this.unitWords.push(word);
+
     let translation = new TranslationToSave(this.unitId, this.getPhraseStrings(this.fromPhrases),
       this.getPhraseStrings(this.toPhrases), this.example, this.translatedExample)
-    this.wordService.addUnitContent(translation);
 
-    // clear the inputs
-    this.fromPhrases = [new Phrase('')];
-    this.toPhrases = [new Phrase('')];
-    this.example = '';
-    this.translatedExample = '';
+    this.wordService.addUnitContent(translation).then(res => {
+      if (res) {
+        let word = new Word(this.unitId, this.fromPhrases, this.toPhrases, this.example, this.translatedExample);
+        this.unitWords.push(word);
+        // clear the inputs
+        this.fromPhrases = [new Phrase('')];
+        this.toPhrases = [new Phrase('')];
+        this.example = '';
+        this.translatedExample = '';
+      }
+    });
   }
 
   remove(wordToRemove: Word): void {
-    this.wordService.removeUnitContent(parseInt(wordToRemove.id));
-    const index = this.unitWords.indexOf(wordToRemove, 0);
-    if (index > -1) {
-      this.unitWords.splice(index, 1);
-    }
+    this.wordService.removeUnitContent(parseInt(wordToRemove.id)).then(res => {
+      if (res) {
+        const index = this.unitWords.indexOf(wordToRemove, 0);
+        if (index > -1) {
+          this.unitWords.splice(index, 1);
+        }
+      }
+    });
+    return;
   }
 
   private getPhraseStrings(phrases: Phrase[]): String[] {

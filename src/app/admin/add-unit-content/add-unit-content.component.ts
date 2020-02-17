@@ -31,7 +31,11 @@ export class AddUnitContentComponent implements OnInit {
         this.unitId = params.get('id');
         return this.wordService.getWords(this.unitId);
       })).subscribe(words => {
-        this.unitWords = words;
+        if (words != null) {
+          this.unitWords = words;
+        } else {
+          this.unitWords = new Array(0);
+        }
       });
     }
   }

@@ -65,9 +65,9 @@ export class AddUnitContentComponent implements OnInit {
     let translation = new TranslationToSave(this.unitId, this.getPhraseStrings(this.fromPhrases),
       this.getPhraseStrings(this.toPhrases), this.example, this.translatedExample)
 
-    this.wordService.addUnitContent(translation).then(res => {
-      if (res) {
-        let word = new Word(this.unitId, this.fromPhrases, this.toPhrases, this.example, this.translatedExample);
+    this.wordService.addUnitContent(translation).then(unitContentId => {
+      if (unitContentId) {
+        let word = new Word(unitContentId, this.fromPhrases, this.toPhrases, this.example, this.translatedExample);
         this.unitWords.push(word);
         // clear the inputs
         this.fromPhrases = [new Phrase('')];

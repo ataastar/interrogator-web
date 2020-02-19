@@ -10,30 +10,40 @@ export class WordService {
 
     constructor(private http: Http) { }
 
-    getWords(key: String) {
-        return this.http.get('http://localhost:3000/words/' + key)
-            .toPromise()
-            .then(res => {
-                var json = res != null ? res.json() : null;
-                var unit = json != null ? (json[0].content != null ? json[0].content : json[0]) : null;
-                this.actualPhrases = unit != null ? unit.words : null;
-                return this.actualPhrases;
-            });
+    async getWords(key: String) {
+        try {
+            const res = await this.http.get('http://localhost:3000/words/' + key)
+                .toPromise();
+            var json = res != null ? res.json() : null;
+            var unit = json != null ? (json[0].content != null ? json[0].content : json[0]) : null;
+            this.actualPhrases = unit != null ? unit.words : null;
+            return this.actualPhrases;
+        }
+        catch (onrejected) {
+            console.error(onrejected);
+            return null;
+        }
     }
 
     getActualWords(): Word[] {
         return this.actualPhrases;
     }
 
-    getGroups() {
-        return this.http.get('http://localhost:3000/word_groups')
-            .toPromise()
-            .then(res => res.json()[0].groups);
+    async getGroups() {
+        try {
+            const res = await this.http.get('http://localhost:3000/word_groups').toPromise();
+            return res.json()[0].groups;
+        }
+        catch (onrejected) {
+            console.error(onrejected);
+            return null;
+        }
     }
 
     async addUnitContent(translation: TranslationToSave) {
         try {
-            return await this.http.put('http://localhost:3000/word/', translation).toPromise();
+            const res = await this.http.put('http://localhost:3000/word/', translation).toPromise();
+            return res.json().unitContentId;
         }
         catch (onrejected) {
             console.error(onrejected);

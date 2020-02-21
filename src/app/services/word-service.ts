@@ -5,7 +5,8 @@ import { TranslationToSave } from '../models/translation-to-save';
 
 @Injectable()
 export class WordService {
-
+    
+    // cache for later use
     actualPhrases: Word[];
 
     constructor(private http: Http) { }

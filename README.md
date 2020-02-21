@@ -20,6 +20,7 @@ BUILD:
 IN PROGRESS
  - admin page to configure words in DB
 TODO tasks
+ - use environment variables for api host, port
  - show progress when adding unit content
  - load images and audios
  - refactor the equal. these should be equals: I'm-I am; You are-You're, They are-They're;It's-It is; What's-What is;Isn't-Is not; Aren't-Are not, Don't Do not; Doesn't-Does not

@@ -6,6 +6,7 @@ import { GuessedWord } from '../models/guessed-word';
 
 import { switchMap } from 'rxjs/operators';
 import { GuessedWordConverter } from './guessed-word-converter';
+import { Word } from '../models/word';
 
 
 @Component({
@@ -32,14 +33,20 @@ export class InterrogatorComponent {
         } else {
             this.route.paramMap
                 .pipe(switchMap((params: ParamMap) => {
-                    return this.wordService.getWords(params.get('id'));
+                    let unitId = params.get('id');
+                    if (unitId) {
+                        return this.wordService.getWords(params.get('id'));
+                    } else {
+                        return new Promise<Word[]>((resolve) => { resolve(); });
+                    }
                 })).subscribe(words => {
-                    this.actualWords = new GuessedWordConverter().convertToGuessed(words);
-                    this.next();
+                    if (words) {
+                        this.actualWords = new GuessedWordConverter().convertToGuessed(words);
+                        this.next();
+                    }
                 });
         }
     }
-
 
     check(): void {
         if (this.isEqual(this.word.to, this.to)) {

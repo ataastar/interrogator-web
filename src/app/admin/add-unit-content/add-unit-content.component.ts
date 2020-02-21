@@ -37,6 +37,10 @@ export class AddUnitContentComponent implements OnInit {
           this.unitWords = new Array(0);
         }
       });
+    } else {
+      this.route.paramMap.pipe(switchMap((params: ParamMap) => {
+        return this.unitId = params.get('id');
+      }));
     }
   }
 

@@ -1,39 +1,40 @@
 Vocabulary expansion, word learning helper
- - random word generation from json file
- - images for words
+ - interrogate unit words
+ - interrogate unit words randomly
+ - can manage unit words
  - plain equal check
 
 Technology
  - Angular 8
- - webpack
  - Typescript
  
 RUN the sample.
  -  npm install
- -  npm run start:webpack
- -  Open a browser window and navigate to http:\\\\localhost:8080 to access the app.
+ -  npm start
+ -  Open a browser window and navigate to http:\\\\localhost:4200 to access the app.
 
 BUILD:
  - npm install
- - npm run build:webpack 
+ - npm build
  
 IN PROGRESS
  - admin page to configure words in DB
 TODO tasks
+ - Google oauth
  - use environment variables for api host, port
  - show progress when adding unit content
  - load images and audios
  - refactor the equal. these should be equals: I'm-I am; You are-You're, They are-They're;It's-It is; What's-What is;Isn't-Is not; Aren't-Are not, Don't Do not; Doesn't-Does not
- - authenticatio-authorization
+ - authentication-authorization
  - need to redesign
+ - configure and run tests
  - server side 
-   - CORS?!
    - get the pronunciation from google translate and store in to the words in database
    - get the audio file from google translate and store in to the words in database
-   - configure and run tests
 TODO missing features
  - focus on created element when adding new phrase to unit content
  - required when no phrases filled and add button pressed
+ - edit: phrases, example sentences
    
 # Angular-cli
 

@@ -19,9 +19,9 @@ BUILD:
  
 IN PROGRESS
  - admin page to configure words in DB
+ - google oauth
  
 TODO tasks
- - Google oauth
  - use environment variables for api host, port
  - show progress when adding unit content
  - load images and audios

@@ -19,6 +19,7 @@ BUILD:
  
 IN PROGRESS
  - admin page to configure words in DB
+ 
 TODO tasks
  - Google oauth
  - use environment variables for api host, port
@@ -31,6 +32,7 @@ TODO tasks
  - server side 
    - get the pronunciation from google translate and store in to the words in database
    - get the audio file from google translate and store in to the words in database
+
 TODO missing features
  - focus on created element when adding new phrase to unit content
  - required when no phrases filled and add button pressed

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Word } from '../models/word';
 import { TranslationToSave } from '../models/translation-to-save';
+import { environment as env } from 'src/environments/environment';
 
 @Injectable()
 export class WordService {
@@ -13,7 +14,7 @@ export class WordService {
 
     async getWords(key: String) {
         try {
-            const res = await this.http.get('http://localhost:3000/words/' + key)
+            const res = await this.http.get(env.apiUrl + '/words/' + key)
                 .toPromise();
             var json = res != null ? res.json() : null;
             var unit = json != null ? (json[0].content != null ? json[0].content : json[0]) : null;
@@ -32,7 +33,7 @@ export class WordService {
 
     async getGroups() {
         try {
-            const res = await this.http.get('http://localhost:3000/word_groups').toPromise();
+            const res = await this.http.get(env.apiUrl + '/word_groups').toPromise();
             return res.json()[0].groups;
         }
         catch (onrejected) {
@@ -43,7 +44,7 @@ export class WordService {
 
     async addUnitContent(translation: TranslationToSave) {
         try {
-            const res = await this.http.put('http://localhost:3000/word/', translation).toPromise();
+            const res = await this.http.put(env.apiUrl + '/word/', translation).toPromise();
             return res.json().unitContentId;
         }
         catch (onrejected) {
@@ -55,7 +56,7 @@ export class WordService {
     async removeUnitContent(unitContentId: number) {
         try {
             let body = { unitContentId: (unitContentId) };
-            return await this.http.put('http://localhost:3000/word/remove', body).toPromise();
+            return await this.http.put(env.apiUrl + '/word/remove', body).toPromise();
         }
         catch (onrejected) {
             console.error(onrejected);

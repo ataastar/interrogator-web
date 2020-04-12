@@ -2,10 +2,12 @@
 
     <div *ngFor="let word of unitWords" class="form-group row">
         <div class="col-4">
-            {{toString( word.from)}}
+            {{toString( word.from )}}
+            <label style="font-size: smaller; font-style: italic;" *ngIf="word.example">/{{word.example}}/</label>
         </div>
         <div class="col-4">
-            {{toString( word.to)}}
+            {{toString( word.to )}}
+            <label style="font-size: smaller; font-style: italic;" *ngIf="word.translatedExample">/{{word.translatedExample}}/</label>
         </div>
         <div class="col-2">
             <input type="button" (click)="remove(word)" name="remove" id="remove" class="btn btn-secondary"

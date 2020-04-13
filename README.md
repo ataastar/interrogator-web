@@ -1,28 +1,38 @@
-Vocabulary expansion, word learning helper
- - interrogate unit words
- - interrogate unit words randomly
+# vocabulary expansion, word learning helper
+
+ - interrogate unit words (we can indicate whether we know or not)
+ - interrogate unit words randomly (need to write down the words)
  - can manage unit words
  - plain equal check
 
-Technology
+# technology
+
  - Angular 8
  - Typescript
  
-RUN the sample.
+# run
+
  -  npm install
  -  npm start
  -  Open a browser window and navigate to http:\\\\localhost:4200 to access the app.
 
-BUILD:
+# build
+
  - npm install
  - npm build
  
-IN PROGRESS
+# Production build
+
+ - npm run-script build:prod
+
+# tasks
+
+## in progress
+
  - admin page to configure words in DB
  - google oauth
  
-TODO tasks
- - use environment variables for api host, port
+## TODO tasks
  - show progress when adding unit content
  - load images and audios
  - refactor the equal. these should be equals: I'm-I am; You are-You're, They are-They're;It's-It is; What's-What is;Isn't-Is not; Aren't-Are not, Don't Do not; Doesn't-Does not
@@ -33,11 +43,12 @@ TODO tasks
    - get the pronunciation from google translate and store in to the words in database
    - get the audio file from google translate and store in to the words in database
 
-TODO missing features
+## TODO missing features
+
  - focus on created element when adding new phrase to unit content
  - required when no phrases filled and add button pressed
  - edit: phrases, example sentences
-   
+
 # Angular-cli
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.23.

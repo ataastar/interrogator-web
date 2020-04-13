@@ -4,13 +4,13 @@
 
             <div style="display: flex">
                 <div>{{word.from}}</div>
-                <div *ngIf="word.example" style="margin-left: 5px">[Példa mondat:
-                    {{word.example}}]</div>
+                <div *ngIf="word.example" style="margin-left: 10px; font-size: smaller; font-style: italic;">
+                    /{{word.example}}/</div>
             </div>
             <div class="form-group row">
                 <div class="col-9">
-                    <input type="text" [(ngModel)]="to" name="to" autofocus [readonly]="checked"
-                        autocomplete="off" id="to" class="form-control form-control-sm" />
+                    <input type="text" [(ngModel)]="to" name="to" autofocus [readonly]="checked" autocomplete="off"
+                        id="to" class="form-control form-control-sm" />
                 </div>
                 <div class="col-3">
                     <input type="submit" (click)="check()" value="Ellenőrzés" *ngIf="!checked" class="btn btn-primary">

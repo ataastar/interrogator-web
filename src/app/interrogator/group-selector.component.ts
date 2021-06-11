@@ -11,6 +11,7 @@ import { WordService } from '../services/word-service';
 export class GroupSelectorComponent {
 
     public groups: any;
+    public selectedName: string;
 
     constructor(private wordService: WordService, private route: ActivatedRoute, private router: Router) {
     }
@@ -19,8 +20,9 @@ export class GroupSelectorComponent {
         this.wordService.getGroups().then(groups => this.groups = groups);
     }
 
-    interrogate(key: String): void {
-        this.router.navigate(['/interrogator/show', key]);
+    interrogate(group: any, subGroup: any): void {
+        this.selectedName = group.name + ' - ' + subGroup.name;
+        this.router.navigate(['/interrogator/show', subGroup.code]);
     }
 
 }

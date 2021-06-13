@@ -1,0 +1,11 @@
+---
+application:
+  name: "learn-english-vocabulary"
+  project: "interrogator-web"
+  organization: "QoveryCommunity"
+routers:
+- name: "main-learn-english-vocabulary"
+  routes:
+  - application_name: "learn-english-vocabulary"
+    paths:
+    - "/*"

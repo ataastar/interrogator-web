@@ -3,15 +3,15 @@
 
 FROM node:13-alpine as build-step
 
-RUN mkdir -p /app
+RUN mkdir -p /usr/src/app
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
-COPY package.json /app
+COPY package.json /usr/src/app
 
 RUN npm install
 
-COPY . /app
+COPY . /usr/src/app
 
 RUN npm run build --qovery
 
@@ -19,4 +19,4 @@ RUN npm run build --qovery
 
 FROM nginx:1.17.1-alpine
 
-COPY --from=build-step /app/docs /usr/share/nginx/html
+COPY --from=build-step /usr/src/dist/interrogator-web /usr/share/nginx/html

@@ -19,4 +19,4 @@ RUN npm run build --qovery
 
 FROM nginx:1.17.1-alpine
 
-COPY --from=build-step /usr/src/dist/interrogator-web /usr/share/nginx/html
+COPY --from=build-step /usr/src/dist /usr/share/nginx/html

@@ -2,7 +2,7 @@ FROM node:13 as build
 
 WORKDIR /app
 
-COPY . ./
+COPY package.json /app
 
 RUN npm i --only=prod
 

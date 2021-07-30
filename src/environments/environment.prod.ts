@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://main-interro-tl8ch045ag2h1cfx-gtw.qovery.io'
+  apiUrl: 'https://z7e9e2525-z078c4069-gtw.qovery.io'
 };

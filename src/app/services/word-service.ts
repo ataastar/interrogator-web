@@ -63,4 +63,36 @@ export class WordService {
             return null;
         }
     }
+
+    async activateWordTypeLink(linkId: number) {
+        try {
+            return await this.http.post(env.apiUrl + '/word_type/activate/' + linkId, {}).toPromise();
+        }
+        catch (onrejected) {
+            console.error(onrejected);
+            return null;
+        }
+    }
+
+    async deactivateWordTypeLink(linkId: number) {
+        try {
+            return await this.http.post(env.apiUrl + '/word_type/deactivate/' + linkId, {}).toPromise();
+        }
+        catch (onrejected) {
+            console.error(onrejected);
+            return null;
+        }
+    }
+
+    async getWordTypeContent(wordTypeId: number, fromLanguageId: number, toLanguageId: number) {
+        try {
+            let body = { wordTypeId: wordTypeId, fromLanguageId: fromLanguageId, toLanguageId: toLanguageId };
+            const res = await this.http.post(env.apiUrl + '/word_type', body).toPromise();
+            return res.json()[0];
+        }
+        catch (onrejected) {
+            console.error(onrejected);
+            return null;
+        }
+    }
 }

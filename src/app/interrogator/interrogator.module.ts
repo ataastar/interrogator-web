@@ -7,6 +7,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { InterrogatorComponent } from './interrogator.component';
 import { GroupSelectorComponent } from './group-selector.component';
+import { WordTypesComponent } from './word-type/display/word-types.component';
 
 @NgModule({
   imports: [
@@ -17,10 +18,12 @@ import { GroupSelectorComponent } from './group-selector.component';
   ],
   declarations: [
     InterrogatorComponent,
+    WordTypesComponent,
     GroupSelectorComponent
   ],
   exports: [
     InterrogatorComponent,
+    WordTypesComponent,
     GroupSelectorComponent,
     NgbModule
   ],

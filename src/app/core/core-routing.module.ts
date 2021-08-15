@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { AuthGuardService } from '../auth-services/auth-guard.service';
 import { LoginComponent } from './login/login.component';
 import { InterrogatorComponent } from '../interrogator/interrogator.component';
 import { ShowPhrasesComponent } from '../interrogator/show-phrases/show-phrases.component';
 import { AddUnitContentComponent } from '../admin/add-unit-content/add-unit-content.component';
+import { WordTypesComponent } from '../interrogator/word-type/display/word-types.component';
 
 const routes: Routes = [
   {
@@ -25,7 +25,8 @@ const routes: Routes = [
   {
     path: 'admin/addUnitContent/:id',
     component: AddUnitContentComponent
-  },  {
+  },
+  {
     path: 'interrogator/show/:id',
     component: ShowPhrasesComponent
   },
@@ -36,6 +37,10 @@ const routes: Routes = [
   {
     path: 'interrogator',
     component: InterrogatorComponent
+  },
+  {
+    path: 'wordType',
+    component: WordTypesComponent
   },
   {
     path: '**',

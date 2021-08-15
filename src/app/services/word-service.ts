@@ -3,6 +3,8 @@ import { Http } from '@angular/http';
 import { Word } from '../models/word';
 import { TranslationToSave } from '../models/translation-to-save';
 import { environment as env } from 'src/environments/environment';
+import { ToWordTypeContentMapper } from '../mapper/to-word-type-content-mapper';
+import { WordTypeContent } from '../models/word-type/word-type-content';
 
 @Injectable()
 export class WordService {
@@ -84,11 +86,23 @@ export class WordService {
         }
     }
 
-    async getWordTypeContent(wordTypeId: number, fromLanguageId: number, toLanguageId: number) {
+    async getWordTypeContent(wordTypeId: number, fromLanguageId: number, toLanguageId: number): Promise<WordTypeContent> {
         try {
             let body = { wordTypeId: wordTypeId, fromLanguageId: fromLanguageId, toLanguageId: toLanguageId };
             const res = await this.http.post(env.apiUrl + '/word_type', body).toPromise();
-            return res.json()[0];
+            return ToWordTypeContentMapper.map(res.json()[0].content);
+        }
+        catch (onrejected) {
+            console.error(onrejected);
+            return null;
+        }
+    }
+
+    async getAllWordTypeContent(wordTypeId: number, fromLanguageId: number, toLanguageId: number): Promise<WordTypeContent> {
+        try {
+            let body = { wordTypeId: wordTypeId, fromLanguageId: fromLanguageId, toLanguageId: toLanguageId };
+            const res = await this.http.post(env.apiUrl + '/word_type/all', body).toPromise();
+            return ToWordTypeContentMapper.map(res.json()[0]);
         }
         catch (onrejected) {
             console.error(onrejected);

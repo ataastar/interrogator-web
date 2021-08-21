@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 import { WordTypeLink } from 'src/app/models/word-type/word-type-link';
 import { WordService } from 'src/app/services/word-service';
+import {WordTypeContent} from '../../models/word-type/word-type-content';
 
 @Component({
   selector: 'display-word-type-unit-content',
@@ -17,11 +19,21 @@ export class DisplayWordTypeUnitContentComponent implements OnInit {
   constructor(private wordService: WordService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-    this.wordService.getWordTypeUnitContent(1, 2).then(result => {
-      this.forms = result.forms
-      this.wordTypeLinks = result.links
-      this.displayAll()
-    })
+    this.route.paramMap
+    .pipe(switchMap((params: ParamMap) => {
+        const unitId = params.get('id');
+        if (unitId) {
+          return this.wordService.getWordTypeUnitContent(Number(unitId), 2);
+        } else {
+            return new Promise<WordTypeContent>((resolve) => { resolve(); });
+        }
+    })).subscribe(result => {
+      if (result) {
+        this.forms = result.forms
+        this.wordTypeLinks = result.links
+        this.displayAll()
+      }
+    });
   }
 
   home(): void {

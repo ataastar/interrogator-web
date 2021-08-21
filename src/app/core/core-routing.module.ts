@@ -44,7 +44,7 @@ const routes: Routes = [
     component: WordTypesComponent
   },
   {
-    path: 'wordTypeUnit',
+    path: 'wordTypeUnit/:id',
     component: DisplayWordTypeUnitContentComponent
   },
   {

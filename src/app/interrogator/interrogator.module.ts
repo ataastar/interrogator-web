@@ -9,6 +9,7 @@ import { InterrogatorComponent } from './interrogator.component';
 import { GroupSelectorComponent } from './group-selector.component';
 import { WordTypesComponent } from './word-type/display/word-types.component';
 import { DisplayWordTypeUnitContentComponent } from './word-type/display-word-type-unit-content.component';
+import { WordTypeUnitSelectorComponent } from './word-type/word-type-unit-selector.component';
 
 @NgModule({
   imports: [
@@ -21,12 +22,14 @@ import { DisplayWordTypeUnitContentComponent } from './word-type/display-word-ty
     InterrogatorComponent,
     WordTypesComponent,
     DisplayWordTypeUnitContentComponent,
+    WordTypeUnitSelectorComponent,
     GroupSelectorComponent
   ],
   exports: [
     InterrogatorComponent,
     WordTypesComponent,
     DisplayWordTypeUnitContentComponent,
+    WordTypeUnitSelectorComponent,
     GroupSelectorComponent,
     NgbModule
   ],

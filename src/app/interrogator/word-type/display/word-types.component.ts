@@ -80,12 +80,8 @@ export class WordTypesComponent implements OnInit {
     }
 }
 
-  activate(id: number): void {
-    // TODO
-  }
-
-  deactivate(id: number): void {
-    // TODO
+  randomizeLinks() {
+    const randomLinks: WordTypeLink[] = []
   }
 
 }

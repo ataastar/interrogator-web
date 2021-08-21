@@ -6,6 +6,7 @@ import { InterrogatorComponent } from '../interrogator/interrogator.component';
 import { ShowPhrasesComponent } from '../interrogator/show-phrases/show-phrases.component';
 import { AddUnitContentComponent } from '../admin/add-unit-content/add-unit-content.component';
 import { WordTypesComponent } from '../interrogator/word-type/display/word-types.component';
+import { DisplayWordTypeUnitContentComponent } from '../interrogator/word-type/display-word-type-unit-content.component';
 
 const routes: Routes = [
   {
@@ -41,6 +42,10 @@ const routes: Routes = [
   {
     path: 'wordType',
     component: WordTypesComponent
+  },
+  {
+    path: 'wordTypeUnit',
+    component: DisplayWordTypeUnitContentComponent
   },
   {
     path: '**',

@@ -3,10 +3,14 @@ import { Http } from '@angular/http';
 import { Word } from '../models/word';
 import { TranslationToSave } from '../models/translation-to-save';
 import { environment as env } from 'src/environments/environment';
+import { ToWordTypeContentMapper } from '../mapper/to-word-type-content-mapper';
+import { WordTypeContent } from '../models/word-type/word-type-content';
+import { WordTypeLink } from '../models/word-type/word-type-link';
+import { WordTypeUnit } from '../models/word-type/word-type-unit';
 
 @Injectable()
 export class WordService {
-    
+
     // cache for later use
     actualPhrases: Word[];
 
@@ -63,4 +67,83 @@ export class WordService {
             return null;
         }
     }
+
+    async activateWordTypeLink(linkId: number) {
+        try {
+            return await this.http.post(env.apiUrl + '/word_type/activate/' + linkId, {}).toPromise();
+        }
+        catch (onrejected) {
+            console.error(onrejected);
+            return null;
+        }
+    }
+
+    async deactivateWordTypeLink(linkId: number) {
+        try {
+            return await this.http.post(env.apiUrl + '/word_type/deactivate/' + linkId, {}).toPromise();
+        }
+        catch (onrejected) {
+            console.error(onrejected);
+            return null;
+        }
+    }
+
+    async getWordTypeContent(wordTypeId: number, fromLanguageId: number, toLanguageId: number): Promise<WordTypeContent> {
+        try {
+            let body = { wordTypeId: wordTypeId, fromLanguageId: fromLanguageId, toLanguageId: toLanguageId };
+            const res = await this.http.post(env.apiUrl + '/word_type', body).toPromise();
+            return ToWordTypeContentMapper.map(res.json()[0].content);
+        }
+        catch (onrejected) {
+            console.error(onrejected);
+            return null;
+        }
+    }
+
+    async getWordTypeUnitContent(wordTypeUnitId: number, fromLanguageId: number): Promise<WordTypeContent> {
+        try {
+            const res = await this.http.get(env.apiUrl + '/word_type_unit/' + wordTypeUnitId + '/' + fromLanguageId).toPromise();
+            return ToWordTypeContentMapper.map(res.json()[0].content);
+        }
+        catch (onrejected) {
+            console.error(onrejected);
+            return null;
+        }
+    }
+    async getWordTypeUnits() {
+        try {
+            const res = await this.http.get(env.apiUrl + '/word_type_unit').toPromise();
+            return res.json()[0].groups;
+        }
+        catch (onrejected) {
+            console.error(onrejected);
+            return null;
+        }
+    }
+
+
+    async addWordTypeUnitLink(link: WordTypeLink, unit: WordTypeUnit) {
+        try {
+            const request = {wordTypeUnitLinkId: unit.id, wordTypeLinkId: link.id}
+            const res = await this.http.put(env.apiUrl + '/word_type_unit_link/add/', request).toPromise();
+            return 0;
+        }
+        catch (onrejected) {
+            console.error(onrejected);
+            return null;
+        }
+    }
+
+    async deleteWordTypeUnitLink(link: WordTypeLink, unit: WordTypeUnit) {
+        try {
+            const request = {wordTypeUnitLinkId: unit.id, wordTypeLinkId: link.id}
+            const res = await this.http.put(env.apiUrl + '/word_type_unit_link/delete/', request).toPromise();
+            return 0;
+        }
+        catch (onrejected) {
+            console.error(onrejected);
+            return null;
+        }
+    }
+
 }

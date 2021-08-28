@@ -13,7 +13,7 @@ export class GroupSelectorComponent {
     public groups: any;
     public selectedName: string;
 
-    constructor(private wordService: WordService, private route: ActivatedRoute, private router: Router) {
+    constructor(private wordService: WordService, private router: Router) {
     }
 
     ngOnInit(): void {

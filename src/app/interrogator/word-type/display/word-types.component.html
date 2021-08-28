@@ -1,0 +1,25 @@
+<div style="align-content: center; width: 100%;">
+    <table align="center" class="table table-sm table-striped table-bordered table-hover">
+        <tbody>
+            <tr>
+                <th></th>
+                <th *ngFor="let form of forms; let i=index">
+                    <span>{{form}}</span>
+                </th>
+                <th>In unit</th>
+            </tr>
+            <tr *ngFor="let link of displayedWordTypeLinks; let i=index">
+                <td>{{link.fromPhrases}}</td>
+                <td *ngFor="let form of forms">
+                    <span>{{showTo(link, form)}}</span>
+                </td>
+                <td>
+                    <div *ngFor="let unit of displayedWordTypeUnits" style="float: left;">
+                        <input type="button" value="{{unit.name}}" (click)="toggleUnit(link, unit)" class="btn"
+                            [ngClass]="isInUnit(link, unit) ? 'btn-dark' : 'btn-light'">
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

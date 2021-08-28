@@ -31,6 +31,7 @@ export class DisplayWordTypeUnitContentComponent implements OnInit {
         if (result) {
           this.forms = result.forms
           this.wordTypeLinks = result.links
+          this.sort()
           this.displayAll()
         }
       });
@@ -61,7 +62,6 @@ export class DisplayWordTypeUnitContentComponent implements OnInit {
   displayAll(): void {
     if (this.wordTypeLinks != null) {
       this.setAllVisible(true)
-      this.sort()
     }
   }
 

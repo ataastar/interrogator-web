@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { WordTypeLink } from 'src/app/models/word-type/word-type-link';
 import { WordService } from 'src/app/services/word-service';
-import {WordTypeContent} from '../../models/word-type/word-type-content';
+import { WordTypeContent } from '../../models/word-type/word-type-content';
 
 @Component({
   selector: 'display-word-type-unit-content',
@@ -20,20 +20,20 @@ export class DisplayWordTypeUnitContentComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap
-    .pipe(switchMap((params: ParamMap) => {
+      .pipe(switchMap((params: ParamMap) => {
         const unitId = params.get('id');
         if (unitId) {
           return this.wordService.getWordTypeUnitContent(Number(unitId), 2);
         } else {
-            return new Promise<WordTypeContent>((resolve) => { resolve(); });
+          return new Promise<WordTypeContent>((resolve) => { resolve(); });
         }
-    })).subscribe(result => {
-      if (result) {
-        this.forms = result.forms
-        this.wordTypeLinks = result.links
-        this.displayAll()
-      }
-    });
+      })).subscribe(result => {
+        if (result) {
+          this.forms = result.forms
+          this.wordTypeLinks = result.links
+          this.displayAll()
+        }
+      });
   }
 
   home(): void {
@@ -41,7 +41,7 @@ export class DisplayWordTypeUnitContentComponent implements OnInit {
   }
 
   interrogateHere(): void {
-    // TODO order
+    this.randomizeLinks()
     this.setAllVisible(false)
   }
 
@@ -61,6 +61,7 @@ export class DisplayWordTypeUnitContentComponent implements OnInit {
   displayAll(): void {
     if (this.wordTypeLinks != null) {
       this.setAllVisible(true)
+      this.sort()
     }
   }
 
@@ -69,10 +70,20 @@ export class DisplayWordTypeUnitContentComponent implements OnInit {
     for (let index = 0; index < this.wordsDisplayed.length; index++) {
       this.wordsDisplayed[index] = visible;
     }
-}
+  }
 
   randomizeLinks() {
     const randomLinks: WordTypeLink[] = []
+    while (this.wordTypeLinks.length > 0) {
+      const random = Math.floor(Math.random() * this.wordTypeLinks.length);
+      randomLinks.push(this.wordTypeLinks.splice(random, 1)[0])
+    }
+    this.wordTypeLinks = randomLinks
+  }
+
+
+  sort() {
+    this.wordTypeLinks.sort((a, b) => (a.toPhrases.filter(p => p.form == 'Verb')[0].phrases[0] > b.toPhrases.filter(p => p.form == 'Verb')[0].phrases[0]) ? 1 : -1)
   }
 
 }

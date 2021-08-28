@@ -15,7 +15,6 @@ export class WordTypesComponent implements OnInit {
   wordTypeContent: WordTypeContent = null
   displayedWordTypeLinks: WordTypeLink[] = null;
   displayedWordTypeUnits: WordTypeUnit[] = null;
-  wordsDisplayed: boolean[];
   forms: string[]
 
   constructor(private wordService: WordService, private route: ActivatedRoute, private router: Router) { }
@@ -24,22 +23,14 @@ export class WordTypesComponent implements OnInit {
     this.wordService.getWordTypeContent(1, 2, 1).then(result => {
       this.wordTypeContent = result
       this.forms = this.wordTypeContent.forms
-      this.displayAll()
+      this.displayedWordTypeLinks = this.wordTypeContent.links
+      this.displayedWordTypeUnits = this.wordTypeContent.wordTypeUnits
+      this.sort()
     })
   }
 
   home(): void {
     this.router.navigate(['/interrogator']);
-  }
-
-  interrogateHere(): void {
-    // TODO order
-    this.displayedWordTypeLinks = this.wordTypeContent.links
-    this.setAllVisible(false)
-  }
-
-  visible(index: number): void {
-    this.wordsDisplayed[index] = true;
   }
 
   showTo(link: WordTypeLink, form: string): any {
@@ -48,23 +39,11 @@ export class WordTypesComponent implements OnInit {
         return toPhrase.phrases.toString()
       }
     }
-
     return "nincs"
   }
 
-  displayAll(): void {
-    this.displayedWordTypeLinks = this.wordTypeContent.links
-    if (this.displayedWordTypeLinks != null) {
-      this.setAllVisible(true)
-    }
-    this.displayedWordTypeUnits = this.wordTypeContent.wordTypeUnits
-  }
-
-  setAllVisible(visible: boolean) {
-    this.wordsDisplayed = new Array(this.displayedWordTypeLinks.length);
-    for (let index = 0; index < this.wordsDisplayed.length; index++) {
-      this.wordsDisplayed[index] = visible;
-    }
+  sort() {
+    this.displayedWordTypeLinks.sort((a, b) => (a.toPhrases.filter(p => p.form == 'Verb')[0].phrases[0] > b.toPhrases.filter(p => p.form == 'Verb')[0].phrases[0]) ? 1 : -1)
   }
 
   toggleUnit(link: WordTypeLink, unit: WordTypeUnit) {
@@ -86,10 +65,6 @@ export class WordTypesComponent implements OnInit {
     if (index > -1) {
       link.wordTypeUnits.splice(index, 1);
     }
-  }
-
-  randomizeLinks() {
-    const randomLinks: WordTypeLink[] = []
   }
 
   isInUnit(link: WordTypeLink, unit: WordTypeUnit): boolean {

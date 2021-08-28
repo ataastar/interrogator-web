@@ -5,10 +5,12 @@ import { TranslationToSave } from '../models/translation-to-save';
 import { environment as env } from 'src/environments/environment';
 import { ToWordTypeContentMapper } from '../mapper/to-word-type-content-mapper';
 import { WordTypeContent } from '../models/word-type/word-type-content';
+import { WordTypeLink } from '../models/word-type/word-type-link';
+import { WordTypeUnit } from '../models/word-type/word-type-unit';
 
 @Injectable()
 export class WordService {
-    
+
     // cache for later use
     actualPhrases: Word[];
 
@@ -119,5 +121,29 @@ export class WordService {
         }
     }
 
+
+    async addWordTypeUnitLink(link: WordTypeLink, unit: WordTypeUnit) {
+        try {
+            const request = {wordTypeUnitLinkId: unit.id, wordTypeLinkId: link.id}
+            const res = await this.http.put(env.apiUrl + '/word_type_unit_link/add/', request).toPromise();
+            return 0;
+        }
+        catch (onrejected) {
+            console.error(onrejected);
+            return null;
+        }
+    }
+
+    async deleteWordTypeUnitLink(link: WordTypeLink, unit: WordTypeUnit) {
+        try {
+            const request = {wordTypeUnitLinkId: unit.id, wordTypeLinkId: link.id}
+            const res = await this.http.put(env.apiUrl + '/word_type_unit_link/delete/', request).toPromise();
+            return 0;
+        }
+        catch (onrejected) {
+            console.error(onrejected);
+            return null;
+        }
+    }
 
 }

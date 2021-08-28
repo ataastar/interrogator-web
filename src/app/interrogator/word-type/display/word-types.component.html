@@ -1,6 +1,5 @@
 <div style="align-content: center; width: 100%;">
     <input type="button" (click)="interrogateHere()" value="Kikérdez" class="btn btn-secondary">
-    <input type="button" (click)="displayActivated()" value="Mutasd az aktívakat" class="btn btn-secondary">
     <input type="button" (click)="displayAll()" value="Mutasd az összeset" class="btn btn-secondary">
     <table align="center" class="table table-sm table-striped table-bordered table-hover">
         <tbody>
@@ -9,12 +8,18 @@
                 <th *ngFor="let form of forms; let i=index">
                     <span>{{form}}</span>
                 </th>
+                <th>In unit</th>
             </tr>
             <tr *ngFor="let link of displayedWordTypeLinks; let i=index" (click)="visible(i)">
                 <td>{{link.fromPhrases}}</td>
                 <td *ngFor="let form of forms">
                     <span *ngIf="wordsDisplayed[i]">{{showTo(link, form)}}
                     </span>
+                </td>
+                <td>
+                    <div *ngFor="let unit of displayedWordTypeUnits" style="float: left;">
+                    <input type="button" value="{{unit.name}}" (click)="toggleUnit(link, unit)" class="btn" [ngClass]="isInUnit(link, unit) ? 'btn-dark' : 'btn-light'">
+                    </div>
                 </td>
             </tr>
         </tbody>

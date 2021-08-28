@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { WordTypeContent } from 'src/app/models/word-type/word-type-content';
 import { WordTypeLink } from 'src/app/models/word-type/word-type-link';
+import { WordTypeUnit } from 'src/app/models/word-type/word-type-unit';
 import { WordService } from 'src/app/services/word-service';
 
 @Component({
@@ -12,8 +13,8 @@ import { WordService } from 'src/app/services/word-service';
 export class WordTypesComponent implements OnInit {
 
   wordTypeContent: WordTypeContent = null
-  allWordTypeContent: WordTypeContent = null
   displayedWordTypeLinks: WordTypeLink[] = null;
+  displayedWordTypeUnits: WordTypeUnit[] = null;
   wordsDisplayed: boolean[];
   forms: string[]
 
@@ -23,7 +24,7 @@ export class WordTypesComponent implements OnInit {
     this.wordService.getWordTypeContent(1, 2, 1).then(result => {
       this.wordTypeContent = result
       this.forms = this.wordTypeContent.forms
-      this.displayActivated()
+      this.displayAll()
     })
   }
 
@@ -42,8 +43,6 @@ export class WordTypesComponent implements OnInit {
   }
 
   showTo(link: WordTypeLink, form: string): any {
-    let toPhrasesString: string
-
     for (const toPhrase of link.toPhrases) {
       if (form == toPhrase.form) {
         return toPhrase.phrases.toString()
@@ -53,24 +52,12 @@ export class WordTypesComponent implements OnInit {
     return "nincs"
   }
 
-  displayActivated(): void {
+  displayAll(): void {
     this.displayedWordTypeLinks = this.wordTypeContent.links
     if (this.displayedWordTypeLinks != null) {
       this.setAllVisible(true)
     }
-  }
-
-  displayAll(): void {
-    if (this.allWordTypeContent == null) {
-      this.wordService.getWordTypeContent(1, 2, 1).then(result => {
-        this.allWordTypeContent = result
-        this.displayedWordTypeLinks = this.allWordTypeContent.links
-        this.setAllVisible(true)
-      })
-    } else {
-      this.displayedWordTypeLinks = this.allWordTypeContent.links
-      this.setAllVisible(true)
-    }
+    this.displayedWordTypeUnits = this.wordTypeContent.wordTypeUnits
   }
 
   setAllVisible(visible: boolean) {
@@ -78,10 +65,35 @@ export class WordTypesComponent implements OnInit {
     for (let index = 0; index < this.wordsDisplayed.length; index++) {
       this.wordsDisplayed[index] = visible;
     }
-}
+  }
+
+  toggleUnit(link: WordTypeLink, unit: WordTypeUnit) {
+    if (this.isInUnit(link, unit)) {
+      this.wordService.deleteWordTypeUnitLink(link, unit).then(result => { this.linkRemoveFromUnit(link, unit) })
+    } else {
+      this.wordService.addWordTypeUnitLink(link, unit).then(result => { this.linkAddToUnit(link, unit) })
+    }
+  }
+
+  linkAddToUnit(link: WordTypeLink, unit: WordTypeUnit) {
+    this.linkRemoveFromUnit(link, unit)
+    link.wordTypeUnits.push(unit.id)
+  }
+
+
+  linkRemoveFromUnit(link: WordTypeLink, unit: WordTypeUnit) {
+    const index = link.wordTypeUnits.indexOf(unit.id, 0);
+    if (index > -1) {
+      link.wordTypeUnits.splice(index, 1);
+    }
+  }
 
   randomizeLinks() {
     const randomLinks: WordTypeLink[] = []
+  }
+
+  isInUnit(link: WordTypeLink, unit: WordTypeUnit): boolean {
+    return link.wordTypeUnits.includes(unit.id)
   }
 
 }

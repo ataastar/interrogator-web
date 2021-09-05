@@ -19,7 +19,7 @@ export class InterrogatorComponent {
 
     actualWords: GuessedWord[] = null;
     word: GuessedWord = null;
-    index: number;
+    index: number = null;
     to: string;
     checked: boolean = false;
     wrong: boolean = false;
@@ -70,7 +70,7 @@ export class InterrogatorComponent {
     }
 
     next(): void {
-        this.word = this.getRandomWord(this.word && this.word.lastAnswerWrong);
+        this.word = this.getRandomWord();
         this.checked = false;
         this.wrong = false;
         this.to = null;
@@ -82,7 +82,7 @@ export class InterrogatorComponent {
     /**
      * @param checkSameIndex true, if must not get the same word as it was answered now
      */
-    getRandomWord(checkSameIndex: boolean): GuessedWord {
+    getRandomWord(): GuessedWord {
         let remainingWordsNumber = this.actualWords != null ? this.actualWords.length : 0;
         // if no more words, then return null
         if (remainingWordsNumber === 0) {
@@ -90,7 +90,7 @@ export class InterrogatorComponent {
         } else {
             let tempIndex: number = this.getRandomIndex(remainingWordsNumber);
             // if this is the last, then no need to get new random number
-            if (checkSameIndex && remainingWordsNumber > 1) {
+            if (this.index != null && remainingWordsNumber > 1) {
                 while (this.index === tempIndex) {
                     tempIndex = this.getRandomIndex(remainingWordsNumber);
                 }

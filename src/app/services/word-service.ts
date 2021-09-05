@@ -16,7 +16,7 @@ export class WordService {
 
     constructor(private http: Http) { }
 
-    async getWords(key: String) {
+    async getWords(key: string) {
         try {
             const res = await this.http.get(env.apiUrl + '/words/' + key)
                 .toPromise();

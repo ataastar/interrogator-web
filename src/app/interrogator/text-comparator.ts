@@ -26,18 +26,18 @@ export class TextComparator {
         return false;
     }
 
-    replaceAbbreviation(source) {
+    replaceAbbreviation(source: string) {
         let result = this.replace(source, 'WHAT\'S', 'WHAT IS');
         result = this.replace(source, 'I\'M', 'I AM');
         // result = this.replace(source, 'I\'M', 'I AM');
         return result;
     }
 
-    private replace(source, search, replace) {
+    private replace(source: string, search: string, replace): string {
         return source.replace(new RegExp(search, 'g'), replace);
     }
 
-    private removeUnnecessaryCharacters(text: any) {
+    private removeUnnecessaryCharacters(text: string) {
         let result = '';
         for (let char of text) {
             switch (char) {

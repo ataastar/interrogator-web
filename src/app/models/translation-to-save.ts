@@ -1,14 +1,14 @@
 export class TranslationToSave {
-    id: String;
-    from: String[];
-    to: String[];
-    imageUrl?: String;
-    pronunciation?: String;
-    audio?: String;
-    example?: String;
-    translatedExample?: String;
+    id: string;
+    from: string[];
+    to: string[];
+    imageUrl?: string;
+    pronunciation?: string;
+    audio?: string;
+    example?: string;
+    translatedExample?: string;
 
-    constructor(id: String, from: String[], to: String[], example?: String, translatedExample?: String) {
+    constructor(id: string, from: string[], to: string[], example?: string, translatedExample?: string) {
         this.id = id;
         this.from = from;  
         this.to = to;

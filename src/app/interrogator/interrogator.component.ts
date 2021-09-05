@@ -7,6 +7,7 @@ import { GuessedWord } from '../models/guessed-word';
 import { switchMap } from 'rxjs/operators';
 import { GuessedWordConverter } from './guessed-word-converter';
 import { Word } from '../models/word';
+import { TextComparator } from './text-comparator';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class InterrogatorComponent {
     to: string;
     checked: boolean = false;
     wrong: boolean = false;
+    comparator: TextComparator = new TextComparator();
 
     constructor(private wordService: WordService, private route: ActivatedRoute, private router: Router) {
     }
@@ -49,7 +51,7 @@ export class InterrogatorComponent {
     }
 
     check(): void {
-        if (this.isEqual(this.word.to, this.to)) {
+        if (this.comparator.isEqual(this.word.to, this.to)) {
             // if this is the last or the last answer was not wrong, then remove from the array
             if (!this.word.lastAnswerWrong || this.actualWords.length === 1) {
                 this.actualWords.splice(this.index, 1);
@@ -65,55 +67,6 @@ export class InterrogatorComponent {
             let player: any = document.getElementById('audioplayer');
             player.play();
         }
-    }
-
-    private isEqual(expectedArray: String[], actual: String): boolean {
-        if (actual === null) { return false; }
-        for (let expected of expectedArray) {
-            if (expected === actual) { return true; }
-            let expectedModified = expected.toUpperCase();
-            let actualModified = actual.toUpperCase();
-            if (expectedModified === actualModified) { return true; }
-
-            expectedModified = this.replaceAbbreviation(expectedModified);
-            actualModified = this.replaceAbbreviation(actualModified);
-            if (expectedModified === actualModified) { return true; }
-
-            expectedModified = this.removeUnnecessaryCharacters(expectedModified);
-            actualModified = this.removeUnnecessaryCharacters(actualModified);
-            if (expectedModified === actualModified) { return true; }
-        }
-        return false;
-    }
-
-    replaceAbbreviation(source: String) {
-        let result = this.replace(source, 'WHAT\'S', 'WHAT IS');
-        result = this.replace(source, 'I\'M', 'I AM');
-        // result = this.replace(source, 'I\'M', 'I AM');
-        return result;
-    }
-
-    private replace(source: String, search: any, replace: string): string {
-        return source.replace(new RegExp(search, 'g'), replace);
-    }
-
-    private removeUnnecessaryCharacters(text: any): string {
-        let result = '';
-        for (let char of text) {
-            switch (char) {
-                case '?':
-                case '.':
-                case '!':
-                case ':':
-                case ',':
-                case ';':
-                case ' ':
-                    break;
-                default:
-                    result = result + char;
-            }
-        }
-        return result;
     }
 
     next(): void {

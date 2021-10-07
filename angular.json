@@ -30,6 +30,14 @@
             "scripts": []
           },
           "configurations": {
+            "home": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.home.ts"
+                }
+              ]
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -69,6 +77,9 @@
           "configurations": {
             "production": {
               "browserTarget": "interrogator-web:build:production"
+            },
+            "home": {
+              "browserTarget": "interrogator-web:build:home"
             }
           }
         },

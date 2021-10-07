@@ -12,9 +12,14 @@
  
 # run
 
- -  npm install
- -  npm start
- -  Open a browser window and navigate to http:\\\\localhost:4200 to access the app.
+ - npm install
+ - npm start
+   - or "npm start --" with the following params
+     - --host=<host>
+       - the application will be served on this host
+     - -c=home
+       - the environment-home.ts will be used with the backend url in it
+ - Open a browser window and navigate to http:\\\\localhost:4200 to access the app.
 
 # build
 

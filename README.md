@@ -19,7 +19,7 @@
        - the application will be served on this host
      - -c=home
        - the environment-home.ts will be used with the backend url in it
-   - example for remote use: npm start -- --host=192.168.0.81 -c=homeremote --disableHostCheck=true
+   - example for remote use: npm start -- --host=interrogator.mooo.com -c=homeremote --disableHostCheck=true
    - example for local use: npm start -- --host=192.168.0.81 -c=home
  - Open a browser window and navigate to http:\\\\localhost:4200 to access the app.
 

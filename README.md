@@ -19,8 +19,8 @@
        - the application will be served on this host
      - -c=home
        - the environment-home.ts will be used with the backend url in it
-   - eg local from remote: npm start -- --host=192.168.0.81 -c=homeremote
-   - eg: local: npm start -- --host=192.168.0.81 -c=home
+   - example for remote use: npm start -- --host=192.168.0.81 -c=homeremote --disableHostCheck=true
+   - example for local use: npm start -- --host=192.168.0.81 -c=home
  - Open a browser window and navigate to http:\\\\localhost:4200 to access the app.
 
 # build

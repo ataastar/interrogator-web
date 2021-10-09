@@ -38,6 +38,14 @@
                 }
               ]
             },
+            "homeremote": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.homeremote.ts"
+                }
+              ]
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -80,6 +88,9 @@
             },
             "home": {
               "browserTarget": "interrogator-web:build:home"
+            },
+            "homeremote": {
+              "browserTarget": "interrogator-web:build:homeremote"
             }
           }
         },

@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/interrogator-web",
+            "outputPath": "build",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -30,6 +30,22 @@
             "scripts": []
           },
           "configurations": {
+            "home": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.home.ts"
+                }
+              ]
+            },
+            "homeremote": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.homeremote.ts"
+                }
+              ]
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -69,6 +85,12 @@
           "configurations": {
             "production": {
               "browserTarget": "interrogator-web:build:production"
+            },
+            "home": {
+              "browserTarget": "interrogator-web:build:home"
+            },
+            "homeremote": {
+              "browserTarget": "interrogator-web:build:homeremote"
             }
           }
         },

@@ -18,8 +18,8 @@ export class AddUnitContentComponent implements OnInit {
   unitWords: Word[];
   fromPhrases: Phrase[] = [new Phrase('')];
   toPhrases: Phrase[] = [new Phrase('')];
-  example: String;
-  translatedExample: String;
+  example: string;
+  translatedExample: string;
 
   constructor(private wordService: WordService, private route: ActivatedRoute, private router: Router) {
   }
@@ -44,7 +44,7 @@ export class AddUnitContentComponent implements OnInit {
     }
   }
 
-  public toString(phraseArray: Phrase[]): String {
+  public toString(phraseArray: Phrase[]): string {
     let result = "";
     for (const phrase of phraseArray) {
       result = result + ";" + phrase.phrase;
@@ -94,8 +94,8 @@ export class AddUnitContentComponent implements OnInit {
     return;
   }
 
-  private getPhraseStrings(phrases: Phrase[]): String[] {
-    let strings: String[] = new Array();
+  private getPhraseStrings(phrases: Phrase[]): string[] {
+    let strings: string[] = new Array();
     phrases.forEach(phrase => {
       strings.push(phrase.phrase);
     });

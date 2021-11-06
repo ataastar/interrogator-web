@@ -4,6 +4,7 @@ import { switchMap } from 'rxjs/operators';
 import { GuessedWord } from 'src/app/models/guessed-word';
 import { WordService } from 'src/app/services/word-service';
 import { GuessedWordConverter } from '../guessed-word-converter';
+import {ArrayUtil} from '../../util/array-util';
 
 @Component({
   selector: 'app-show-phrases',
@@ -44,6 +45,7 @@ export class ShowPhrasesComponent implements OnInit {
     for (let index = 0; index < this.wordsDisplayed.length; index++) {
       this.wordsDisplayed[index] = false;
     }
+    ArrayUtil.shuffle(this.words);
   }
 
   display(i: number): void {

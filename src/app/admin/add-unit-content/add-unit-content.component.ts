@@ -1,10 +1,9 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Word } from 'src/app/models/word';
 import { WordService } from 'src/app/services/word-service';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { Phrase } from 'src/app/models/phrase';
-import { Subscription } from 'rxjs';
 import { TranslationToSave } from 'src/app/models/translation-to-save';
 
 @Component({
@@ -92,6 +91,10 @@ export class AddUnitContentComponent implements OnInit {
       }
     });
     return;
+  }
+
+  getUnitName(): string {
+    return this.wordService.getSelectedUnitName();
   }
 
   private getPhraseStrings(phrases: Phrase[]): string[] {

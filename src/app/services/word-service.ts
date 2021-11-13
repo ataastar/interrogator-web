@@ -12,7 +12,8 @@ import { WordTypeUnit } from '../models/word-type/word-type-unit';
 export class WordService {
 
     // cache for later use
-    actualPhrases: Word[];
+    private actualPhrases: Word[];
+    private selectedUnitName: string;
 
     constructor(private http: Http) { }
 
@@ -23,6 +24,7 @@ export class WordService {
             var json = res != null ? res.json() : null;
             var unit = json != null ? (json[0].content != null ? json[0].content : json[0]) : null;
             this.actualPhrases = unit != null ? unit.words : null;
+            this.selectedUnitName = unit != null ? unit.name : '';
             return this.actualPhrases;
         }
         catch (onrejected) {
@@ -35,7 +37,11 @@ export class WordService {
         return this.actualPhrases;
     }
 
-    async getGroups() {
+  getSelectedUnitName(): string {
+    return this.selectedUnitName;
+  }
+
+  async getGroups() {
         try {
             const res = await this.http.get(env.apiUrl + '/word_groups').toPromise();
             return res.json()[0].groups;

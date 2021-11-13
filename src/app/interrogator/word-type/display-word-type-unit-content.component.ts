@@ -26,7 +26,7 @@ export class DisplayWordTypeUnitContentComponent implements OnInit {
         if (unitId) {
           return this.wordService.getWordTypeUnitContent(Number(unitId), 2);
         } else {
-          return new Promise<WordTypeContent>((resolve) => { resolve(); });
+          return new Promise<WordTypeContent>((resolve) => { resolve(null); });
         }
       })).subscribe(result => {
         if (result) {

@@ -39,7 +39,7 @@ export class InterrogatorComponent {
                     if (unitId) {
                         return this.wordService.getWords(params.get('id'));
                     } else {
-                        return new Promise<Word[]>((resolve) => { resolve(); });
+                        return new Promise<Word[]>((resolve) => { resolve(null); });
                     }
                 })).subscribe(words => {
                     if (words) {
@@ -79,9 +79,6 @@ export class InterrogatorComponent {
         }
     }
 
-    /**
-     * @param checkSameIndex true, if must not get the same word as it was answered now
-     */
     getRandomWord(): GuessedWord {
         let remainingWordsNumber = this.actualWords != null ? this.actualWords.length : 0;
         // if no more words, then return null

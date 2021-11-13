@@ -5,7 +5,7 @@ import { CoreRoutingModule } from './core-routing.module';
 import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { RouterModule } from '@angular/router';
-import { AuthenticationService } from '../auth-services/authentication.service';
+import { AuthService } from '../auth-services/auth.service';
 import { AuthGuardService } from '../auth-services/auth-guard.service';
 import { InterrogatorModule } from '../interrogator/interrogator.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -21,7 +21,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     RouterModule
   ],
   providers: [
-    AuthenticationService,
+    AuthService,
     AuthGuardService
   ]
 })

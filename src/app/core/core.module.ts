@@ -6,9 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../auth-services/auth.service';
-import { AuthGuardService } from '../auth-services/auth-guard.service';
 import { InterrogatorModule } from '../interrogator/interrogator.module';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
@@ -21,8 +19,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     RouterModule
   ],
   providers: [
-    AuthService,
-    AuthGuardService
+    AuthService
   ]
 })
 export class CoreModule { }

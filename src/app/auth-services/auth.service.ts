@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import * as moment from 'moment';
+import { User } from '../models/user';
+import { pluck, share, shareReplay, tap } from 'rxjs/operators';
 
 @Injectable()
 export class AuthService {
@@ -10,9 +12,10 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    return this.http.post<User>('/api/login', {email, password})
-      .do(res => this.setSession)
-      .shareReplay();
+    return this.http.post<User>('/api/login', {email, password}).pipe(
+      shareReplay()
+      //,    do(res => this.setSession)
+      );
   }
 
   private setSession(authResult) {

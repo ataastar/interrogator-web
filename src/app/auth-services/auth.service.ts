@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import * as moment from 'moment';
 import { User } from '../models/user';
-import { pluck, share, shareReplay, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class AuthService {
@@ -12,25 +11,26 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    return this.http.post<User>('/api/login', {email, password}).pipe(
-      shareReplay()
-      //,    do(res => this.setSession)
-      );
+    return this.http.post('/api/login', {email, password})
+      .pipe(tap(authResult => {
+        this.setSession(authResult)
+      }
+    ));
   }
 
   private setSession(authResult) {
-    const expiresAt = moment().add(authResult.expiresIn, 'second');
+    //const expiresAt = moment().add(authResult.expiresIn, 'second');
 
     localStorage.setItem('id_token', authResult.idToken);
-    localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
+    //localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
   }
 
   logout() {
     localStorage.removeItem('id_token');
-    localStorage.removeItem('expires_at');
+    //localStorage.removeItem('expires_at');
   }
 
-  public isLoggedIn() {
+ /* public isLoggedIn() {
     return moment().isBefore(this.getExpiration());
   }
 
@@ -42,5 +42,5 @@ export class AuthService {
     const expiration = localStorage.getItem('expires_at');
     const expiresAt = JSON.parse(expiration);
     return moment(expiresAt);
-  }
+  }*/
 }

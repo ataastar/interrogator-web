@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user';
-import { tap } from 'rxjs/operators';
+import { shareReplay, tap } from 'rxjs/operators';
 
 @Injectable()
 export class AuthService {
@@ -13,9 +13,11 @@ export class AuthService {
   login(email: string, password: string) {
     return this.http.post('/api/login', {email, password})
       .pipe(tap(authResult => {
-        this.setSession(authResult)
-      }
-    ));
+            this.setSession(authResult)
+          }
+        )
+      )
+      .pipe(shareReplay(1));
   }
 
   private setSession(authResult) {
@@ -30,17 +32,17 @@ export class AuthService {
     //localStorage.removeItem('expires_at');
   }
 
- /* public isLoggedIn() {
-    return moment().isBefore(this.getExpiration());
-  }
+  /* public isLoggedIn() {
+     return moment().isBefore(this.getExpiration());
+   }
 
-  isLoggedOut() {
-    return !this.isLoggedIn();
-  }
+   isLoggedOut() {
+     return !this.isLoggedIn();
+   }
 
-  getExpiration() {
-    const expiration = localStorage.getItem('expires_at');
-    const expiresAt = JSON.parse(expiration);
-    return moment(expiresAt);
-  }*/
+   getExpiration() {
+     const expiration = localStorage.getItem('expires_at');
+     const expiresAt = JSON.parse(expiration);
+     return moment(expiresAt);
+   }*/
 }

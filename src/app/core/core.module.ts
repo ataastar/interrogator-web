@@ -5,7 +5,7 @@ import { CoreRoutingModule } from './core-routing.module';
 import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { RouterModule } from '@angular/router';
-import { AuthService } from '../auth-services/auth.service';
+import { AuthService } from './auth/auth.service';
 import { InterrogatorModule } from '../interrogator/interrogator.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 

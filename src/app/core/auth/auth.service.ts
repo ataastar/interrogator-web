@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { User } from '../models/user';
 import { shareReplay, tap } from 'rxjs/operators';
-import { environment as env } from '../../environments/environment';
+import { environment as env } from '../../../environments/environment';
 
 @Injectable()
 export class AuthService {
@@ -33,10 +32,14 @@ export class AuthService {
     //localStorage.removeItem('expires_at');
   }
 
-  /* public isLoggedIn() {
-     return moment().isBefore(this.getExpiration());
+   public getToken() {
+     return localStorage.getItem("id_token");
    }
 
+   public isLoggedIn() {
+     return this.getToken() != null;
+   }
+/*
    isLoggedOut() {
      return !this.isLoggedIn();
    }

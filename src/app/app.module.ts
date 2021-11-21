@@ -14,7 +14,8 @@ import { CoreModule } from './core/core.module';
 import { ShowPhrasesComponent } from './interrogator/show-phrases/show-phrases.component';
 import { AddUnitContentComponent } from './admin/add-unit-content/add-unit-content.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { AuthInterceptor } from './core/interceptor/auth.interceptor';
+import { AuthInterceptor } from './core/auth/auth.interceptor';
+import { AuthGuard } from './core/auth/auth-guard';
 
 @NgModule({
   imports: [
@@ -32,7 +33,7 @@ import { AuthInterceptor } from './core/interceptor/auth.interceptor';
     AddUnitContentComponent
   ],
   bootstrap: [AppComponent],
-  providers: [WordService, {
+  providers: [WordService, AuthGuard, {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
     multi: true

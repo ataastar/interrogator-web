@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -14,13 +13,15 @@ import { AdminModule } from './admin/admin.module';
 import { CoreModule } from './core/core.module';
 import { ShowPhrasesComponent } from './interrogator/show-phrases/show-phrases.component';
 import { AddUnitContentComponent } from './admin/add-unit-content/add-unit-content.component';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthInterceptor } from './core/interceptor/auth.interceptor';
 
 @NgModule({
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    FormsModule,
-    HttpModule,
+    FormsModule, ReactiveFormsModule,
+    HttpClientModule,
     InterrogatorModule,
     AdminModule,
     CoreModule
@@ -31,6 +32,10 @@ import { AddUnitContentComponent } from './admin/add-unit-content/add-unit-conte
     AddUnitContentComponent
   ],
   bootstrap: [AppComponent],
-  providers: [WordService]
+  providers: [WordService, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }]
 })
 export class AppModule { }

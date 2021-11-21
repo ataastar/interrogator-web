@@ -1,7 +1,7 @@
 
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -12,7 +12,7 @@ import { AdminComponent } from './admin.component';
   imports: [
     CommonModule,
     FormsModule,
-    HttpModule,
+    HttpClientModule,
     NgbModule
   ],
   declarations: [

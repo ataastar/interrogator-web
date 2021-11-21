@@ -7,19 +7,23 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../auth-services/auth.service';
 import { InterrogatorModule } from '../interrogator/interrogator.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule, ReactiveFormsModule,
     CoreRoutingModule,
     InterrogatorModule
   ],
   declarations: [LoginComponent, NotFoundComponent],
   exports: [
-    RouterModule
+    RouterModule,
+    LoginComponent
   ],
   providers: [
     AuthService
   ]
 })
-export class CoreModule { }
+export class CoreModule {
+}

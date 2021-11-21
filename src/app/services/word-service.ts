@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import { Word } from '../models/word';
 import { TranslationToSave } from '../models/translation-to-save';
 import { environment as env } from 'src/environments/environment';
@@ -7,6 +6,7 @@ import { ToWordTypeContentMapper } from '../mapper/to-word-type-content-mapper';
 import { WordTypeContent } from '../models/word-type/word-type-content';
 import { WordTypeLink } from '../models/word-type/word-type-link';
 import { WordTypeUnit } from '../models/word-type/word-type-unit';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class WordService {
@@ -15,13 +15,13 @@ export class WordService {
     private actualPhrases: Word[];
     private selectedUnitName: string;
 
-    constructor(private http: Http) { }
+    constructor(private http: HttpClient) { }
 
     async getWords(key: string) {
         try {
-            const res = await this.http.get(env.apiUrl + '/words/' + key)
+            const res = await this.http.get<any>(env.apiUrl + '/words/' + key)
                 .toPromise();
-            var json = res != null ? res.json() : null;
+            var json = res != null ? res : null;
             var unit = json != null ? (json[0].content != null ? json[0].content : json[0]) : null;
             this.actualPhrases = unit != null ? unit.words : null;
             this.selectedUnitName = unit != null ? unit.name : '';
@@ -43,8 +43,8 @@ export class WordService {
 
   async getGroups() {
         try {
-            const res = await this.http.get(env.apiUrl + '/word_groups').toPromise();
-            return res.json()[0].groups;
+            const res = await this.http.get<any>(env.apiUrl + '/word_groups').toPromise();
+            return res[0].groups;
         }
         catch (onrejected) {
             console.error(onrejected);
@@ -54,8 +54,8 @@ export class WordService {
 
     async addUnitContent(translation: TranslationToSave) {
         try {
-            const res = await this.http.put(env.apiUrl + '/word/', translation).toPromise();
-            return res.json().unitContentId;
+            const res = await this.http.put<any>(env.apiUrl + '/word/', translation).toPromise();
+            return res.unitContentId;
         }
         catch (onrejected) {
             console.error(onrejected);
@@ -97,8 +97,8 @@ export class WordService {
     async getWordTypeContent(wordTypeId: number, fromLanguageId: number, toLanguageId: number): Promise<WordTypeContent> {
         try {
             let body = { wordTypeId: wordTypeId, fromLanguageId: fromLanguageId, toLanguageId: toLanguageId };
-            const res = await this.http.post(env.apiUrl + '/word_type', body).toPromise();
-            return ToWordTypeContentMapper.map(res.json()[0].content);
+            const res = await this.http.post<any>(env.apiUrl + '/word_type', body).toPromise();
+            return ToWordTypeContentMapper.map(res[0].content);
         }
         catch (onrejected) {
             console.error(onrejected);
@@ -108,8 +108,8 @@ export class WordService {
 
     async getWordTypeUnitContent(wordTypeUnitId: number, fromLanguageId: number): Promise<WordTypeContent> {
         try {
-            const res = await this.http.get(env.apiUrl + '/word_type_unit/' + wordTypeUnitId + '/' + fromLanguageId).toPromise();
-            return ToWordTypeContentMapper.map(res.json()[0].content);
+            const res = await this.http.get<any>(env.apiUrl + '/word_type_unit/' + wordTypeUnitId + '/' + fromLanguageId).toPromise();
+            return ToWordTypeContentMapper.map(res[0].content);
         }
         catch (onrejected) {
             console.error(onrejected);
@@ -118,8 +118,8 @@ export class WordService {
     }
     async getWordTypeUnits() {
         try {
-            const res = await this.http.get(env.apiUrl + '/word_type_unit').toPromise();
-            return res.json()[0].groups;
+            const res = await this.http.get<any>(env.apiUrl + '/word_type_unit').toPromise();
+            return res[0].groups;
         }
         catch (onrejected) {
             console.error(onrejected);

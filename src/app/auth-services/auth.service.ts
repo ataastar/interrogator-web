@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user';
 import { shareReplay, tap } from 'rxjs/operators';
+import { environment as env } from '../../environments/environment';
 
 @Injectable()
 export class AuthService {
@@ -11,7 +12,7 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    return this.http.post('/api/login', {email, password})
+    return this.http.post(env.apiUrl + '/api/login', {email, password})
       .pipe(tap(authResult => {
             this.setSession(authResult)
           }

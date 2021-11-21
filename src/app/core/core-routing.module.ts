@@ -18,6 +18,7 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent
   },
+  // TODO navigate to login if not logged in
   /*{
     path: 'admin',
     canActivate: [AuthGuardService],

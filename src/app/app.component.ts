@@ -16,7 +16,7 @@ export class AppComponent {
   // TODO logout to separated component and put global logout somewhere
   public logout() {
     localStorage.removeItem(AuthService.TOKEN_ID);
-    this.router.navigate(['login']).then(r => {/* navigated*/});
+    this.router.navigate(['login']).then(() => {/* navigated*/});
   }
 
   public logoutEnabled(): boolean {

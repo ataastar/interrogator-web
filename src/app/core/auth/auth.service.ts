@@ -6,6 +6,8 @@ import { environment as env } from '../../../environments/environment';
 @Injectable()
 export class AuthService {
 
+  public static TOKEN_ID = 'id_token';
+
   constructor(private http: HttpClient) {
 
   }
@@ -23,17 +25,17 @@ export class AuthService {
   private setSession(authResult) {
     //const expiresAt = moment().add(authResult.expiresIn, 'second');
 
-    localStorage.setItem('id_token', authResult.idToken);
+    localStorage.setItem(AuthService.TOKEN_ID, authResult.idToken);
     //localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
   }
 
   logout() {
-    localStorage.removeItem('id_token');
+    localStorage.removeItem(AuthService.TOKEN_ID);
     //localStorage.removeItem('expires_at');
   }
 
    public getToken() {
-     return localStorage.getItem("id_token");
+     return localStorage.getItem(AuthService.TOKEN_ID);
    }
 
    public isLoggedIn() {

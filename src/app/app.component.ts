@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import '../assets/css/styles.css';
-import * as queryString from 'query-string';
+import { AuthService } from './core/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'learn-english-app',
@@ -9,16 +10,16 @@ import * as queryString from 'query-string';
 })
 export class AppComponent {
 
-    stringifiedParams = queryString.stringify({
-        client_id: '423949024920-kl1emj9rbq5753ht3h6qqrlub0u054pq.apps.googleusercontent.com',
-        redirect_uri: 'http://localhost/authenticate/google',
-        scope: [
-          'https://www.googleapis.com/auth/userinfo.email',
-        ].join(' '), // space seperated string
-        response_type: 'code',
-        access_type: 'offline',
-        prompt: 'consent',
-      });
-      
-      googleLoginUrl = 'https://accounts.google.com/o/oauth2/v2/auth?' + this.stringifiedParams;
+
+  constructor(private router: Router, private authService: AuthService) {}
+
+  // TODO logout to separated component and put global logout somewhere
+  public logout() {
+    localStorage.removeItem(AuthService.TOKEN_ID);
+    this.router.navigate(['login']).then(r => {/* navigated*/});
+  }
+
+  public logoutEnabled(): boolean {
+    return this.authService.isLoggedIn();
+  }
 }

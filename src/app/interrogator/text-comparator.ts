@@ -1,5 +1,5 @@
 /**
- * Compare the input text with the possible word/sentece
+ * Compare the input text with the possible word/sentence
  */
 export class TextComparator {
 
@@ -18,8 +18,8 @@ export class TextComparator {
             actualModified = this.replaceAbbreviation(actualModified);
             if (expectedModified === actualModified) { return true; }
 
-            expectedModified = this.removeUnnecessaryCharacters(expectedModified);
-            actualModified = this.removeUnnecessaryCharacters(actualModified);
+            expectedModified = TextComparator.removeUnnecessaryCharacters(expectedModified);
+            actualModified = TextComparator.removeUnnecessaryCharacters(actualModified);
             if (expectedModified === actualModified) { return true; }
 
         }
@@ -27,17 +27,17 @@ export class TextComparator {
     }
 
     replaceAbbreviation(source: string) {
-        let result = this.replace(source, 'WHAT\'S', 'WHAT IS');
-        result = this.replace(source, 'I\'M', 'I AM');
+        let result = TextComparator.replace(source, 'WHAT\'S', 'WHAT IS');
+        result = TextComparator.replace(result, 'I\'M', 'I AM');
         // result = this.replace(source, 'I\'M', 'I AM');
         return result;
     }
 
-    private replace(source: string, search: string, replace): string {
+    private static replace(source: string, search: string, replace): string {
         return source.replace(new RegExp(search, 'g'), replace);
     }
 
-    private removeUnnecessaryCharacters(text: string) {
+    private static removeUnnecessaryCharacters(text: string) {
         let result = '';
         for (let char of text) {
             switch (char) {

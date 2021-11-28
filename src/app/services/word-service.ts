@@ -7,6 +7,7 @@ import { WordTypeContent } from '../models/word-type/word-type-content';
 import { WordTypeLink } from '../models/word-type/word-type-link';
 import { WordTypeUnit } from '../models/word-type/word-type-unit';
 import { HttpClient } from '@angular/common/http';
+import { InterrogatorType } from '../interrogator/enum/interrogator-type';
 
 @Injectable()
 export class WordService {
@@ -143,17 +144,17 @@ export class WordService {
     }
   }
 
-  async wrongAnswer(id: number): Promise<boolean> {
-    return this.sendAnswer(id, false);
+  async wrongAnswer(id: number, type: InterrogatorType): Promise<boolean> {
+    return this.sendAnswer(id, false, type);
   }
 
-  async rightAnswer(id: number): Promise<boolean> {
-    return this.sendAnswer(id, true);
+  async rightAnswer(id: number, type: InterrogatorType): Promise<boolean> {
+    return this.sendAnswer(id, true, type);
   }
 
-  async sendAnswer(id: number, right: boolean): Promise<boolean> {
+  async sendAnswer(id: number, right: boolean, type: InterrogatorType): Promise<boolean> {
     try {
-      const request = {id: id, right: right}
+      const request = {id: id, right: right, interrogation_type: type}
       //const res = await this.http.put(env.apiUrl + '/answer', request).toPromise();
       return true;
     } catch (onRejected) {

@@ -8,6 +8,7 @@ import { switchMap } from 'rxjs/operators';
 import { GuessedWordConverter } from './guessed-word-converter';
 import { Word } from '../models/word';
 import { TextComparator } from './text-comparator';
+import { InterrogatorType } from './enum/interrogator-type';
 
 
 @Component({
@@ -89,7 +90,7 @@ export class InterrogatorComponent {
       this.word.incrementWrongAnswer();
       this.wrong = true;
       if (!this.wrongWordList[this.word.id]) {
-        this.wordService.wrongAnswer(this.word.id); // TODO handle globally if something go wrong such a call
+        this.wordService.wrongAnswer(this.word.id, InterrogatorType.WRITING); // TODO handle globally if something go wrong such a call
         console.log('wrong input for: ' + this.word.from);
         this.wrongWordList[this.word.id] = true;
       }

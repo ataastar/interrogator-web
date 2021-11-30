@@ -154,8 +154,8 @@ export class WordService {
 
   async sendAnswer(id: number, right: boolean, type: InterrogatorType): Promise<boolean> {
     try {
-      const request = {id: id, right: right, interrogation_type: type}
-      //const res = await this.http.put(env.apiUrl + '/answer', request).toPromise();
+      const request = {id: id, right: right, interrogationType: type}
+      await this.http.put(env.apiUrl + '/answer', request).toPromise();
       return true;
     } catch (onRejected) {
       console.error(onRejected);

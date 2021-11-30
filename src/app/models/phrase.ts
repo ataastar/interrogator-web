@@ -1,8 +1,8 @@
 export class Phrase {
-    translationId?: Number;
-    phrase: String;
+    translationId?: number;
+    phrase: string;
 
-    constructor(phrase: String, translationId?: Number) {
+    constructor(phrase: string, translationId?: number) {
         this.phrase = phrase;
         this.translationId = translationId;
     }

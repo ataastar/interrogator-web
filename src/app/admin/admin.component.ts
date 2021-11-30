@@ -19,7 +19,7 @@ export class AdminComponent {
         this.wordService.getGroups().then(groups => this.groups = groups);
     }
 
-    interrogate(key: String): void {
+    interrogate(key: string): void {
         this.router.navigate(['/interrogator', key, 'db']);
     }
 

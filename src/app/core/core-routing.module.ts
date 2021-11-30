@@ -7,6 +7,7 @@ import { ShowPhrasesComponent } from '../interrogator/show-phrases/show-phrases.
 import { AddUnitContentComponent } from '../admin/add-unit-content/add-unit-content.component';
 import { WordTypesComponent } from '../interrogator/word-type/display/word-types.component';
 import { DisplayWordTypeUnitContentComponent } from '../interrogator/word-type/display-word-type-unit-content.component';
+import { AuthGuard } from './auth/auth-guard';
 
 const routes: Routes = [
   {
@@ -16,7 +17,7 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent, canActivate: [AuthGuard]
   },
   /*{
     path: 'admin',
@@ -25,27 +26,27 @@ const routes: Routes = [
   },*/
   {
     path: 'admin/addUnitContent/:id',
-    component: AddUnitContentComponent
-  },
+    component: AddUnitContentComponent, canActivate: [AuthGuard]
+},
   {
     path: 'interrogator/show/:id',
-    component: ShowPhrasesComponent
+    component: ShowPhrasesComponent, canActivate: [AuthGuard]
   },
   {
     path: 'interrogator/:id',
-    component: InterrogatorComponent
+    component: InterrogatorComponent, canActivate: [AuthGuard]
   },
   {
     path: 'interrogator',
-    component: InterrogatorComponent
+    component: InterrogatorComponent, canActivate: [AuthGuard]
   },
   {
     path: 'wordType',
-    component: WordTypesComponent
+    component: WordTypesComponent, canActivate: [AuthGuard]
   },
   {
     path: 'wordTypeUnit/:id',
-    component: DisplayWordTypeUnitContentComponent
+    component: DisplayWordTypeUnitContentComponent, canActivate: [AuthGuard]
   },
   {
     path: '**',
@@ -54,7 +55,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
   exports: [RouterModule]
 })
 export class CoreRoutingModule { }

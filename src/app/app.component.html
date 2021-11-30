@@ -1,15 +1,12 @@
 <div class="row">
-    <div class="col-11">
-        <group-selector></group-selector>
+    <div class="col-10">
+        <group-selector *ngIf="logoutEnabled()"></group-selector>
     </div>
     <div class="col-1">
-        <word-type-unit-selector></word-type-unit-selector>
+        <word-type-unit-selector *ngIf="logoutEnabled()"></word-type-unit-selector>
     </div>
-    <!--div class="col-1">
-        <a href={{googleLoginUrl}}>
-            Login with Google
-          </a>
-    </div-->
+  <div class="col-1">
+    <a href="#" (click)="logout()" *ngIf="logoutEnabled()">Logout</a>
+  </div>
 </div>
-
 <router-outlet></router-outlet>

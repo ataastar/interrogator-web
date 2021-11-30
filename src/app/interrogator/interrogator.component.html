@@ -20,13 +20,13 @@
             <label *ngIf="checked && word.pronunciation" class="col-form-label" class="col-3">
                 {{word.pronunciation}}
             </label>
-            <ngb-alert [dismissible]="false" *ngIf="checked && !wrong" type="success">Helyes! ({{word.to}})<div
+            <div class="alert alert-success" *ngIf="checked && !wrong" role="alert">Helyes! ({{word.to}})<div
                     *ngIf="word.translatedExample">[{{word.translatedExample}}]</div>
-            </ngb-alert>
-            <ngb-alert [dismissible]="false" *ngIf="checked && wrong" type="danger">
+            </div>
+            <div class="alert alert-danger" *ngIf="checked && wrong" role="alert">
                 <div>helyes válasz: {{word.to}}</div>
                 <div *ngIf="word.translatedExample">[{{word.translatedExample}}]</div>
-            </ngb-alert>
+            </div>
 
 
         </div>

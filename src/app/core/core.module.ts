@@ -5,24 +5,25 @@ import { CoreRoutingModule } from './core-routing.module';
 import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { RouterModule } from '@angular/router';
-import { AuthenticationService } from '../auth-services/authentication.service';
-import { AuthGuardService } from '../auth-services/auth-guard.service';
+import { AuthService } from './auth/auth.service';
 import { InterrogatorModule } from '../interrogator/interrogator.module';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule, ReactiveFormsModule,
     CoreRoutingModule,
     InterrogatorModule
   ],
   declarations: [LoginComponent, NotFoundComponent],
   exports: [
-    RouterModule
+    RouterModule,
+    LoginComponent
   ],
   providers: [
-    AuthenticationService,
-    AuthGuardService
+    AuthService
   ]
 })
-export class CoreModule { }
+export class CoreModule {
+}

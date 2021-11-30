@@ -1,12 +1,12 @@
 export class GuessedWord {
-    id: Number;
-    from: String;
-    to: String[];
-    imageUrl?: String;
-    pronunciation?: String;
-    audio?: String;
-    example?: String;
-    translatedExample?: String;
+    id: number;
+    from: string;
+    to: string[];
+    imageUrl?: string;
+    pronunciation?: string;
+    audio?: string;
+    example?: string;
+    translatedExample?: string;
 
     lastAnswerWrong: boolean = false;
     private wrongAnswerNumber: number = 0;

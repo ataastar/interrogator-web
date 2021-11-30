@@ -1,10 +1,9 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Word } from 'src/app/models/word';
 import { WordService } from 'src/app/services/word-service';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { Phrase } from 'src/app/models/phrase';
-import { Subscription } from 'rxjs';
 import { TranslationToSave } from 'src/app/models/translation-to-save';
 
 @Component({
@@ -18,8 +17,8 @@ export class AddUnitContentComponent implements OnInit {
   unitWords: Word[];
   fromPhrases: Phrase[] = [new Phrase('')];
   toPhrases: Phrase[] = [new Phrase('')];
-  example: String;
-  translatedExample: String;
+  example: string;
+  translatedExample: string;
 
   constructor(private wordService: WordService, private route: ActivatedRoute, private router: Router) {
   }
@@ -44,7 +43,7 @@ export class AddUnitContentComponent implements OnInit {
     }
   }
 
-  public toString(phraseArray: Phrase[]): String {
+  public toString(phraseArray: Phrase[]): string {
     let result = "";
     for (const phrase of phraseArray) {
       result = result + ";" + phrase.phrase;
@@ -94,8 +93,12 @@ export class AddUnitContentComponent implements OnInit {
     return;
   }
 
-  private getPhraseStrings(phrases: Phrase[]): String[] {
-    let strings: String[] = new Array();
+  getUnitName(): string {
+    return this.wordService.getSelectedUnitName();
+  }
+
+  private getPhraseStrings(phrases: Phrase[]): string[] {
+    let strings: string[] = new Array();
     phrases.forEach(phrase => {
       strings.push(phrase.phrase);
     });

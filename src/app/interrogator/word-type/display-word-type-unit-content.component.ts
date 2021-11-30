@@ -4,6 +4,7 @@ import { switchMap } from 'rxjs/operators';
 import { WordTypeLink } from 'src/app/models/word-type/word-type-link';
 import { WordService } from 'src/app/services/word-service';
 import { WordTypeContent } from '../../models/word-type/word-type-content';
+import {ArrayUtil} from '../../util/array-util';
 
 @Component({
   selector: 'display-word-type-unit-content',
@@ -14,7 +15,7 @@ export class DisplayWordTypeUnitContentComponent implements OnInit {
 
   wordTypeLinks: WordTypeLink[] = null;
   wordsDisplayed: boolean[];
-  forms: string[]
+  forms: string[];
 
   constructor(private wordService: WordService, private route: ActivatedRoute, private router: Router) { }
 
@@ -25,14 +26,14 @@ export class DisplayWordTypeUnitContentComponent implements OnInit {
         if (unitId) {
           return this.wordService.getWordTypeUnitContent(Number(unitId), 2);
         } else {
-          return new Promise<WordTypeContent>((resolve) => { resolve(); });
+          return new Promise<WordTypeContent>((resolve) => { resolve(null); });
         }
       })).subscribe(result => {
         if (result) {
-          this.forms = result.forms
-          this.wordTypeLinks = result.links
-          this.sort()
-          this.displayAll()
+          this.forms = result.forms;
+          this.wordTypeLinks = result.links;
+          this.sort();
+          this.displayAll();
         }
       });
   }
@@ -42,8 +43,8 @@ export class DisplayWordTypeUnitContentComponent implements OnInit {
   }
 
   interrogateHere(): void {
-    this.randomizeLinks()
-    this.setAllVisible(false)
+    ArrayUtil.shuffle(this.wordTypeLinks);
+    this.setAllVisible(false);
   }
 
   display(index: number): void {
@@ -52,38 +53,29 @@ export class DisplayWordTypeUnitContentComponent implements OnInit {
 
   showTo(link: WordTypeLink, form: string): any {
     for (const toPhrase of link.toPhrases) {
-      if (form == toPhrase.form) {
-        return toPhrase.phrases.toString()
+      if (form === toPhrase.form) {
+        return toPhrase.phrases.toString();
       }
     }
-    return "-"
+    return '-';
   }
 
   displayAll(): void {
     if (this.wordTypeLinks != null) {
-      this.setAllVisible(true)
+      this.setAllVisible(true);
     }
   }
 
-  setAllVisible(visible: boolean) {
+  private setAllVisible(visible: boolean) {
     this.wordsDisplayed = new Array(this.wordTypeLinks.length);
     for (let index = 0; index < this.wordsDisplayed.length; index++) {
       this.wordsDisplayed[index] = visible;
     }
   }
 
-  randomizeLinks() {
-    const randomLinks: WordTypeLink[] = []
-    while (this.wordTypeLinks.length > 0) {
-      const random = Math.floor(Math.random() * this.wordTypeLinks.length);
-      randomLinks.push(this.wordTypeLinks.splice(random, 1)[0])
-    }
-    this.wordTypeLinks = randomLinks
-  }
-
-
-  sort() {
-    this.wordTypeLinks.sort((a, b) => (a.toPhrases.filter(p => p.form == 'Verb')[0].phrases[0] > b.toPhrases.filter(p => p.form == 'Verb')[0].phrases[0]) ? 1 : -1)
+  private sort() {
+    this.wordTypeLinks.sort((a, b) => (a.toPhrases.filter(p => p.form === 'Verb')[0].phrases[0]
+      > b.toPhrases.filter(p => p.form === 'Verb')[0].phrases[0]) ? 1 : -1);
   }
 
 }

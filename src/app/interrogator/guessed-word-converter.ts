@@ -10,13 +10,13 @@ export class GuessedWordConverter {
         let actualWords = new Array(words.length);
         let i = 0;
         for (let word of words) {
-            actualWords[i] = this.clone(word);
+            actualWords[i] = GuessedWordConverter.clone(word);
             i++;
         }
         return actualWords;
     }
 
-    private clone(source: Word): GuessedWord {
+    private static clone(source: Word): GuessedWord {
         let cloned = new GuessedWord();
         // tslint:disable-next-line:forin
         for (let prop in source) {
@@ -27,7 +27,7 @@ export class GuessedWordConverter {
         for (const phrase of source.from) {
             cloned.from = cloned.from + ";" + phrase.phrase;
         }
-        cloned.from = cloned.from.substr(1);
+        cloned.from = cloned.from.substring(1);
         cloned.to = new Array(source.to.length);
         let i = 0;
         for (const phrase of source.to) {

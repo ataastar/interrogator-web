@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://192.168.0.213:3000' // lan
-  //apiUrl: 'http://192.168.0.81:3000' // wifi
+  apiUrl: 'http://192.168.100.14:3000' // lan
+  //apiUrl: 'http://192.168.100.15:3000' // wifi
 };

@@ -13,7 +13,8 @@
 # run
 
  - npm install
- - npm start
+ - npm startDev: ng serve
+ - npm start: serve static pages
    - or "npm start --" with the following params
      - --host=<host>
        - the application will be served on this host

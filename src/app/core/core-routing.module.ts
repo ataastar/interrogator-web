@@ -40,7 +40,7 @@ const routes: Routes = [
     path: 'interrogator',
     component: InterrogatorComponent, canActivate: [AuthGuard]
   },
-  {
+  { // admin page to add phrase to word type unit
     path: 'wordType',
     component: WordTypesComponent, canActivate: [AuthGuard]
   },

@@ -1,16 +1,18 @@
 /**
  * Compare the input text with the possible word/sentence
  */
+import { Phrase } from '../models/phrase';
+
 export class TextComparator {
 
     constructor() {
     }
 
-    isEqual(expectedArray: string[], actual: string) {
+    isEqual(expectedArray: Phrase[], actual: string) {
         if (actual === null) { return; }
         for (let expected of expectedArray) {
-            if (expected === actual) { return true; }
-            let expectedModified = expected.toUpperCase();
+            if (expected.phrase === actual) { return true; }
+            let expectedModified = expected.phrase.toUpperCase();
             let actualModified = actual.toUpperCase();
             if (expectedModified === actualModified) { return true; }
 

@@ -9,6 +9,7 @@ import { GuessedWordConverter } from './guessed-word-converter';
 import { Word } from '../models/word';
 import { TextComparator } from './text-comparator';
 import { InterrogatorType } from './enum/interrogator-type';
+import { Phrase } from '../models/phrase';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class InterrogatorComponent {
   /**
    * The current word which, should be guessed
    */
-  word: GuessedWord = null;
+  guessed: GuessedWord = null;
   /**
    * Random generated index. The index of the guessed word array.
    */
@@ -46,16 +47,11 @@ export class InterrogatorComponent {
    * The comparator
    */
   comparator: TextComparator = new TextComparator();
-  /**
-   * Array which stores the wrong words id. Words which was written incompletely
-   */
-  wrongWordList: boolean[] = [];
 
   constructor(private wordService: WordService, private route: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit() {
-    this.wrongWordList = [];
     this.actualWords = new GuessedWordConverter().convertToGuessed(this.wordService.getActualWords());
     if (this.actualWords) {
       this.next();
@@ -80,35 +76,37 @@ export class InterrogatorComponent {
   }
 
   check(): void {
-    if (this.comparator.isEqual(this.word.to, this.to)) {
-      // if this is the last or the last answer was not wrong, then remove from the array
-      if (!this.word.lastAnswerWrong || this.actualWords.length === 1) {
+    if (this.comparator.isEqual(this.guessed.word.to, this.to)) {
+      // if this is the last or the previous answer was also right, then remove from the array
+      if (!this.guessed.lastAnswerWrong || this.actualWords.length === 1) {
+        if (this.guessed.getWrongAnswerNumber() == 0) { // if the first was right, then send it to the server
+          this.wordService.rightAnswer(this.guessed.word.id, InterrogatorType.WRITING);
+        }
         this.actualWords.splice(this.index, 1);
       }
-      this.word.incrementCorrectAnswer();
+      this.guessed.incrementCorrectAnswer();
     } else {
-      this.word.incrementWrongAnswer();
-      this.wrong = true;
-      if (!this.wrongWordList[this.word.id]) {
-        this.wordService.wrongAnswer(this.word.id, InterrogatorType.WRITING); // TODO handle globally if something go wrong such a call
-        console.log('wrong input for: ' + this.word.from);
-        this.wrongWordList[this.word.id] = true;
+      if (this.guessed.getWrongAnswerNumber() == 0) {
+        this.wordService.wrongAnswer(this.guessed.word.id, InterrogatorType.WRITING); // TODO handle globally if something go wrong such a call
+        console.log('wrong input for: ' + this.guessed.word.from);
       }
+      this.guessed.incrementWrongAnswer();
+      this.wrong = true;
     }
     this.checked = true;
     // play the audio if available
-    if (this.word.audio) {
+    if (this.guessed.word.audio) {
       let player: any = document.getElementById('audioplayer');
       player.play();
     }
   }
 
   next(): void {
-    this.word = this.getRandomWord();
+    this.guessed = this.getRandomWord();
     this.checked = false;
     this.wrong = false;
     this.to = null;
-    if (this.word != null && document.getElementById('to') != null) {
+    if (this.guessed != null && document.getElementById('to') != null) {
       document.getElementById('to').focus();
     }
   }
@@ -129,6 +127,10 @@ export class InterrogatorComponent {
       this.index = tempIndex;
       return this.actualWords[this.index];
     }
+  }
+
+  toString(phrases: Phrase[]) {
+    return phrases.map(phrase => phrase.phrase).join(',');
   }
 
   getRandomIndex(length: number): number {

@@ -23,13 +23,13 @@ export class WordService {
     try {
       const res = await this.http.get<any>(env.apiUrl + '/words/' + key)
         .toPromise();
-      var json = res != null ? res : null;
-      var unit = json != null ? (json[0].content != null ? json[0].content : json[0]) : null;
+      const json = res != null ? res : null;
+      const unit = json != null ? (json[0].content != null ? json[0].content : json[0]) : null;
       this.actualPhrases = unit != null ? unit.words : null;
       this.selectedUnitName = unit != null ? unit.name : '';
       return this.actualPhrases;
-    } catch (onrejected) {
-      console.error(onrejected);
+    } catch (onRejected) {
+      console.error(onRejected);
       return null;
     }
   }
@@ -46,8 +46,8 @@ export class WordService {
     try {
       const res = await this.http.get<any>(env.apiUrl + '/word_groups').toPromise();
       return res[0].groups;
-    } catch (onrejected) {
-      console.error(onrejected);
+    } catch (onRejected) {
+      console.error(onRejected);
       return null;
     }
   }
@@ -56,8 +56,8 @@ export class WordService {
     try {
       const res = await this.http.put<any>(env.apiUrl + '/word/', translation).toPromise();
       return res.unitContentId;
-    } catch (onrejected) {
-      console.error(onrejected);
+    } catch (onRejected) {
+      console.error(onRejected);
       return null;
     }
   }
@@ -66,17 +66,17 @@ export class WordService {
     try {
       let body = {unitContentId: (unitContentId)};
       return await this.http.put(env.apiUrl + '/word/remove', body).toPromise();
-    } catch (onrejected) {
-      console.error(onrejected);
+    } catch (onRejected) {
+      console.error(onRejected);
       return null;
     }
   }
 
-  async activateWordTypeLink(linkId: number) {
+  /*async activateWordTypeLink(linkId: number) {
     try {
       return await this.http.post(env.apiUrl + '/word_type/activate/' + linkId, {}).toPromise();
-    } catch (onrejected) {
-      console.error(onrejected);
+    } catch (onRejected) {
+      console.error(onRejected);
       return null;
     }
   }
@@ -84,19 +84,19 @@ export class WordService {
   async deactivateWordTypeLink(linkId: number) {
     try {
       return await this.http.post(env.apiUrl + '/word_type/deactivate/' + linkId, {}).toPromise();
-    } catch (onrejected) {
-      console.error(onrejected);
+    } catch (onRejected) {
+      console.error(onRejected);
       return null;
     }
-  }
+  }*/
 
   async getWordTypeContent(wordTypeId: number, fromLanguageId: number, toLanguageId: number): Promise<WordTypeContent> {
     try {
       let body = {wordTypeId: wordTypeId, fromLanguageId: fromLanguageId, toLanguageId: toLanguageId};
       const res = await this.http.post<any>(env.apiUrl + '/word_type', body).toPromise();
       return ToWordTypeContentMapper.map(res[0].content);
-    } catch (onrejected) {
-      console.error(onrejected);
+    } catch (onRejected) {
+      console.error(onRejected);
       return null;
     }
   }
@@ -105,8 +105,8 @@ export class WordService {
     try {
       const res = await this.http.get<any>(env.apiUrl + '/word_type_unit/' + wordTypeUnitId + '/' + fromLanguageId).toPromise();
       return ToWordTypeContentMapper.map(res[0].content);
-    } catch (onrejected) {
-      console.error(onrejected);
+    } catch (onRejected) {
+      console.error(onRejected);
       return null;
     }
   }
@@ -115,8 +115,8 @@ export class WordService {
     try {
       const res = await this.http.get<any>(env.apiUrl + '/word_type_unit').toPromise();
       return res[0].groups;
-    } catch (onrejected) {
-      console.error(onrejected);
+    } catch (onRejected) {
+      console.error(onRejected);
       return null;
     }
   }
@@ -125,38 +125,39 @@ export class WordService {
   async addWordTypeUnitLink(link: WordTypeLink, unit: WordTypeUnit) {
     try {
       const request = {wordTypeUnitLinkId: unit.id, wordTypeLinkId: link.id}
-      const res = await this.http.put(env.apiUrl + '/word_type_unit_link/add/', request).toPromise();
-      return 0;
-    } catch (onrejected) {
-      console.error(onrejected);
-      return null;
+      await this.http.put(env.apiUrl + '/word_type_unit_link/add/', request).toPromise();
+      return;
+    } catch (onRejected) {
+      console.error(onRejected);
+      return;
     }
   }
 
   async deleteWordTypeUnitLink(link: WordTypeLink, unit: WordTypeUnit) {
     try {
       const request = {wordTypeUnitLinkId: unit.id, wordTypeLinkId: link.id}
-      const res = await this.http.put(env.apiUrl + '/word_type_unit_link/delete/', request).toPromise();
-      return 0;
+      await this.http.put(env.apiUrl + '/word_type_unit_link/delete/', request).toPromise();
+      return;
     } catch (onRejected) {
       console.error(onRejected);
-      return null;
+      return;
     }
   }
 
-  async wrongAnswer(id: number, type: InterrogatorType): Promise<boolean> {
+  async wrongAnswer(id: number, type: InterrogatorType): Promise<Object> {
     return this.sendAnswer(id, false, type);
   }
 
-  async rightAnswer(id: number, type: InterrogatorType): Promise<boolean> {
+  async rightAnswer(id: number, type: InterrogatorType): Promise<Object> {
     return this.sendAnswer(id, true, type);
   }
 
-  async sendAnswer(id: number, right: boolean, type: InterrogatorType): Promise<boolean> {
+  async sendAnswer(id: number, right: boolean, type: InterrogatorType): Promise<Object> {
     try {
       const request = {id: id, right: right, interrogation_type: type}
-      //const res = await this.http.put(env.apiUrl + '/answer', request).toPromise();
-      return true;
+      const res = await this.http.post(env.apiUrl + '/answer', request).toPromise();
+      console.log("add answer result: " + res);
+      return res;
     } catch (onRejected) {
       console.error(onRejected);
       return null;

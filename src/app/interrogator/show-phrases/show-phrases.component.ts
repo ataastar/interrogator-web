@@ -5,6 +5,7 @@ import { GuessedWord } from 'src/app/models/guessed-word';
 import { WordService } from 'src/app/services/word-service';
 import { GuessedWordConverter } from '../guessed-word-converter';
 import {ArrayUtil} from '../../util/array-util';
+import { Phrase } from '../../models/phrase';
 
 @Component({
   selector: 'app-show-phrases',
@@ -54,6 +55,10 @@ export class ShowPhrasesComponent implements OnInit {
 
   addNew(): void {
     this.router.navigate(['/admin/addUnitContent', this.key]);
+  }
+
+  toString(phrases: Phrase[]) { // TODO avoid code duplication
+    return phrases.map(phrase => phrase.phrase).join(',');
   }
 
 }

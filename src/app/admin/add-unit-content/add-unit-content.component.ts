@@ -82,7 +82,7 @@ export class AddUnitContentComponent implements OnInit {
   }
 
   remove(wordToRemove: Word): void {
-    this.wordService.removeUnitContent(parseInt(wordToRemove.id)).then(res => {
+    this.wordService.removeUnitContent(wordToRemove.id).then(res => {
       if (res) {
         const index = this.unitWords.indexOf(wordToRemove, 0);
         if (index > -1) {
@@ -98,7 +98,7 @@ export class AddUnitContentComponent implements OnInit {
   }
 
   private getPhraseStrings(phrases: Phrase[]): string[] {
-    let strings: string[] = new Array();
+    let strings: string[] = [];
     phrases.forEach(phrase => {
       strings.push(phrase.phrase);
     });
@@ -111,7 +111,7 @@ export class AddUnitContentComponent implements OnInit {
       if (phrase === undefined || phrase == null) {
         result = false;
         return;
-      } else if (phrase.phrase == undefined || phrase.phrase == null || phrase.phrase.trim() == '') {
+      } else if (phrase.phrase == undefined || phrase.phrase.trim() == '') {
         result = false;
         return;
       }

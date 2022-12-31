@@ -1,11 +1,11 @@
 <form>
-    <div *ngIf="word">
+    <div *ngIf="guessed">
         <div>
 
             <div style="display: flex">
-                <div>{{word.from}}</div>
-                <div *ngIf="word.example" style="margin-left: 10px; font-size: smaller; font-style: italic;">
-                    /{{word.example}}/</div>
+                <div>{{toString(guessed.word.from)}}</div>
+                <div *ngIf="guessed.word.example" style="margin-left: 10px; font-size: smaller; font-style: italic;">
+                    /{{guessed.word.example}}/</div>
             </div>
             <div class="form-group row">
                 <div class="col-9">
@@ -17,25 +17,25 @@
                     <input type="submit" (click)="next()" value="Tovább" *ngIf="checked" class="btn btn-primary">
                 </div>
             </div>
-            <label *ngIf="checked && word.pronunciation" class="col-form-label" class="col-3">
-                {{word.pronunciation}}
+            <label *ngIf="checked && guessed.word.pronunciation" class="col-form-label col-3">
+                {{guessed.word.pronunciation}}
             </label>
-            <div class="alert alert-success" *ngIf="checked && !wrong" role="alert">Helyes! ({{word.to}})<div
-                    *ngIf="word.translatedExample">[{{word.translatedExample}}]</div>
+            <div class="alert alert-success" *ngIf="checked && !wrong" role="alert">Helyes! ({{toString(guessed.word.to)}})<div
+                    *ngIf="guessed.word.translatedExample">[{{guessed.word.translatedExample}}]</div>
             </div>
             <div class="alert alert-danger" *ngIf="checked && wrong" role="alert">
-                <div>helyes válasz: {{word.to}}</div>
-                <div *ngIf="word.translatedExample">[{{word.translatedExample}}]</div>
+                <div>helyes válasz: {{ toString(guessed.word.to) }}</div>
+                <div *ngIf="guessed.word.translatedExample">[{{guessed.word.translatedExample}}]</div>
             </div>
 
 
         </div>
         <div>
-            <img *ngIf="word.imageUrl" [src]="getImageUrl()" />
+            <img *ngIf="guessed.word.imageUrl" [src]="getImageUrl()" alt="" />
         </div>
-        <audio [src]="getAudio()" *ngIf="word.audio" id="audioplayer"></audio>
+        <audio [src]="getAudio()" *ngIf="guessed.word.audio" id="audioplayer"></audio>
     </div>
-    <div *ngIf="actualWords && !word">
+    <div *ngIf="actualWords && !guessed">
         Gratulálunk! Sikeresen befejezted.
         <!--<input type="button" (click)="back()" value="Vissza">-->
     </div>

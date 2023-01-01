@@ -10,13 +10,7 @@ export class GuessedWordConverter {
     if (words == null) {
       return null;
     }
-    let actualWords = new Array(words.length);
-    let i = 0;
-    for (let word of words) {
-      actualWords[i] = new GuessedWord(word);
-      i++;
-    }
-    return actualWords;
+    return words.map(w => new GuessedWord(w));
   }
 
   /*private static clone(source: Word): GuessedWord {

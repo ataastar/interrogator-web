@@ -54,6 +54,7 @@ export class InterrogatorComponent {
   ngOnInit() {
     this.actualWords = new GuessedWordConverter().convertToGuessed(this.wordService.getActualWords());
     if (this.actualWords) {
+      this.categorizeWords(this.actualWords);
       this.next();
     } else {
       this.route.paramMap
@@ -69,10 +70,40 @@ export class InterrogatorComponent {
         })).subscribe(words => {
         if (words) {
           this.actualWords = new GuessedWordConverter().convertToGuessed(words);
+          this.categorizeWords(this.actualWords);
           this.next();
         }
       });
     }
+  }
+
+  private categorizeWords(words: GuessedWord[], filterForExpired: boolean = true): GuessedWord[] {
+    const now = new Date().getTime();
+    console.log(now);
+    if (filterForExpired) {
+      words = words.filter(w => {
+        console.log(w.word.nextInterrogationDate);
+        return w.word.nextInterrogationDate == null || w.word.nextInterrogationDate <= now});
+    }
+    words = words.sort((a, b) => (a.word.lastAnswerTime < b. word.lastAnswerTime ? -1 : 1));
+    console.log(words);
+    let firstAnswerTimeDiff = null;
+    const result = [];
+    let actualArray = [];
+    for (const word of words) {
+      if (firstAnswerTimeDiff == null && word.word.lastAnswerTime != null) {
+        firstAnswerTimeDiff = now - word.word.lastAnswerTime;
+      }
+      if (firstAnswerTimeDiff == null && word.word.lastAnswerTime != null || firstAnswerTimeDiff / 3 > now - word.word.lastAnswerTime) {
+        result.push(actualArray);
+        actualArray = [];
+        firstAnswerTimeDiff = now - word.word.lastAnswerTime;
+      }
+      actualArray.push(word);
+    }
+    result.push(actualArray);
+    console.log(result);
+    return result;
   }
 
   check(): void {

@@ -9,6 +9,8 @@ export class Word {
     audio?: string;
     example?: string;
     translatedExample?: string;
+    nextInterrogationDate: number;
+    lastAnswerTime: number;
 
     constructor(id: number, from: Phrase[], to: Phrase[], example?: string, translatedExample?: string) {
         this.id = id;

@@ -11,7 +11,11 @@ import { TextComparator } from './text-comparator';
 import { InterrogatorType } from './enum/interrogator-type';
 import { Phrase } from '../models/phrase';
 
-
+/**
+ * Interrogates the words of the unit content. (all of the word or just the words which should be interrogate by next interrogation date)
+ * Firstly interrogates those words which were interrogated earlier. Creates kind of groups by the last interrogation time and randomly interrogates words from the groups.
+ * When the wrong answer reach the number of 5, then won't be interrogate (pick up) new word from the groups, it interrogates the picked up words until the words will be answered right twice in a row
+ */
 @Component({
   selector: 'interrogator',
   templateUrl: './interrogator.component.html',
@@ -20,7 +24,15 @@ import { Phrase } from '../models/phrase';
 export class InterrogatorComponent {
 
   /**
-   * The words which are assigned to the unit. These words will be interrogated
+   * It is an array which contain GuessedWords array: e.g. [GuessedWord[]]. The first array of guessed word to be interrogate first and later the second, ...
+   */
+  categorizedWords: Array<Array<GuessedWord>> = null;
+  /**
+   * Contains the words which should be interrogate currently the others. It is the part of the categorizedWords
+   */
+  currentWordArray: GuessedWord[] = null;
+  /**
+   * The words which will be interrogated randomly. Filled from the currentWordArray and can be added some more words from the next array from the categorizedWords
    */
   actualWords: GuessedWord[] = null;
   /**
@@ -77,33 +89,39 @@ export class InterrogatorComponent {
     }
   }
 
-  private categorizeWords(words: GuessedWord[], filterForExpired: boolean = true): GuessedWord[] {
+  private categorizeWords(words: GuessedWord[], filterForExpired: boolean = true): Array<Array<GuessedWord>> {
     const now = new Date().getTime();
     console.log(now);
     if (filterForExpired) {
       words = words.filter(w => {
-        console.log(w.word.nextInterrogationDate);
-        return w.word.nextInterrogationDate == null || w.word.nextInterrogationDate <= now});
+        console.log(w.getNextInterrogationTimeAsMillis());
+        return w.word.nextInterrogationTime == null || w.getNextInterrogationTimeAsMillis() <= now});
     }
     words = words.sort((a, b) => (a.word.lastAnswerTime < b. word.lastAnswerTime ? -1 : 1));
     console.log(words);
-    let firstAnswerTimeDiff = null;
-    const result = [];
-    let actualArray = [];
+    let firstAnswerTimeDiff: number = null;
+    const result: Array<Array<GuessedWord>> = new Array<Array<GuessedWord>>();
+    let actualArray: Array<GuessedWord> = new Array<GuessedWord>();
     for (const word of words) {
       if (firstAnswerTimeDiff == null && word.word.lastAnswerTime != null) {
-        firstAnswerTimeDiff = now - word.word.lastAnswerTime;
+        firstAnswerTimeDiff = now - word.getLastAnswerTimeAsMillis();
       }
-      if (firstAnswerTimeDiff == null && word.word.lastAnswerTime != null || firstAnswerTimeDiff / 3 > now - word.word.lastAnswerTime) {
+      if (firstAnswerTimeDiff == null && word.word.lastAnswerTime != null || firstAnswerTimeDiff / 3 > now - word.getLastAnswerTimeAsMillis()) {
         result.push(actualArray);
         actualArray = [];
-        firstAnswerTimeDiff = now - word.word.lastAnswerTime;
+        firstAnswerTimeDiff = now - word.getLastAnswerTimeAsMillis();
       }
       actualArray.push(word);
     }
     result.push(actualArray);
     console.log(result);
+    this.categorizedWords = result;
     return result;
+  }
+
+  private fillCurrentWordArray() {
+    // TODO fill currentWordArray
+    // TODO count wrong answer. if the 5 is reached, must not pick up new word to interrogate
   }
 
   check(): void {

@@ -25,4 +25,11 @@ export class GuessedWord {
     this.lastAnswerWrong = false;
   }
 
+  getNextInterrogationTimeAsMillis() {
+    return this.word.nextInterrogationTime != null ? new Date(this.word.nextInterrogationTime).getTime() : null;
+  }
+
+  getLastAnswerTimeAsMillis() {
+    return this.word.lastAnswerTime != null ? new Date(this.word.lastAnswerTime).getTime() : null;
+  }
 }

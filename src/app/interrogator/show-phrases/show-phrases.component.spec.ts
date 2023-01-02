@@ -1,6 +1,11 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ShowPhrasesComponent } from './show-phrases.component';
+import { WordService } from '../../services/word-service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ActivatedRoute } from '@angular/router';
+import { Subject } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ShowPhrasesComponent', () => {
   let component: ShowPhrasesComponent;
@@ -8,7 +13,9 @@ describe('ShowPhrasesComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ShowPhrasesComponent ]
+      providers: [{provide: WordService}, {provide: ActivatedRoute,  useValue: { paramMap: new Subject() } } ],
+      declarations: [ ShowPhrasesComponent ],
+      imports: [ HttpClientTestingModule, RouterTestingModule ]
     })
     .compileComponents();
   }));

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Word } from 'src/app/models/word';
 import { WordService } from 'src/app/services/word-service';
-import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { Phrase } from 'src/app/models/phrase';
 import { TranslationToSave } from 'src/app/models/translation-to-save';
@@ -20,7 +20,7 @@ export class AddUnitContentComponent implements OnInit {
   example: string;
   translatedExample: string;
 
-  constructor(private wordService: WordService, private route: ActivatedRoute, private router: Router) {
+  constructor(private wordService: WordService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {

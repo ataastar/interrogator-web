@@ -30,11 +30,12 @@ export class InterrogatorComponent {
   /**
    * Contains the words which should be interrogate currently the others. It is the part of the categorizedWords
    */
-  currentWordArray: GuessedWord[] = null;
+  currentWordArray: Array<GuessedWord> = null;
   /**
    * The words which will be interrogated randomly. Filled from the currentWordArray and can be added some more words from the next array from the categorizedWords
    */
   actualWords: GuessedWord[] = null;
+  wrongAnswerCount = 0;
   /**
    * The current word which, should be guessed
    */
@@ -119,9 +120,49 @@ export class InterrogatorComponent {
     return result;
   }
 
-  private fillCurrentWordArray() {
-    // TODO fill currentWordArray
+  private fillWordArrays(): boolean {
+    if (this.categorizedWords.length == 0) {return false;} // no any word to add
+    let wordCanBeAddedCount = this.wrongAnswerCount - this.actualWords.length;
+    if (wordCanBeAddedCount <= 0) {return true;} // we have enough word to interrogate (the previous group contained many words)
+    const fillAllFirstLevel = this.currentWordArray.length == 0; // the first group of words are interrogated or this is the first fill
+    for (const word of this.categorizedWords[0]) { // get the first group of words and add to the actual words
+      if (fillAllFirstLevel) { // in this case we fill all words from the current group
+        this.currentWordArray.push(word);
+        wordCanBeAddedCount--;
+        this.actualWords.push(word)
+        continue;
+      }
+      // TODO add if not exists
+      // TODO increment just if was added
+      wordCanBeAddedCount--;
+      this.actualWords.push(word)
+      if (wordCanBeAddedCount <= 0) { // we reached the max number of words
+        break;
+      }
+    }
+    // need to remove the first group
+    // 1. if fillAllFirstLevel is true (all was interrogated from the first group or it is the initial fill)
+    // 2. or if all of the words were added to the actual array from the first group
+    if (fillAllFirstLevel || this.actualWords.length - this.currentWordArray.length >= this.categorizedWords[0].length) {
+      this.categorizedWords.splice(0, 1);
+    }
+    while (wordCanBeAddedCount > 0 && this.categorizedWords.length > 0) {
+      for (const word of this.categorizedWords[0]) { // get the first group of words and add to the actual words
+        // TODO add if not exists
+        // TODO increment just if was added
+        wordCanBeAddedCount--;
+        this.actualWords.push(word)
+        if (wordCanBeAddedCount <= 0) { // we reached the max number of words
+          break;
+        }
+      }
+      /// need to remove the group if all of the words were added to the actual array from this group
+      if (this.actualWords.length - this.currentWordArray.length >= this.categorizedWords[0].length) {
+        this.categorizedWords.splice(0, 1);
+      }
+    }
     // TODO count wrong answer. if the 5 is reached, must not pick up new word to interrogate
+    return true; // TODO false if no word to add
   }
 
   check(): void {
@@ -137,6 +178,7 @@ export class InterrogatorComponent {
     } else {
       if (this.guessed.getWrongAnswerNumber() == 0) {
         this.wordService.wrongAnswer(this.guessed.word.id, InterrogatorType.WRITING); // TODO handle globally if something go wrong such a call
+        this.wrongAnswerCount++;
         console.log('wrong input for: ' + this.guessed.word.from);
       }
       this.guessed.incrementWrongAnswer();

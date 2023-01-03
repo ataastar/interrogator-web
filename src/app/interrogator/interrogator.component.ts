@@ -30,11 +30,11 @@ export class InterrogatorComponent {
   /**
    * Contains the words which should be interrogate currently the others. It is the part of the categorizedWords
    */
-  currentWordArray: Array<GuessedWord> = null;
+  currentWordArray: Array<GuessedWord> = [];
   /**
    * The words which will be interrogated randomly. Filled from the currentWordArray and can be added some more words from the next array from the categorizedWords
    */
-  actualWords: GuessedWord[] = null;
+  actualWords: GuessedWord[] = [];
   wrongAnswerCount = 0;
   /**
    * The current word which, should be guessed
@@ -65,9 +65,8 @@ export class InterrogatorComponent {
   }
 
   ngOnInit() {
-    this.actualWords = new GuessedWordConverter().convertToGuessed(this.wordService.getActualWords());
-    if (this.actualWords) {
-      this.categorizeWords(this.actualWords);
+    this.categorizeWords(new GuessedWordConverter().convertToGuessed(this.wordService.getActualWords()));
+    if (this.categorizedWords.length > 0) {
       this.next();
     } else {
       this.route.paramMap
@@ -82,8 +81,7 @@ export class InterrogatorComponent {
           }
         })).subscribe(words => {
         if (words) {
-          this.actualWords = new GuessedWordConverter().convertToGuessed(words);
-          this.categorizeWords(this.actualWords);
+          this.categorizeWords(new GuessedWordConverter().convertToGuessed(words));
           this.next();
         }
       });
@@ -115,16 +113,23 @@ export class InterrogatorComponent {
       }
       actualArray.push(word);
     }
-    result.push(actualArray);
+    if (actualArray.length > 0) {
+      result.push(actualArray);
+    }
     console.log(result);
     this.categorizedWords = result;
     return result;
   }
 
-  private fillWordArrays(): boolean {
-    if (this.categorizedWords.length == 0) {return false;} // no any word to add
-    let wordCanBeAddedCount = this.wrongAnswerCount - this.actualWords.length;
-    if (wordCanBeAddedCount <= 0) {return true;} // we have enough word to interrogate (the previous group contained many words)
+  fillWordArrays(): boolean {
+    if (this.categorizedWords == null || this.categorizedWords.length == 0) {
+      return false; // no any word to add
+    }
+    let wordCanBeAddedCount = 5 - this.wrongAnswerCount - this.actualWords.length;
+    console.log('wordCanBeAddedCount: ' + wordCanBeAddedCount);
+    if (wordCanBeAddedCount <= 0) {
+      return true;
+    } // we have enough word to interrogate (the previous group contained many words)
     const fillAllFirstLevel = this.currentWordArray.length == 0; // the first group of words are interrogated or this is the first fill
     for (const word of this.categorizedWords[0]) { // get the first group of words and add to the actual words
       if (fillAllFirstLevel) { // in this case we fill all words from the current group

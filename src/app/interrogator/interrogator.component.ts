@@ -90,15 +90,16 @@ export class InterrogatorComponent {
     }
   }
 
-  private categorizeWords(words: GuessedWord[], filterForExpired: boolean = true): Array<Array<GuessedWord>> {
+  categorizeWords(words: GuessedWord[], filterForExpired: boolean = true): Array<Array<GuessedWord>> {
     const now = new Date().getTime();
     console.log(now);
     if (filterForExpired) {
       words = words.filter(w => {
         console.log(w.getNextInterrogationTimeAsMillis());
-        return w.word.nextInterrogationTime == null || w.getNextInterrogationTimeAsMillis() <= now});
+        return w.word.nextInterrogationTime == null || w.getNextInterrogationTimeAsMillis() <= now
+      });
     }
-    words = words.sort((a, b) => (a.word.lastAnswerTime < b. word.lastAnswerTime ? -1 : 1));
+    words = words.sort((a, b) => (a.word.lastAnswerTime < b.word.lastAnswerTime ? -1 : 1));
     console.log(words);
     let firstAnswerTimeDiff: number = null;
     const result: Array<Array<GuessedWord>> = new Array<Array<GuessedWord>>();

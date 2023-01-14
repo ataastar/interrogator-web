@@ -28,11 +28,11 @@ export class InterrogatorComponent {
    */
   categorizedWords: Array<Array<GuessedWord>> = null;
   /**
-   * Contains the words which should be interrogate currently the others. It is the part of the categorizedWords
+   * Contains the words which should be interrogate before others to be added.
    */
-  currentWordArray: Array<GuessedWord> = [];
+  needToInterrogate: Array<GuessedWord> = [];
   /**
-   * The words which will be interrogated randomly. Filled from the currentWordArray and can be added some more words from the next array from the categorizedWords
+   * The words which will be interrogated randomly. Filled from the needToInterrogate and can be added some more words from the next array from the categorizedWords
    */
   actualWords: GuessedWord[] = [];
   wrongAnswerCount = 0;
@@ -90,15 +90,15 @@ export class InterrogatorComponent {
 
   categorizeWords(words: GuessedWord[], filterForExpired: boolean = true): Array<Array<GuessedWord>> {
     const now = new Date().getTime();
-    console.log(now);
+    //console.log(now);
     if (filterForExpired) {
       words = words.filter(w => {
-        console.log(w.getNextInterrogationTimeAsMillis());
+        //console.log(w.getNextInterrogationTimeAsMillis());
         return w.word.nextInterrogationTime == null || w.getNextInterrogationTimeAsMillis() <= now
       });
     }
     words = words.sort((a, b) => (a.word.lastAnswerTime < b.word.lastAnswerTime ? -1 : 1));
-    console.log(words);
+    //console.log(words);
     let firstAnswerTimeDiff: number = null;
     const result: Array<Array<GuessedWord>> = new Array<Array<GuessedWord>>();
     let actualArray: Array<GuessedWord> = new Array<GuessedWord>();
@@ -116,69 +116,121 @@ export class InterrogatorComponent {
     if (actualArray.length > 0) {
       result.push(actualArray);
     }
-    console.log(result);
+    //console.log(result);
     this.categorizedWords = result;
     return result;
   }
 
+  /**
+   * Fills the needToInterrogate and the actualWords array depends on how many words were answered wrong
+   * and how many words are in the next group of the categorizedWords
+   */
   fillWordArrays(): boolean {
     if (this.categorizedWords == null || this.categorizedWords.length == 0) {
       return false; // no any word to add
     }
     let wordCanBeAddedCount = 5 - this.wrongAnswerCount - this.actualWords.length;
-    console.log('wordCanBeAddedCount: ' + wordCanBeAddedCount);
-    if (wordCanBeAddedCount <= 0) {
+    //console.log('wordCanBeAddedCount: ' + wordCanBeAddedCount);
+    if (wordCanBeAddedCount <= 0) { // we have enough word to interrogate (the previous group contained many words)
+      //console.log('wordCanBeAddedCount <= 0');
       return true;
-    } // we have enough word to interrogate (the previous group contained many words)
-    const fillAllFirstLevel = this.currentWordArray.length == 0; // the first group of words are interrogated or this is the first fill
+    }
+    const fillAllFirstLevel = this.needToInterrogate.length == 0; // the first group of words are interrogated or this is the first fill
+    let currentlyAddedWords: GuessedWord[] = [];
+    let currentlyAddedCount = 0;
     for (const word of this.categorizedWords[0]) { // get the first group of words and add to the actual words
+      //console.log(word);
       if (fillAllFirstLevel) { // in this case we fill all words from the current group
-        this.currentWordArray.push(word);
-        wordCanBeAddedCount--;
-        this.actualWords.push(word)
+        if (this.addToActualWordIfNotExists(word, currentlyAddedWords)) {
+          wordCanBeAddedCount--;
+        }
         continue;
       }
-      // TODO add if not exists
-      // TODO increment just if was added
-      wordCanBeAddedCount--;
-      this.actualWords.push(word)
+      if (this.addToActualWordIfNotExists(word, currentlyAddedWords)) {
+        wordCanBeAddedCount--;
+      }
+      currentlyAddedCount++;
       if (wordCanBeAddedCount <= 0) { // we reached the max number of words
         break;
       }
     }
-    // need to remove the first group
-    // 1. if fillAllFirstLevel is true (all was interrogated from the first group or it is the initial fill)
-    // 2. or if all of the words were added to the actual array from the first group
-    if (fillAllFirstLevel || this.actualWords.length - this.currentWordArray.length >= this.categorizedWords[0].length) {
+    // need to remove the first group if:
+    // 1. fillAllFirstLevel is true (all was interrogated from the first group or it is the initial fill)
+    // 2. or all of the words were added to the actual array from the first group
+    if (fillAllFirstLevel || currentlyAddedCount >= this.categorizedWords[0].length) {
+      //console.log('need to remove the first array of categorizedWords.');
+      this.needToInterrogate = this.needToInterrogate.concat(currentlyAddedWords);
       this.categorizedWords.splice(0, 1);
     }
     while (wordCanBeAddedCount > 0 && this.categorizedWords.length > 0) {
+      currentlyAddedCount = 0;
+      currentlyAddedWords = [];
       for (const word of this.categorizedWords[0]) { // get the first group of words and add to the actual words
-        // TODO add if not exists
-        // TODO increment just if was added
-        wordCanBeAddedCount--;
-        this.actualWords.push(word)
+        if (this.addToActualWordIfNotExists(word, currentlyAddedWords)) {
+          //console.log('word added: ' + word);
+          wordCanBeAddedCount--;
+          //console.log('wordCanBeAddedCount: ' + wordCanBeAddedCount);
+        }
+        currentlyAddedCount++;
         if (wordCanBeAddedCount <= 0) { // we reached the max number of words
           break;
         }
       }
       /// need to remove the group if all of the words were added to the actual array from this group
-      if (this.actualWords.length - this.currentWordArray.length >= this.categorizedWords[0].length) {
+      if (currentlyAddedCount >= this.categorizedWords[0].length) {
+        this.needToInterrogate = this.needToInterrogate.concat(currentlyAddedWords);
+        //console.log('need to remove the first array of categorizedWords. (2)');
+        //console.log('this.actualWords.length: ' + this.actualWords.length);
+        //console.log('this.needToInterrogate.length: ' + this.needToInterrogate.length);
+        //console.log('this.categorizedWords[0].length: ' + this.categorizedWords[0].length);
         this.categorizedWords.splice(0, 1);
       }
     }
-    // TODO count wrong answer. if the 5 is reached, must not pick up new word to interrogate
-    return true; // TODO false if no word to add
+    return true;
+  }
+
+  /**
+   * Add the parameter word to the actualWords array if it does not contain the word.
+   * @param word
+   * @param words
+   * @private
+   * @return true if the word was added to the actual array (actual array did not contain the word before)
+   */
+  private addToActualWordIfNotExists(word: GuessedWord, words: GuessedWord[]): boolean {
+    // add to the needToInterrogate list
+    let found = false;
+    for (const wordInList of words) {
+      if (wordInList.word.id == word.word.id) {
+        found = true;
+      }
+    }
+    if (!found) {
+      words.push(word)
+    }
+    // add to the actualWords list
+    found = false;
+    for (const wordInList of this.actualWords) {
+      if (wordInList.word.id == word.word.id) {
+        found = true;
+      }
+    }
+    if (!found) {
+      this.actualWords.push(word)
+    }
+    return true;
   }
 
   check(): void {
     if (this.comparator.isEqual(this.guessed.word.to, this.to)) {
       // if this is the last or the previous answer was also right, then remove from the array
       if (!this.guessed.lastAnswerWrong || this.actualWords.length === 1) {
+        this.removeWordFromActualArrays(this.guessed);
         if (this.guessed.getWrongAnswerNumber() == 0) { // if the first was right, then send it to the server
           this.wordService.rightAnswer(this.guessed.word.id, InterrogatorType.WRITING);
+          if (this.wrongAnswerCount < 5) { // no need to add new word to interrogate if we reached the maximum wrong answer count
+            this.fillWordArrays();
+          }
         }
-        this.actualWords.splice(this.index, 1);
       }
       this.guessed.incrementCorrectAnswer();
     } else {
@@ -195,6 +247,21 @@ export class InterrogatorComponent {
     if (this.guessed.word.audio) {
       let player: any = document.getElementById('audioplayer');
       player.play();
+    }
+  }
+
+  private removeWordFromActualArrays(word: GuessedWord): void {
+    let index = this.actualWords.findIndex(x => x.word.id == word.word.id);
+    if (index > -1) {
+      this.actualWords.splice(index, 1);
+    } else {
+      console.log("Can not find word in the actual array!!!");
+      console.log(word);
+      console.log(this.actualWords);
+    }
+    index = this.needToInterrogate.findIndex(x => x.word.id == word.word.id);
+    if (index > -1) {
+      this.needToInterrogate.splice(index, 1);
     }
   }
 

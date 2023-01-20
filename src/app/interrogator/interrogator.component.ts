@@ -135,57 +135,35 @@ export class InterrogatorComponent {
       //console.log('wordCanBeAddedCount <= 0');
       return true;
     }
-    const fillAllFirstLevel = this.needToInterrogate.length - this.wrongAnswerCount == 0; // the first group of words are interrogated or this is the first fill
-    let currentlyAddedWords: GuessedWord[] = [];
-    let currentlyAddedCount = 0;
-    for (const word of this.categorizedWords[0]) { // get the first group of words and add to the actual words
-      //console.log('from categorizedWords: ' + JSON.stringify(word.word));
-      if (fillAllFirstLevel) { // in this case we fill all words from the current group
-        if (this.addToActualWordIfNotExists(word, currentlyAddedWords)) {
-          wordCanBeAddedCount--;
-        }
-
-        continue;
-      }
-      if (this.addToActualWordIfNotExists(word, currentlyAddedWords)) {
-        wordCanBeAddedCount--;
-      }
-      currentlyAddedCount++;
-      if (wordCanBeAddedCount <= 0) { // we reached the max number of words
-        break;
-      }
-    }
-    // need to remove the first group if:
-    // 1. fillAllFirstLevel is true (all was interrogated from the first group or it is the initial fill)
-    // 2. or all of the words were added to the actual array from the first group
-    if (fillAllFirstLevel || currentlyAddedCount >= this.categorizedWords[0].length) {
-      //console.log('need to remove the first array of categorizedWords.');
-      this.needToInterrogate = this.needToInterrogate.concat(currentlyAddedWords);
-      this.categorizedWords.splice(0, 1);
-    }
+    let fillAllFirstLevel = this.needToInterrogate.length - this.wrongAnswerCount == 0; // the first group of words were interrogated or this is the first fill
     while (wordCanBeAddedCount > 0 && this.categorizedWords.length > 0) {
-      currentlyAddedCount = 0;
-      currentlyAddedWords = [];
+      let currentlyAddedWords: GuessedWord[] = [];
+      let currentlyAddedCount = 0;
       for (const word of this.categorizedWords[0]) { // get the first group of words and add to the actual words
+        //console.log('from categorizedWords: ' + JSON.stringify(word.word));
+        if (fillAllFirstLevel) { // in this case we fill all words from the current group
+          if (this.addToActualWordIfNotExists(word, currentlyAddedWords)) {
+            wordCanBeAddedCount--;
+          }
+          continue;
+        }
         if (this.addToActualWordIfNotExists(word, currentlyAddedWords)) {
-          //console.log('word added: ' + JSON.stringify(word.word));
           wordCanBeAddedCount--;
-          //console.log('wordCanBeAddedCount: ' + wordCanBeAddedCount);
         }
         currentlyAddedCount++;
         if (wordCanBeAddedCount <= 0) { // we reached the max number of words
           break;
         }
       }
-      /// need to remove the group if all of the words were added to the actual array from this group
-      if (currentlyAddedCount >= this.categorizedWords[0].length) {
+      // need to remove the first group if:
+      // 1. fillAllFirstLevel is true (all was interrogated from the first group or it is the initial fill)
+      // 2. or all of the words were added to the actual array from the first group
+      if (fillAllFirstLevel || currentlyAddedCount >= this.categorizedWords[0].length) {
+        //console.log('need to remove the first array of categorizedWords.');
         this.needToInterrogate = this.needToInterrogate.concat(currentlyAddedWords);
-        //console.log('need to remove the first array of categorizedWords. (2)');
-        //console.log('this.actualWords.length: ' + this.actualWords.length);
-        //console.log('this.needToInterrogate.length: ' + this.needToInterrogate.length);
-        //console.log('this.categorizedWords[0].length: ' + this.categorizedWords[0].length);
         this.categorizedWords.splice(0, 1);
       }
+      fillAllFirstLevel = false;
     }
     return true;
   }

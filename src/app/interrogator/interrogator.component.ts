@@ -135,7 +135,7 @@ export class InterrogatorComponent {
       //console.log('wordCanBeAddedCount <= 0');
       return true;
     }
-    const fillAllFirstLevel = this.needToInterrogate.length == 0; // the first group of words are interrogated or this is the first fill
+    const fillAllFirstLevel = this.needToInterrogate.length - this.wrongAnswerCount == 0; // the first group of words are interrogated or this is the first fill
     let currentlyAddedWords: GuessedWord[] = [];
     let currentlyAddedCount = 0;
     for (const word of this.categorizedWords[0]) { // get the first group of words and add to the actual words
@@ -239,7 +239,7 @@ export class InterrogatorComponent {
       if (this.guessed.getWrongAnswerNumber() == 0) {
         this.wordService.wrongAnswer(this.guessed.word.id, InterrogatorType.WRITING); // TODO handle globally if something go wrong such a call
         this.wrongAnswerCount++;
-        console.log('wrong input for: ' + this.guessed.word.from);
+        //console.log('wrong input for: ' + this.guessed.word.from);
       }
       this.guessed.incrementWrongAnswer();
       this.wrong = true;

@@ -112,7 +112,6 @@ describe('InterrogatorComponent', () => {
 
     expect(component.fillWordArrays()).toBeTruthy();
     expect(component.categorizedWords.length).toBe(0);
-    console.log(component.needToInterrogate);
     expect(component.needToInterrogate.length).toBe(1);
     expect(component.actualWords.length).toBe(1);
 
@@ -310,30 +309,8 @@ describe('InterrogatorComponent', () => {
     // right answer
     checkAndAssertAnswer(component, word2, word2, 5, '5-1+1 words are remained in the array', 3, '4-1 should be interrogated');
     expect(word2.lastAnswerWrong).toBeFalsy('Was answered once rightly');
-    /*
-        // wrong answer
-        spyOn(component, 'getRandomWord').and.returnValue(word7);
-        checkAndAssertAnswer(component, word7, word1, 5, '5 words are remained in the array', 5, '5, all ne to be interrogate');
-        // wrong answer
-        checkAndAssertAnswer(component, word6, word1, 5, '5 words are remained in the array', 5, '5, all ne to be interrogate');
-        // right answer
-        checkAndAssertAnswer(component, word5, word5, 5, '5-1+1 words are remained in the array', 4, '5-1 should be interrogated');
-        // wrong answer
-        checkAndAssertAnswer(component, word4, word1, 5, '5-1+1 words are remained in the array', 4, '5-1 should be interrogated');
-        // wrong answer
-        checkAndAssertAnswer(component, word3, word1, 5, '5-1+1 words are remained in the array', 4, '5-1 should be interrogated');
-        // wrong answer
-        checkAndAssertAnswer(component, word2, word1, 5, '5-1+1 words are remained in the array', 4, '5-1 should be interrogated');
-        // check wrong answer count on words
-        expect(word7.getWrongAnswerNumber()).toBe(1, 'Was answered once wrongly');
-        expect(word7.lastAnswerWrong).toBeTruthy('Was answered once wrongly');
-        expect(word6.getWrongAnswerNumber()).toBe(1, 'Was answered once wrongly');
-        expect(word5.getWrongAnswerNumber()).toBe(0, 'Was answered once rightly');
-        expect(word5.lastAnswerWrong).toBeFalsy('Was answered once rightly');
-        expect(word4.getWrongAnswerNumber()).toBe(1, 'Was answered once wrongly');
-        expect(word3.getWrongAnswerNumber()).toBe(1, 'Was answered once wrongly');
-        expect(word2.getWrongAnswerNumber()).toBe(1, 'Was answered once wrongly');
-    */
+    // right answer
+    checkAndAssertAnswer(component, word4, word4, 7, '5-2+2 (+ 3: remaining from the last group) words are remained in the array', 7, '4-2 (+ 5 all from the last group) should be interrogated');
   });
 })
 ;

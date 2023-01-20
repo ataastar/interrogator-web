@@ -158,23 +158,13 @@ describe('InterrogatorComponent', () => {
 
     // right answer
     spyOn(component, 'getRandomWord').and.returnValue(word1);
-    component.next();
-    component.to = to1;
-    component.check();
+    checkAndAssertAnswer(component, word1, word1, 1, 'aa1 is remained in the array', 1, 'One of it was interrogated');
     expect(component.checked).toBeTruthy('to be checked');
-    expect(component.wrong).toBeFalsy('the answer right, so can\'t be wrong');
-    expect(component.actualWords.length).toBe(1, 'aa1 is remained in the array');
     expect(component.actualWords[0].word.from[0].phrase).toBe('aa1', 'aa1 is remained in the array');
 
     // right answer
-    component.getRandomWord = jasmine.createSpy().and.returnValue(word2);
-    component.next();
-    component.to = to2;
-    component.check();
+    checkAndAssertAnswer(component, word2, word2, 0, 'Can not be any word to interrogate', 0, 'all was interrogated');
     expect(component.checked).toBeTruthy('to be checked');
-    expect(component.wrong).toBeFalsy('the answer right, so can\'t be wrong');
-    expect(component.actualWords.length).toBe(0, 'Can not be any word to interrogate');
-
   });
 
   it('Test fillWordArrays: 5 groups, each contain 1 word -> all need to be added to the actual array -> answer all right', () => {
@@ -207,47 +197,20 @@ describe('InterrogatorComponent', () => {
 
     // right answer
     spyOn(component, 'getRandomWord').and.returnValue(word2);
-    component.next();
-    component.to = word2.word.to[0].phrase;
-    component.check();
+    checkAndAssertAnswer(component, word2, word2, 4, '4 words are remained in the array', 4, 'One of it was interrogated');
     expect(component.checked).toBeTruthy('to be checked');
-    expect(component.wrong).toBeFalsy('the answer right, so can\'t be wrong');
-    expect(component.actualWords.length).toBe(4, '4 words are remained in the array');
-    expect(component.needToInterrogate.length).toBe(4, 'One of it was interrogated');
-
     // right answer
-    component.getRandomWord = jasmine.createSpy().and.returnValue(word5);
-    component.next();
-    component.to = word5.word.to[0].phrase;
-    component.check();
-    expect(component.actualWords.length).toBe(3, '3 words are remained in the array');
-    expect(component.needToInterrogate.length).toBe(3, '2 were interrogated');
-
+    checkAndAssertAnswer(component, word5, word5, 3, '3 words are remained in the array', 3, '2 were interrogated');
     // right answer
-    component.getRandomWord = jasmine.createSpy().and.returnValue(word1);
-    component.next();
-    component.to = word1.word.to[0].phrase;
-    component.check();
-    expect(component.actualWords.length).toBe(2, '3 words are remained in the array');
-    expect(component.needToInterrogate.length).toBe(2, '3 were interrogated');
-
+    checkAndAssertAnswer(component, word1, word1, 2, '2 words are remained in the array', 2, '3 were interrogated');
     // right answer
-    component.getRandomWord = jasmine.createSpy().and.returnValue(word3);
-    component.next();
-    component.to = word3.word.to[0].phrase;
-    component.check();
-    expect(component.actualWords.length).toBe(1, '3 words are remained in the array');
-
+    checkAndAssertAnswer(component, word3, word3, 1, '1 word is remained in the array', 1, '4 were interrogated');
     // right answer
-    component.getRandomWord = jasmine.createSpy().and.returnValue(word4);
-    component.next();
-    component.to = word4.word.to[0].phrase;
-    component.check();
-    expect(component.actualWords.length).toBe(0, '3 words are remained in the array');
+    checkAndAssertAnswer(component, word4, word4, 0, '0 word is remained in the array', 0, '5 were interrogated');
 
   });
 
-  it('Test fillWordArrays: 6 groups (the last contains 2 word, the others contains just 1 word) -> last 2 no need to be added to the actual array -> 4 wrong answer -> after the first right answer 6. should be added to the actual and the current and 7. should remained in the categorized array', () => {
+  it('Test fillWordArrays: 6 groups (the last contains 2 word, the others contains just 1 word) -> last 2 no need to be added to the actual array -> 2 wrong answer -> 3. answer is right -> 6. words should be added to the actual -> wrong answer for the remaining words -> 7. word should remained in the categorized array', () => {
     const component = setup(setupMockWordService());
 
     const now = new Date().getTime();
@@ -277,49 +240,47 @@ describe('InterrogatorComponent', () => {
     expect(component.needToInterrogate.length).toBe(5);
     expect(component.needToInterrogate[0]).toBe(word7);
     expect(component.actualWords.length).toBe(5);
-    /*
-        // wrong answer
-        spyOn(component, 'getRandomWord').and.returnValue(word7);
-        component.next();
-        component.to = word1.word.to[0].phrase;
-        component.check();
-        expect(component.wrong).toBeTruthy('Wrong answer');
-        expect(component.actualWords.length).toBe(5, '5 words are remained in the array');
-        expect(component.needToInterrogate.length).toBe(5, '5, all ne to be interrogate');
 
-        // right answer
-        component.getRandomWord = jasmine.createSpy().and.returnValue(word5);
-        component.next();
-        component.to = word5.word.to[0].phrase;
-        component.check();
-        expect(component.actualWords.length).toBe(3, '3 words are remained in the array');
-        expect(component.needToInterrogate.length).toBe(0, 'The first was interrogated and the answer was right');
+    // wrong answer
+    spyOn(component, 'getRandomWord').and.returnValue(word7);
+    checkAndAssertAnswer(component, word7, word1, 5, '5 words are remained in the array', 5, '5, all ne to be interrogate');
+    // wrong answer
+    checkAndAssertAnswer(component, word6, word1, 5, '5 words are remained in the array', 5, '5, all ne to be interrogate');
+    // right answer
+    checkAndAssertAnswer(component, word5, word5, 5, '5-1+1 words are remained in the array', 4, '5-1 should be interrogated');
+    // wrong answer
+    checkAndAssertAnswer(component, word4, word1, 5, '5-1+1 words are remained in the array', 4, '5-1 should be interrogated');
+    // wrong answer
+    checkAndAssertAnswer(component, word3, word1, 5, '5-1+1 words are remained in the array', 4, '5-1 should be interrogated');
+    // wrong answer
+    checkAndAssertAnswer(component, word2, word1, 5, '5-1+1 words are remained in the array', 4, '5-1 should be interrogated');
+    // check wrong answer count on words
+    expect(word7.getWrongAnswerNumber()).toBe(1, 'Was answered once wrongly');
+    expect(word7.lastAnswerWrong).toBeTruthy('Was answered once wrongly');
+    expect(word6.getWrongAnswerNumber()).toBe(1, 'Was answered once wrongly');
+    expect(word5.getWrongAnswerNumber()).toBe(0, 'Was answered once rightly');
+    expect(word5.lastAnswerWrong).toBeFalsy('Was answered once rightly');
+    expect(word4.getWrongAnswerNumber()).toBe(1, 'Was answered once wrongly');
+    expect(word3.getWrongAnswerNumber()).toBe(1, 'Was answered once wrongly');
+    expect(word2.getWrongAnswerNumber()).toBe(1, 'Was answered once wrongly');
 
-        // right answer
-        component.getRandomWord = jasmine.createSpy().and.returnValue(word1);
-        component.next();
-        component.to = word1.word.to[0].phrase;
-        component.check();
-        expect(component.actualWords.length).toBe(2, '3 words are remained in the array');
-        expect(component.needToInterrogate.length).toBe(0, 'The first was already interrogated');
-
-        // right answer
-        component.getRandomWord = jasmine.createSpy().and.returnValue(word3);
-        component.next();
-        component.to = word3.word.to[0].phrase;
-        component.check();
-        expect(component.actualWords.length).toBe(1, '3 words are remained in the array');
-
-        // right answer
-        component.getRandomWord = jasmine.createSpy().and.returnValue(word4);
-        component.next();
-        component.to = word4.word.to[0].phrase;
-        component.check();
-        expect(component.actualWords.length).toBe(0, '3 words are remained in the array');
-  */
   });
 })
 ;
+
+function checkAndAssertAnswer(c: InterrogatorComponent, nextWord: GuessedWord, answerWord: GuessedWord, expectedActualWordLength: number, expectedActualWordLengthExp: string, needToInterrogateLength: number, needToInterrogateLengthExp: string) {
+  c.getRandomWord = jasmine.createSpy().and.returnValue(nextWord);
+  c.next();
+  c.to = answerWord.word.to[0].phrase;
+  c.check();
+  if (answerWord == nextWord) {
+    expect(c.wrong).toBeFalsy('Right answer');
+  } else {
+    expect(c.wrong).toBeTruthy('Wrong answer');
+  }
+  expect(c.actualWords.length).toBe(expectedActualWordLength, expectedActualWordLengthExp);
+  expect(c.needToInterrogate.length).toBe(needToInterrogateLength, needToInterrogateLengthExp);
+}
 
 function addWordToArray(words: GuessedWord[], id: number, fromPhrase: string, time: number): GuessedWord {
   const word = createGuessedWord(id, new Date(time), new Date(time), fromPhrase, fromPhrase + 'to');

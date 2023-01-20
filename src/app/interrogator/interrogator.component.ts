@@ -129,7 +129,7 @@ export class InterrogatorComponent {
     if (this.categorizedWords == null || this.categorizedWords.length == 0) {
       return false; // no any word to add
     }
-    let wordCanBeAddedCount = 5 - this.wrongAnswerCount - this.actualWords.length;
+    let wordCanBeAddedCount = 5 - this.actualWords.length;
     //console.log('wordCanBeAddedCount: ' + wordCanBeAddedCount);
     if (wordCanBeAddedCount <= 0) { // we have enough word to interrogate (the previous group contained many words)
       //console.log('wordCanBeAddedCount <= 0');
@@ -139,11 +139,12 @@ export class InterrogatorComponent {
     let currentlyAddedWords: GuessedWord[] = [];
     let currentlyAddedCount = 0;
     for (const word of this.categorizedWords[0]) { // get the first group of words and add to the actual words
-      //console.log(word);
+      //console.log('from categorizedWords: ' + JSON.stringify(word.word));
       if (fillAllFirstLevel) { // in this case we fill all words from the current group
         if (this.addToActualWordIfNotExists(word, currentlyAddedWords)) {
           wordCanBeAddedCount--;
         }
+
         continue;
       }
       if (this.addToActualWordIfNotExists(word, currentlyAddedWords)) {
@@ -167,7 +168,7 @@ export class InterrogatorComponent {
       currentlyAddedWords = [];
       for (const word of this.categorizedWords[0]) { // get the first group of words and add to the actual words
         if (this.addToActualWordIfNotExists(word, currentlyAddedWords)) {
-          //console.log('word added: ' + word);
+          //console.log('word added: ' + JSON.stringify(word.word));
           wordCanBeAddedCount--;
           //console.log('wordCanBeAddedCount: ' + wordCanBeAddedCount);
         }
@@ -217,7 +218,7 @@ export class InterrogatorComponent {
     if (!found) {
       this.actualWords.push(word)
     }
-    return true;
+    return !found;
   }
 
   check(): void {
@@ -227,6 +228,7 @@ export class InterrogatorComponent {
         this.removeWordFromActualArrays(this.guessed);
         if (this.guessed.getWrongAnswerNumber() == 0) { // if the first was right, then send it to the server
           this.wordService.rightAnswer(this.guessed.word.id, InterrogatorType.WRITING);
+          //console.log('wrongAnswerCount: ' + this.wrongAnswerCount);
           if (this.wrongAnswerCount < 5) { // no need to add new word to interrogate if we reached the maximum wrong answer count
             this.fillWordArrays();
           }
@@ -253,6 +255,8 @@ export class InterrogatorComponent {
   private removeWordFromActualArrays(word: GuessedWord): void {
     let index = this.actualWords.findIndex(x => x.word.id == word.word.id);
     if (index > -1) {
+      //console.log(index);
+      //console.log(JSON.stringify(word));
       this.actualWords.splice(index, 1);
     } else {
       console.log("Can not find word in the actual array!!!");
@@ -261,6 +265,7 @@ export class InterrogatorComponent {
     }
     index = this.needToInterrogate.findIndex(x => x.word.id == word.word.id);
     if (index > -1) {
+      //console.log(index);
       this.needToInterrogate.splice(index, 1);
     }
   }

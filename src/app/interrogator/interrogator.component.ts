@@ -37,13 +37,14 @@ export class InterrogatorComponent {
   actualWords: GuessedWord[] = [];
   wrongAnswerCount = 0;
   /**
+   * Currently answered word list (now, or 1 or 2 answer times before). The word which was answered wrong or which need to be answered right one more time
+   * These words need to skip 1, 2 or 3 times (no need to ask). The times is depends on the actual words size.
+   */
+  currentlyAnswered: GuessedWord[] = [];
+  /**
    * The current word which, should be guessed
    */
   guessed: GuessedWord = null;
-  /**
-   * Random generated index. The index of the guessed word array.
-   */
-  index: number = null;
   /**
    * The input word.
    */
@@ -211,6 +212,8 @@ export class InterrogatorComponent {
             this.fillWordArrays();
           }
         }
+      } else {
+        this.currentlyAnswered.push(this.guessed); // the word is need to be interrogated one more time, so we need to skip for the next few random choice
       }
       this.guessed.incrementCorrectAnswer();
     } else {
@@ -221,13 +224,21 @@ export class InterrogatorComponent {
       }
       this.guessed.incrementWrongAnswer();
       this.wrong = true;
+      this.currentlyAnswered.push(this.guessed); // we need to skip for the next few random choice, because it was answered wrong
     }
+    // the need to remove word from currently answered list (the oldest or more)
+    this.removeFromCurrentlyAnswered();
     this.checked = true;
     // play the audio if available
     if (this.guessed.word.audio) {
       let player: any = document.getElementById('audioplayer');
       player.play();
     }
+  }
+
+  private removeFromCurrentlyAnswered() {
+    const currentlyAnsweredLengthShouldBe = this.actualWords.length > 4 ? 3 : (this.actualWords.length = 4 ? 2 : 1);
+    this.currentlyAnswered.splice(0, Math.max(this.currentlyAnswered.length - currentlyAnsweredLengthShouldBe, 0));
   }
 
   private removeWordFromActualArrays(word: GuessedWord): void {
@@ -259,20 +270,31 @@ export class InterrogatorComponent {
   }
 
   getRandomWord(): GuessedWord {
-    let remainingWordsNumber = this.actualWords != null ? this.actualWords.length : 0;
+    if (this.actualWords == null) {
+      return null;
+    }
+    // fill a new list with words which are in the actual list but not in the currently answered list.
+    const forRandom: GuessedWord[] = [];
+    for (const word of this.actualWords) {
+      let found = false;
+      for (const answered of this.currentlyAnswered) {
+        if (word.word.id === answered.word.id) {
+          found = true;
+          break;
+        }
+      }
+      if (!found) {
+        forRandom.push(word);
+      }
+    }
+    let remainingWordsNumber = forRandom.length;
     // if no more words, then return null
     if (remainingWordsNumber === 0) {
       return null;
+    } else if (remainingWordsNumber === 1) {
+      return forRandom[0];
     } else {
-      let tempIndex: number = this.getRandomIndex(remainingWordsNumber);
-      // if this is the last, then no need to get new random number
-      if (this.index != null && remainingWordsNumber > 1) {
-        while (this.index === tempIndex) {
-          tempIndex = this.getRandomIndex(remainingWordsNumber);
-        }
-      }
-      this.index = tempIndex;
-      return this.actualWords[this.index];
+      return forRandom[this.getRandomIndex(remainingWordsNumber)];
     }
   }
 

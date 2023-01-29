@@ -66,9 +66,10 @@ export class InterrogatorComponent {
   }
 
   ngOnInit() {
-    this.categorizeWords(new GuessedWordConverter().convertToGuessed(this.wordService.getActualWords()));
+    const categorizeWords = this.categorizeWords(new GuessedWordConverter().convertToGuessed(this.wordService.getActualWords()));
+    const categorizeWordsLength = categorizeWords != null ? categorizeWords.length : 0; // need to store the length because list is modified later
     this.fillWordArrays();
-    if (this.categorizedWords.length > 0) {
+    if (categorizeWordsLength > 0) {
       this.next();
     } else {
       this.route.paramMap

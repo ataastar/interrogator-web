@@ -67,6 +67,7 @@ export class InterrogatorComponent {
 
   ngOnInit() {
     this.categorizeWords(new GuessedWordConverter().convertToGuessed(this.wordService.getActualWords()));
+    this.fillWordArrays();
     if (this.categorizedWords.length > 0) {
       this.next();
     } else {
@@ -83,6 +84,7 @@ export class InterrogatorComponent {
         })).subscribe(words => {
         if (words) {
           this.categorizeWords(new GuessedWordConverter().convertToGuessed(words));
+          this.fillWordArrays();
           this.next();
         }
       });
@@ -120,6 +122,7 @@ export class InterrogatorComponent {
     //console.log(result);
     this.categorizedWords = result;
     return result;
+
   }
 
   /**
@@ -226,7 +229,7 @@ export class InterrogatorComponent {
       this.wrong = true;
       this.currentlyAnswered.push(this.guessed); // we need to skip for the next few random choice, because it was answered wrong
     }
-    // the need to remove word from currently answered list (the oldest or more)
+    // need to remove word from currently answered list (the oldest or more)
     this.removeFromCurrentlyAnswered();
     this.checked = true;
     // play the audio if available
@@ -237,7 +240,7 @@ export class InterrogatorComponent {
   }
 
   private removeFromCurrentlyAnswered() {
-    const currentlyAnsweredLengthShouldBe = this.actualWords.length > 4 ? 3 : (this.actualWords.length = 4 ? 2 : 1);
+    const currentlyAnsweredLengthShouldBe = this.actualWords.length > 4 ? 3 : (this.actualWords.length == 4 ? 2 : (this.actualWords.length == 1 ? 0 : 1));
     this.currentlyAnswered.splice(0, Math.max(this.currentlyAnswered.length - currentlyAnsweredLengthShouldBe, 0));
   }
 

@@ -42,6 +42,10 @@ export class InterrogatorComponent {
    */
   currentlyAnswered: GuessedWord[] = [];
   /**
+   * Stores the last 2 previous answers. If the list is contains 2 elements and the first elements was wrong, then need to remove at least 1 element from the <b>currentlyAnswered</b> list
+   */
+  previousAnswers: boolean[] = [];
+  /**
    * The current word which, should be guessed
    */
   guessed: GuessedWord = null;
@@ -273,6 +277,9 @@ export class InterrogatorComponent {
     }
   }
 
+  /**
+   * Randomly choose one word from the difference between <b>actualWords</b> and <b>currentlyAnswered</b> list
+   */
   getRandomWord(): GuessedWord {
     if (this.actualWords == null) {
       return null;

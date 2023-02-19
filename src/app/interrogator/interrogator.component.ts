@@ -92,6 +92,9 @@ export class InterrogatorComponent {
   }
 
   categorizeWords(words: GuessedWord[], filterForExpired: boolean = true): Array<Array<GuessedWord>> {
+    if (words == null) {
+      return null;
+    }
     const now = new Date().getTime();
     //console.log(now);
     if (filterForExpired) {

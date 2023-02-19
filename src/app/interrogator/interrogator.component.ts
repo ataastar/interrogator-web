@@ -133,7 +133,7 @@ export class InterrogatorComponent {
    * and how many words are in the next group of the categorizedWords
    */
   fillWordArrays(): boolean {
-    if (this.categorizedWords == null || this.categorizedWords.length == 0) {
+    if (this.categorizedWords == null || this.categorizedWords.length == 0 || this.wrongAnswerCount >= 5) {
       return false; // no word to add
     }
     let wordCanBeAddedCount = 5 - this.actualWords.length;
@@ -183,7 +183,7 @@ export class InterrogatorComponent {
    * @return true if the word was added to the actual array (actual array did not contain the word before)
    */
   private addToActualWordIfNotExists(word: GuessedWord, words: GuessedWord[]): boolean {
-    // add to the needToInterrogate list
+    // add to the actualWords list
     let found = false;
     for (const wordInList of words) {
       if (wordInList.word.id == word.word.id) {
@@ -228,6 +228,9 @@ export class InterrogatorComponent {
       }
       this.guessed.incrementWrongAnswer();
       this.wrong = true;
+      if (this.wrongAnswerCount == 5) { // when the 5 words were answered wrongly, then need to remove other words from the actual list. Need to interrogate just the remaining words which ware answered wrongly
+        this.interrogateWordsWithWrongAnswer();
+      }
     }
     this.currentlyAnswered.push(this.guessed);
     // need to remove word from currently answered list (the oldest or more)
@@ -238,6 +241,16 @@ export class InterrogatorComponent {
       let player: any = document.getElementById('audioplayer');
       player.play();
     }
+  }
+
+  private interrogateWordsWithWrongAnswer() {
+    const wordsWithWrongAnswer: GuessedWord[] = []
+    for (const word of this.actualWords) {
+      if (word.getWrongAnswerNumber() > 0) {
+        wordsWithWrongAnswer.push(word);
+      }
+    }
+    this.actualWords = wordsWithWrongAnswer;
   }
 
   private removeFromCurrentlyAnswered() {

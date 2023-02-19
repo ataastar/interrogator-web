@@ -199,16 +199,16 @@ describe('InterrogatorComponent', () => {
 
     // right answer
     spyOn(component, 'getRandomWord').and.returnValue(word2);
-    checkAndAssertAnswer(component, word2, word2, 4, '4 words are remained in the array', 4, 'One of it was interrogated', 0, 'No any wrongly answered word');
+    checkAndAssertAnswer(component, word2, word2, 4, '4 words are remained in the array', 4, 'One of it was interrogated', 1);
     expect(component.checked).toBeTruthy('to be checked');
     // right answer
-    checkAndAssertAnswer(component, word5, word5, 3, '3 words are remained in the array', 3, '2 were interrogated', 0, 'No any wrongly answered word');
+    checkAndAssertAnswer(component, word5, word5, 3, '3 words are remained in the array', 3, '2 were interrogated', 1);
     // right answer
-    checkAndAssertAnswer(component, word1, word1, 2, '2 words are remained in the array', 2, '3 were interrogated', 0, 'No any wrongly answered word');
+    checkAndAssertAnswer(component, word1, word1, 2, '2 words are remained in the array', 2, '3 were interrogated', 1);
     // right answer
-    checkAndAssertAnswer(component, word3, word3, 1, '1 word is remained in the array', 1, '4 were interrogated', 0, 'No any wrongly answered word');
+    checkAndAssertAnswer(component, word3, word3, 1, '1 word is remained in the array', 1, '4 were interrogated', 0);
     // right answer
-    checkAndAssertAnswer(component, word4, word4, 0, '0 word is remained in the array', 0, '5 were interrogated', 0, 'No any wrongly answered word');
+    checkAndAssertAnswer(component, word4, word4, 0, '0 word is remained in the array', 0, '5 were interrogated', 0);
 
   });
 
@@ -250,13 +250,13 @@ describe('InterrogatorComponent', () => {
     // wrong answer
     checkAndAssertAnswer(component, word6, word1, 5, '5 words are remained in the array', 5, '5, all ne to be interrogate', 2, '2 wrongly answered word');
     // right answer
-    checkAndAssertAnswer(component, word5, word5, 5, '5-1+1 words are remained in the array', 4, '5-1 should be interrogated');
+    checkAndAssertAnswer(component, word5, word5, 5, '5-1+1 words are remained in the array', 4, '5-1 should be interrogated', 3, '2 wrongly answered word');
     // wrong answer
-    checkAndAssertAnswer(component, word4, word1, 5, '5-1+1 words are remained in the array', 4, '5-1 should be interrogated');
+    checkAndAssertAnswer(component, word4, word1, 5, '5-1+1 words are remained in the array', 4, '5-1 should be interrogated', 3, '3 wrongly answered word');
     // wrong answer
-    checkAndAssertAnswer(component, word3, word1, 5, '5-1+1 words are remained in the array', 4, '5-1 should be interrogated');
+    checkAndAssertAnswer(component, word3, word1, 5, '5-1+1 words are remained in the array', 4, '5-1 should be interrogated', 3, '4 wrongly answered word');
     // wrong answer
-    checkAndAssertAnswer(component, word2, word1, 5, '5-1+1 words are remained in the array', 4, '5-1 should be interrogated');
+    checkAndAssertAnswer(component, word2, word1, 5, '5-1+1 words are remained in the array', 4, '5-1 should be interrogated', 3, '5 wrongly answered word');
     // check wrong answer count on words
     expect(word7.getWrongAnswerNumber()).toBe(1, 'Was answered once wrongly');
     expect(word7.lastAnswerWrong).toBeTruthy('Was answered once wrongly');
@@ -283,11 +283,11 @@ describe('InterrogatorComponent', () => {
     const word2 = addWordToArray(words, 2, 'b', now - _1Minute * 4 * 4);
     const word3 = addWordToArray(words, 3, 'c', now - _1Minute * 4);
     const word4 = addWordToArray(words, 4, 'd', now - _1Minute * 4);
-    const word5 = addWordToArray(words, 5, 'e', now - _1Minute);
-    const word6 = addWordToArray(words, 6, 'f', now - _1Minute);
+    addWordToArray(words, 5, 'e', now - _1Minute);
+    addWordToArray(words, 6, 'f', now - _1Minute);
     const word7 = addWordToArray(words, 7, 'g', now - _1Minute);
-    const word8 = addWordToArray(words, 8, 'h', now - _1Minute);
-    const word9 = addWordToArray(words, 9, 'i', now - _1Minute);
+    addWordToArray(words, 8, 'h', now - _1Minute);
+    addWordToArray(words, 9, 'i', now - _1Minute);
 
     const a = component.categorizeWords(words, true);
     expect(a.length).toEqual(3);
@@ -304,16 +304,16 @@ describe('InterrogatorComponent', () => {
 
     // wrong answer
     spyOn(component, 'getRandomWord').and.returnValue(word1);
-    checkAndAssertAnswer(component, word1, word7, 5, '5 words are remained in the array', 4, 'all ne to be interrogate');
+    checkAndAssertAnswer(component, word1, word7, 5, '5 words are remained in the array', 4, 'all ne to be interrogate', 1);
     expect(word1.getWrongAnswerNumber()).toBe(1, 'Was answered once wrongly');
     expect(word1.lastAnswerWrong).toBeTruthy('Was answered once wrongly');
     // wrong answer
-    checkAndAssertAnswer(component, word3, word7, 5, '5 words are remained in the array', 4, 'all ne to be interrogate');
+    checkAndAssertAnswer(component, word3, word7, 5, '5 words are remained in the array', 4, 'all ne to be interrogate', 2);
     // right answer
-    checkAndAssertAnswer(component, word2, word2, 5, '5-1+1 words are remained in the array', 3, '4-1 should be interrogated');
+    checkAndAssertAnswer(component, word2, word2, 5, '5-1+1 words are remained in the array', 3, '4-1 should be interrogated', 3);
     expect(word2.lastAnswerWrong).toBeFalsy('Was answered once rightly');
     // right answer
-    checkAndAssertAnswer(component, word4, word4, 7, '5-2+2 (+ 3: remaining from the last group) words are remained in the array', 7, '4-2 (+ 5 all from the last group) should be interrogated');
+    checkAndAssertAnswer(component, word4, word4, 7, '5-2+2 (+ 3: remaining from the last group) words are remained in the array', 7, '4-2 (+ 5 all from the last group) should be interrogated', 3);
   });
 
   /*it('Test getRandomWord', () => {
@@ -344,11 +344,11 @@ describe('InterrogatorComponent', () => {
 
     // wrong answer
     spyOn(component, 'getRandomWord').and.returnValue(word1);
-    checkAndAssertAnswer(component, word1, word7, 5, '5 words are remained in the array', 4, 'all ne to be interrogate');
+    checkAndAssertAnswer(component, word1, word7, 5, '5 words are remained in the array', 4, 'all need to be interrogate');
     expect(word1.getWrongAnswerNumber()).toBe(1, 'Was answered once wrongly');
     expect(word1.lastAnswerWrong).toBeTruthy('Was answered once wrongly');
     // wrong answer
-    checkAndAssertAnswer(component, word3, word7, 5, '5 words are remained in the array', 4, 'all ne to be interrogate');
+    checkAndAssertAnswer(component, word3, word7, 5, '5 words are remained in the array', 4, 'all need to be interrogate');
     // right answer
     checkAndAssertAnswer(component, word2, word2, 5, '5-1+1 words are remained in the array', 3, '4-1 should be interrogated');
     expect(word2.lastAnswerWrong).toBeFalsy('Was answered once rightly');

@@ -12,9 +12,9 @@ import { InterrogatorType } from './enum/interrogator-type';
 import { Phrase } from '../models/phrase';
 
 /**
- * Interrogates the words of the unit content. (all of the word or just the words which should be interrogate by next interrogation date)
+ * Interrogates the words of the unit content. (all the word or just the words which should be interrogated by next interrogation date)
  * Firstly interrogates those words which were interrogated earlier. Creates kind of groups by the last interrogation time and randomly interrogates words from the groups.
- * When the wrong answer reach the number of 5, then won't be interrogate (pick up) new word from the groups, it interrogates the picked up words until the words will be answered right twice in a row
+ * When the wrong answer reach the number of 5, then won't be interrogated (pick up) new word from the groups, it interrogates the picked up words until the words will be answered right twice in a row
  */
 @Component({
   selector: 'interrogator',
@@ -24,11 +24,11 @@ import { Phrase } from '../models/phrase';
 export class InterrogatorComponent {
 
   /**
-   * It is an array which contain GuessedWords array: e.g. [GuessedWord[]]. The first array of guessed word to be interrogate first and later the second, ...
+   * It is an array which contain GuessedWords array: e.g. [GuessedWord[]]. The first array of guessed word is interrogated first and later the second, ...
    */
   categorizedWords: Array<Array<GuessedWord>> = null;
   /**
-   * Contains the words which should be interrogate before others to be added.
+   * Contains the words which should be interrogated before others to be added.
    */
   needToInterrogate: Array<GuessedWord> = [];
   /**
@@ -37,14 +37,9 @@ export class InterrogatorComponent {
   actualWords: GuessedWord[] = [];
   wrongAnswerCount = 0;
   /**
-   * Currently answered word list (now, or 1 or 2 answer times before). The word which was answered wrong or which need to be answered right one more time
-   * These words need to skip 1, 2 or 3 times (no need to ask). The times is depends on the actual words size.
+   * Currently answered word list. Contains the last answered words (the last 3 times)
    */
   currentlyAnswered: GuessedWord[] = [];
-  /**
-   * Stores the last 2 previous answers. If the list is contains 2 elements and the first elements was wrong, then need to remove at least 1 element from the <b>currentlyAnswered</b> list
-   */
-  previousAnswers: boolean[] = [];
   /**
    * The current word which, should be guessed
    */
@@ -136,7 +131,7 @@ export class InterrogatorComponent {
    */
   fillWordArrays(): boolean {
     if (this.categorizedWords == null || this.categorizedWords.length == 0) {
-      return false; // no any word to add
+      return false; // no word to add
     }
     let wordCanBeAddedCount = 5 - this.actualWords.length;
     //console.log('wordCanBeAddedCount: ' + wordCanBeAddedCount);
@@ -220,8 +215,6 @@ export class InterrogatorComponent {
             this.fillWordArrays();
           }
         }
-      } else {
-        this.currentlyAnswered.push(this.guessed); // the word is need to be interrogated one more time, so we need to skip for the next few random choice
       }
       this.guessed.incrementCorrectAnswer();
     } else {
@@ -232,8 +225,8 @@ export class InterrogatorComponent {
       }
       this.guessed.incrementWrongAnswer();
       this.wrong = true;
-      this.currentlyAnswered.push(this.guessed); // we need to skip for the next few random choice, because it was answered wrong
     }
+    this.currentlyAnswered.push(this.guessed);
     // need to remove word from currently answered list (the oldest or more)
     this.removeFromCurrentlyAnswered();
     this.checked = true;
@@ -245,7 +238,7 @@ export class InterrogatorComponent {
   }
 
   private removeFromCurrentlyAnswered() {
-    const currentlyAnsweredLengthShouldBe = this.actualWords.length > 4 ? 3 : (this.actualWords.length == 4 ? 2 : (this.actualWords.length == 1 ? 0 : 1));
+    const currentlyAnsweredLengthShouldBe = this.actualWords.length > 4 ? 3 : (this.actualWords.length == 4 ? 2 : (this.actualWords.length <= 1 ? 0 : 1));
     this.currentlyAnswered.splice(0, Math.max(this.currentlyAnswered.length - currentlyAnsweredLengthShouldBe, 0));
   }
 
@@ -328,4 +321,5 @@ export class InterrogatorComponent {
   back(): void {
     this.router.navigate(['']);
   }
+
 }

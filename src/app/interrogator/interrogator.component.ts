@@ -274,7 +274,7 @@ export class InterrogatorComponent {
    * Randomly choose one word from the difference between <b>actualWords</b> and <b>currentlyAnswered</b> list
    */
   getRandomWord(): GuessedWord {
-    if (this.actualWords == null) {
+    if (this.actualWords == null || this.actualWords.length == 0) {
       return null;
     }
     // fill a new list with words which are in the actual list but not in the currently answered list.

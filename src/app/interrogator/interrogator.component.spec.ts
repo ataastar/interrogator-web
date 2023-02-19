@@ -316,46 +316,41 @@ describe('InterrogatorComponent', () => {
     checkAndAssertAnswer(component, word4, word4, 7, '5-2+2 (+ 3: remaining from the last group) words are remained in the array', 7, '4-2 (+ 5 all from the last group) should be interrogated', 3);
   });
 
-  /*it('Test getRandomWord', () => {
+  it('Test getRandomWord', () => {
     const component = setup(setupMockWordService());
-    spyOn(component, 'getRandomIndex').and.returnValue(1);
 
-    const now = new Date().getTime();
-    let _1Minute = 1000 * 60;
+    let w1 = createGuessedWord(1);
+    let w2 = createGuessedWord(2);
+    let w3 = createGuessedWord(3);
+    let w4 = createGuessedWord(4);
+    let w5 = createGuessedWord(5);
 
-    const words: GuessedWord[] = []
-    const word1 = addWordToArray(words, 1, 'a', now - _1Minute * 4 * 4);
-    const word2 = addWordToArray(words, 2, 'b', now - _1Minute * 4 * 4);
-    const word3 = addWordToArray(words, 3, 'c', now - _1Minute * 4);
-    const word4 = addWordToArray(words, 4, 'd', now - _1Minute * 4);
-    const word5 = addWordToArray(words, 5, 'e', now - _1Minute);
-    const word6 = addWordToArray(words, 6, 'f', now - _1Minute);
-    const word7 = addWordToArray(words, 7, 'g', now - _1Minute);
-    const word8 = addWordToArray(words, 8, 'h', now - _1Minute);
-    const word9 = addWordToArray(words, 9, 'i', now - _1Minute);
+    spyOn(component, 'getRandomIndex').and.returnValue(w1.word.id);
 
-    const a = component.categorizeWords(words, true);
-    expect(component.fillWordArrays()).toBeTruthy();
-    expect(component.categorizedWords.length).toBe(1);
-    expect(component.categorizedWords[0].length).toBe(5);
-    expect(component.needToInterrogate.length).toBe(4, 'One is from the last group, which no need to add to this array');
-    expect(component.needToInterrogate[0]).toBe(word1);
-    expect(component.actualWords.length).toBe(5);
+    expect(component.getRandomWord()).toBeNull(); // empty
+    component.actualWords.push(w1);
+    expect(component.getRandomWord()).toEqual(w1); // actual: 1
+    component.currentlyAnswered.push(w1);
+    expect(component.getRandomWord()).toBeNull(); // actual: 1 current: 1
+    component.actualWords.push(w2);
+    component.getRandomIndex = jasmine.createSpy().and.returnValue(0);
+    //component.currentlyAnswered.push(w2);
+    expect(component.getRandomWord()).toEqual(w2); // actual: 1,2 current: 1 remaining: 2 random: 0.
+    component.getRandomIndex = jasmine.createSpy().and.returnValue(1);
+    component.actualWords.push(w3);
+    expect(component.getRandomWord()).toEqual(w3); // actual: 1,2,3 current: 1 remaining: 2,3 random: 1.
+    component.currentlyAnswered.push(w5);
+    component.getRandomIndex = jasmine.createSpy().and.returnValue(0);
+    expect(component.getRandomWord()).toEqual(w2); // actual: 1,2,3 current: 1,5 remaining: 2,3 random: 0.
+    component.actualWords.push(w4);
+    component.actualWords.push(w5);
+    component.getRandomIndex = jasmine.createSpy().and.returnValue(2);
+    expect(component.getRandomWord()).toEqual(w4); // actual: 1,2,3,4,5 current: 1,5 remaining: 2,3,4 random: 2.
+    component.currentlyAnswered.push(w3);
+    component.getRandomIndex = jasmine.createSpy().and.returnValue(1);
+    expect(component.getRandomWord()).toEqual(w4); // actual: 1,2,3,4,5 current: 1,5,3 remaining: 2,4 random: 1.
+  });
 
-    // wrong answer
-    spyOn(component, 'getRandomWord').and.returnValue(word1);
-    checkAndAssertAnswer(component, word1, word7, 5, '5 words are remained in the array', 4, 'all need to be interrogate');
-    expect(word1.getWrongAnswerNumber()).toBe(1, 'Was answered once wrongly');
-    expect(word1.lastAnswerWrong).toBeTruthy('Was answered once wrongly');
-    // wrong answer
-    checkAndAssertAnswer(component, word3, word7, 5, '5 words are remained in the array', 4, 'all need to be interrogate');
-    // right answer
-    checkAndAssertAnswer(component, word2, word2, 5, '5-1+1 words are remained in the array', 3, '4-1 should be interrogated');
-    expect(word2.lastAnswerWrong).toBeFalsy('Was answered once rightly');
-    // right answer
-    checkAndAssertAnswer(component, word4, word4, 7, '5-2+2 (+ 3: remaining from the last group) words are remained in the array', 7, '4-2 (+ 5 all from the last group) should be interrogated');
-  });*/
-  // TODO est getRandom
 })
 ;
 
@@ -382,6 +377,6 @@ function addWordToArray(words: GuessedWord[], id: number, fromPhrase: string, ti
   return word;
 }
 
-function createGuessedWord(id: number, nextInterrogationTime: Date, lastAnswerTime: Date, fromWord?: string, toWord?: string): GuessedWord {
-  return new GuessedWord(new Word(id, [new Phrase(fromWord, 1)], [new Phrase(toWord, 2)], null, null, nextInterrogationTime.toUTCString(), lastAnswerTime.toUTCString()));
+function createGuessedWord(id: number, nextInterrogationTime?: Date, lastAnswerTime?: Date, fromWord?: string, toWord?: string): GuessedWord {
+  return new GuessedWord(new Word(id, [new Phrase(fromWord, 1)], [new Phrase(toWord, 2)], null, null, nextInterrogationTime ? nextInterrogationTime.toUTCString() : null, lastAnswerTime ? lastAnswerTime.toUTCString() : null));
 }

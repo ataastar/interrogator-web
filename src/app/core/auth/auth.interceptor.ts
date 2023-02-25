@@ -1,21 +1,17 @@
 import { Injectable } from '@angular/core';
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
+import { tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-
-
-  constructor(public authService: AuthService) {
+  constructor(public authService: AuthService, public router: Router) {
   }
 
   intercept(req: HttpRequest<any>,
             next: HttpHandler): Observable<HttpEvent<any>> {
-
-    // TODO handle logout after x amount of time
-    // clear id_token from the localStorage
-    // timeout parameter as datetime in storage, check if current time is before -> no clear storage (id_token) -> yes update timeout with eg 5 minutes
 
     const idToken = this.authService.getToken();
 
@@ -25,9 +21,30 @@ export class AuthInterceptor implements HttpInterceptor {
           "Bearer " + idToken)
       });
 
-      return next.handle(cloned);
+      return next.handle(cloned).pipe(tap(() => {
+        },
+        (err: any) => {
+          this.handleResponse(err)
+        }));
     } else {
-      return next.handle(req);
+      return next.handle(req).pipe(tap(() => {
+        },
+        (err: any) => {
+          this.handleResponse(err)
+        }));
+    }
+  }
+
+  private handleResponse(err: any) {
+    console.log(err);
+    if (err instanceof HttpErrorResponse) {
+      if (err.status !== 401) {
+        return;
+      }
+      // TODO refresh token e.g. https://www.bezkoder.com/angular-12-refresh-token/
+      this.authService.logout();
+      this.router.navigate(['login']).then(() => {/* navigated*/
+      });
     }
   }
 }

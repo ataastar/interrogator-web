@@ -244,17 +244,16 @@ export class InterrogatorComponent {
   }
 
   private interrogateWordsWithWrongAnswer() {
-    console.log('interrogateWordsWithWrongAnswer...')
+    //console.log('interrogateWordsWithWrongAnswer...')
     const wordsWithWrongAnswer: GuessedWord[] = []
     for (const word of this.actualWords) {
       if (word.getWrongAnswerNumber() > 0) {
         wordsWithWrongAnswer.push(word);
-
-        console.log(word);
+        //console.log(word);
       }
     }
     this.actualWords = wordsWithWrongAnswer;
-    console.log('interrogateWordsWithWrongAnswer end')
+    //console.log('interrogateWordsWithWrongAnswer end')
   }
 
   private removeFromCurrentlyAnswered() {

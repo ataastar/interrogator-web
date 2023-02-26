@@ -155,9 +155,7 @@ export class WordService {
   async sendAnswer(id: number, right: boolean, type: InterrogatorType): Promise<Object> {
     try {
       const request = {id: id, right: right, interrogation_type: type}
-      const res = await this.http.post(env.apiUrl + '/answer', request).toPromise();
-      console.log("add answer result: " + res);
-      return res;
+      return await this.http.post(env.apiUrl + '/answer', request).toPromise();
     } catch (onRejected) {
       console.error(onRejected);
       return null;

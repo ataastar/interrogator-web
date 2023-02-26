@@ -7,13 +7,14 @@ import { environment as env } from '../../../environments/environment';
 export class AuthService {
 
   public static TOKEN_ID = 'id_token';
+  public static REFRESH_TOKEN_ID = 'refresh_token';
 
   constructor(private http: HttpClient) {
 
   }
 
   login(email: string, password: string) {
-    return this.http.post(env.apiUrl + '/api/login', {email, password})
+    return this.http.post(env.apiUrl + '/api/login', { email, password })
       .pipe(tap(authResult => {
             this.setSession(authResult)
           }
@@ -22,33 +23,30 @@ export class AuthService {
       .pipe(shareReplay(1));
   }
 
-  private setSession(authResult) {
-    //const expiresAt = moment().add(authResult.expiresIn, 'second');
+  refreshToken() {
+    console.log('refresh token');
+    return this.http.post(env.apiUrl + '/api/refreshToken', { refreshToken: localStorage.getItem(AuthService.REFRESH_TOKEN_ID) })
+      .pipe(tap(authResult => {
+        console.log('refresh arrived');
+        this.setSession(authResult)
+      }));
+  }
 
+  private setSession(authResult) {
     localStorage.setItem(AuthService.TOKEN_ID, authResult.idToken);
-    //localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
+    localStorage.setItem(AuthService.REFRESH_TOKEN_ID, authResult.refreshToken);
   }
 
   logout() {
-    localStorage.removeItem(AuthService.TOKEN_ID);
-    //localStorage.removeItem('expires_at');
+    localStorage.clear();
   }
 
-   public getToken() {
-     return localStorage.getItem(AuthService.TOKEN_ID);
-   }
+  public getToken() {
+    return localStorage.getItem(AuthService.TOKEN_ID);
+  }
 
-   public isLoggedIn() {
-     return this.getToken() != null;
-   }
-/*
-   isLoggedOut() {
-     return !this.isLoggedIn();
-   }
+  public isLoggedIn() {
+    return this.getToken() != null;
+  }
 
-   getExpiration() {
-     const expiration = localStorage.getItem('expires_at');
-     const expiresAt = JSON.parse(expiration);
-     return moment(expiresAt);
-   }*/
 }

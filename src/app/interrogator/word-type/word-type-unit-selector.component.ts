@@ -8,7 +8,7 @@ import { WordService } from 'src/app/services/word-service';
 })
 export class WordTypeUnitSelectorComponent {
 
-  public units: any;
+  public units;
   public selectedName: string;
 
   constructor(private wordService: WordService, private router: Router) {
@@ -18,7 +18,7 @@ export class WordTypeUnitSelectorComponent {
     this.wordService.getWordTypeUnits().then(units => this.units = units);
   }
 
-  interrogate(unit: any): void {
+  interrogate(unit): void {
     this.selectedName = unit.name;
     this.router.navigate(['/wordTypeUnit/', unit.code]);
   }

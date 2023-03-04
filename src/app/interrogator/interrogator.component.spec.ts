@@ -1,5 +1,4 @@
 import { InterrogatorComponent } from './interrogator.component';
-import { WordService } from '../services/word-service';
 import { GuessedWord } from '../models/guessed-word';
 import { Word } from '../models/word';
 import { Phrase } from '../models/phrase';

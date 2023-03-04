@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { WordService } from '../services/word-service';
+import { Group } from '../models/group';
 
 
 @Component({
@@ -10,7 +11,7 @@ import { WordService } from '../services/word-service';
 })
 export class GroupSelectorComponent {
 
-  public groups: any;
+  public groups: Group[];
   public selectedName: string;
 
   constructor(private wordService: WordService, private router: Router) {
@@ -20,9 +21,9 @@ export class GroupSelectorComponent {
     this.wordService.getGroups().then(groups => this.groups = groups);
   }
 
-  interrogate(group: any, subGroup: any): void {
+  interrogate(group: Group, subGroup: Group): void {
     this.selectedName = group.name + ' - ' + subGroup.name;
-    this.router.navigate(['/interrogator/show', subGroup.code]);
+    this.router.navigate(['/interrogator/show', subGroup.code]).then();
   }
 
 }

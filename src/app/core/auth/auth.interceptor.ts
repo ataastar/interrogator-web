@@ -12,8 +12,8 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(public authService: AuthService, public router: Router) {
   }
 
-  intercept(req: HttpRequest<any>,
-    next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(req: HttpRequest<object>,
+    next: HttpHandler): Observable<HttpEvent<object>> {
 
     const idToken = this.authService.getToken();
 
@@ -37,7 +37,7 @@ export class AuthInterceptor implements HttpInterceptor {
     });
   }
 
-  private handle401Error(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  private handle401Error(request: HttpRequest<object>, next: HttpHandler): Observable<HttpEvent<object>> {
     if (!this.isRefreshing) {
       this.isRefreshing = true;
       if (this.authService.isLoggedIn()) {
@@ -51,8 +51,7 @@ export class AuthInterceptor implements HttpInterceptor {
             this.isRefreshing = false;
             if (error.status == '403' || error.status == '401') {
               this.authService.logout();
-              this.router.navigate(['login']).then(() => {
-              });
+              this.router.navigate(['login']).then();
             }
             return throwError(() => error);
           })

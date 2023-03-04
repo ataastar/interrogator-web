@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
-import {WordTypeContent} from 'src/app/models/word-type/word-type-content';
-import {WordTypeLink} from 'src/app/models/word-type/word-type-link';
-import {WordTypeUnit} from 'src/app/models/word-type/word-type-unit';
-import {WordService} from 'src/app/services/word-service';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { WordTypeContent } from 'src/app/models/word-type/word-type-content';
+import { WordTypeLink } from 'src/app/models/word-type/word-type-link';
+import { WordTypeUnit } from 'src/app/models/word-type/word-type-unit';
+import { WordService } from 'src/app/services/word-service';
 
 @Component({
   selector: 'word-types',
@@ -34,7 +34,7 @@ export class WordTypesComponent implements OnInit {
     this.router.navigate(['/interrogator']);
   }
 
-  showTo(link: WordTypeLink, form: string): any {
+  showTo(link: WordTypeLink, form: string) {
     for (const toPhrase of link.toPhrases) {
       if (form === toPhrase.form) {
         return toPhrase.phrases.toString();

@@ -8,6 +8,7 @@ import { WordTypeLink } from '../models/word-type/word-type-link';
 import { WordTypeUnit } from '../models/word-type/word-type-unit';
 import { HttpClient } from '@angular/common/http';
 import { InterrogatorType } from '../interrogator/enum/interrogator-type';
+import { Group } from '../models/group';
 
 @Injectable()
 export class WordService {
@@ -21,7 +22,7 @@ export class WordService {
 
   async getWords(key: string) {
     try {
-      const res = await this.http.get<any>(env.apiUrl + '/words/' + key)
+      const res = await this.http.get<object>(env.apiUrl + '/words/' + key)
         .toPromise();
       const json = res != null ? res : null;
       const unit = json != null ? (json[0].content != null ? json[0].content : json[0]) : null;
@@ -42,9 +43,9 @@ export class WordService {
     return this.selectedUnitName;
   }
 
-  async getGroups() {
+  async getGroups(): Promise<Group[]> {
     try {
-      const res = await this.http.get<any>(env.apiUrl + '/word_groups').toPromise();
+      const res = await this.http.get<object>(env.apiUrl + '/word_groups').toPromise();
       return res[0].groups;
     } catch (onRejected) {
       console.error(onRejected);
@@ -92,8 +93,8 @@ export class WordService {
 
   async getWordTypeContent(wordTypeId: number, fromLanguageId: number, toLanguageId: number): Promise<WordTypeContent> {
     try {
-      const body = {wordTypeId: wordTypeId, fromLanguageId: fromLanguageId, toLanguageId: toLanguageId};
-      const res = await this.http.post<any>(env.apiUrl + '/word_type', body).toPromise();
+      const body = { wordTypeId: wordTypeId, fromLanguageId: fromLanguageId, toLanguageId: toLanguageId };
+      const res = await this.http.post<object>(env.apiUrl + '/word_type', body).toPromise();
       return ToWordTypeContentMapper.map(res[0].content);
     } catch (onRejected) {
       console.error(onRejected);
@@ -103,7 +104,7 @@ export class WordService {
 
   async getWordTypeUnitContent(wordTypeUnitId: number, fromLanguageId: number): Promise<WordTypeContent> {
     try {
-      const res = await this.http.get<any>(env.apiUrl + '/word_type_unit/' + wordTypeUnitId + '/' + fromLanguageId).toPromise();
+      const res = await this.http.get<object>(env.apiUrl + '/word_type_unit/' + wordTypeUnitId + '/' + fromLanguageId).toPromise();
       return ToWordTypeContentMapper.map(res[0].content);
     } catch (onRejected) {
       console.error(onRejected);
@@ -113,7 +114,7 @@ export class WordService {
 
   async getWordTypeUnits() {
     try {
-      const res = await this.http.get<any>(env.apiUrl + '/word_type_unit').toPromise();
+      const res = await this.http.get<object>(env.apiUrl + '/word_type_unit').toPromise();
       return res[0].groups;
     } catch (onRejected) {
       console.error(onRejected);
@@ -144,17 +145,17 @@ export class WordService {
     }
   }
 
-  async wrongAnswer(id: number, type: InterrogatorType): Promise<Object> {
+  async wrongAnswer(id: number, type: InterrogatorType): Promise<object> {
     return this.sendAnswer(id, false, type);
   }
 
-  async rightAnswer(id: number, type: InterrogatorType): Promise<Object> {
+  async rightAnswer(id: number, type: InterrogatorType): Promise<object> {
     return this.sendAnswer(id, true, type);
   }
 
-  async sendAnswer(id: number, right: boolean, type: InterrogatorType): Promise<Object> {
+  async sendAnswer(id: number, right: boolean, type: InterrogatorType): Promise<object> {
     try {
-      const request = {id: id, right: right, interrogation_type: type};
+      const request = { id: id, right: right, interrogation_type: type };
       return await this.http.post(env.apiUrl + '/answer', request).toPromise();
     } catch (onRejected) {
       console.error(onRejected);

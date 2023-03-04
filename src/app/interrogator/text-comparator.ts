@@ -5,9 +5,6 @@ import { Phrase } from '../models/phrase';
 
 export class TextComparator {
 
-  constructor() {
-  }
-
   isEqual(expectedArray: Phrase[], actual: string) {
     if (actual === null) {
       return;

@@ -10,7 +10,7 @@ import { WordService } from '../services/word-service';
 })
 export class AdminComponent {
 
-  public groups: any;
+  public groups;
 
   constructor(private wordService: WordService, private route: ActivatedRoute, private router: Router) {
   }

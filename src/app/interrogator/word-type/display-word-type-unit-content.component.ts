@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { WordTypeLink } from 'src/app/models/word-type/word-type-link';
 import { WordService } from 'src/app/services/word-service';
 import { WordTypeContent } from '../../models/word-type/word-type-content';
-import {ArrayUtil} from '../../util/array-util';
+import { ArrayUtil } from '../../util/array-util';
 
 @Component({
   selector: 'display-word-type-unit-content',
@@ -51,7 +51,7 @@ export class DisplayWordTypeUnitContentComponent implements OnInit {
     this.wordsDisplayed[index] = true;
   }
 
-  showTo(link: WordTypeLink, form: string): any {
+  showTo(link: WordTypeLink, form: string) {
     for (const toPhrase of link.toPhrases) {
       if (form === toPhrase.form) {
         return toPhrase.phrases.toString();

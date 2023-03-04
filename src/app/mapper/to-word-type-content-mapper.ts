@@ -4,7 +4,7 @@ import { WordTypeLink } from '../models/word-type/word-type-link';
 import { WordTypeUnit } from '../models/word-type/word-type-unit';
 
 export class ToWordTypeContentMapper {
-  static map(content: any): WordTypeContent {
+  static map(content): WordTypeContent {
     const links: WordTypeLink[] = [];
     for (const row of content.rows) {
       const fromPhrases: string[] = row.fromPhrases as string[];

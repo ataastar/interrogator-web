@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth/auth.service';
 
 @Component({
@@ -8,9 +8,9 @@ import { AuthService } from '../auth/auth.service';
   templateUrl: './login.component.html'
 })
 export class LoginComponent {
-  form: FormGroup;
+  form: UntypedFormGroup;
 
-  constructor(private fb: FormBuilder,
+  constructor(private fb: UntypedFormBuilder,
               private authService: AuthService,
               private router: Router) {
     this.form = this.fb.group({
@@ -27,7 +27,7 @@ export class LoginComponent {
         .subscribe(
           () => {
             console.log('User is logged in');
-            this.router.navigate(['interrogator']).then(s =>
+            this.router.navigate(['interrogator']).then(() =>
               window.location.reload()
             );
           }

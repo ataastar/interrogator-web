@@ -12,28 +12,27 @@ import { WordTypeUnitSelectorComponent } from './word-type/word-type-unit-select
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    HttpClientModule, ReactiveFormsModule,
-    NgbModule
-  ],
-  declarations: [
-    InterrogatorComponent,
-    WordTypesComponent,
-    DisplayWordTypeUnitContentComponent,
-    WordTypeUnitSelectorComponent,
-    GroupSelectorComponent
-  ],
-  exports: [
-    InterrogatorComponent,
-    WordTypesComponent,
-    DisplayWordTypeUnitContentComponent,
-    WordTypeUnitSelectorComponent,
-    GroupSelectorComponent,
-    NgbModule
-  ],
-  entryComponents: []
+    imports: [
+        CommonModule,
+        FormsModule,
+        HttpClientModule, ReactiveFormsModule,
+        NgbModule
+    ],
+    declarations: [
+        InterrogatorComponent,
+        WordTypesComponent,
+        DisplayWordTypeUnitContentComponent,
+        WordTypeUnitSelectorComponent,
+        GroupSelectorComponent
+    ],
+    exports: [
+        InterrogatorComponent,
+        WordTypesComponent,
+        DisplayWordTypeUnitContentComponent,
+        WordTypeUnitSelectorComponent,
+        GroupSelectorComponent,
+        NgbModule
+    ]
 })
 export class InterrogatorModule {
 }

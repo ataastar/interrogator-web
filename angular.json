@@ -147,6 +147,9 @@
           }
         }
       }
-    }},
-  "defaultProject": "interrogator-web"
+    }
+  },
+  "cli": {
+    "analytics": "52fe14f5-5885-421e-bc69-6bb7b1528cab"
+  }
 }

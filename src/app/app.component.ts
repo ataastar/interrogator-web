@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
-import '../assets/css/styles.css';
 import { AuthService } from './core/auth/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
     selector: 'learn-english-app',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
 

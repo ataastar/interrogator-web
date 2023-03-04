@@ -9,20 +9,18 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AdminComponent } from './admin.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    HttpClientModule,
-    NgbModule
-  ],
-  declarations: [
-    AdminComponent
-  ],
-  exports: [
-    AdminComponent,
-    NgbModule
-  ],
-  entryComponents: [
-  ]
+    imports: [
+        CommonModule,
+        FormsModule,
+        HttpClientModule,
+        NgbModule
+    ],
+    declarations: [
+        AdminComponent
+    ],
+    exports: [
+        AdminComponent,
+        NgbModule
+    ]
 })
 export class AdminModule {}

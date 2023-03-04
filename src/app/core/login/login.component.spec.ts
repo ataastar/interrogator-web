@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { LoginComponent } from './login.component';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { AuthService } from '../auth/auth.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -11,7 +11,7 @@ describe('LoginComponent', () => {
   let fixture: ComponentFixture<LoginComponent>;
 
   beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({providers: [FormBuilder, AuthService],
+    TestBed.configureTestingModule({providers: [UntypedFormBuilder, AuthService],
       declarations: [ LoginComponent ],
       imports: [RouterTestingModule, HttpClientTestingModule]
     })

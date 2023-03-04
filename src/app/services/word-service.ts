@@ -64,7 +64,7 @@ export class WordService {
 
   async removeUnitContent(unitContentId: number) {
     try {
-      let body = {unitContentId: (unitContentId)};
+      const body = {unitContentId: (unitContentId)};
       return await this.http.put(env.apiUrl + '/word/remove', body).toPromise();
     } catch (onRejected) {
       console.error(onRejected);
@@ -92,7 +92,7 @@ export class WordService {
 
   async getWordTypeContent(wordTypeId: number, fromLanguageId: number, toLanguageId: number): Promise<WordTypeContent> {
     try {
-      let body = {wordTypeId: wordTypeId, fromLanguageId: fromLanguageId, toLanguageId: toLanguageId};
+      const body = {wordTypeId: wordTypeId, fromLanguageId: fromLanguageId, toLanguageId: toLanguageId};
       const res = await this.http.post<any>(env.apiUrl + '/word_type', body).toPromise();
       return ToWordTypeContentMapper.map(res[0].content);
     } catch (onRejected) {
@@ -124,7 +124,7 @@ export class WordService {
 
   async addWordTypeUnitLink(link: WordTypeLink, unit: WordTypeUnit) {
     try {
-      const request = {wordTypeUnitLinkId: unit.id, wordTypeLinkId: link.id}
+      const request = {wordTypeUnitLinkId: unit.id, wordTypeLinkId: link.id};
       await this.http.put(env.apiUrl + '/word_type_unit_link/add/', request).toPromise();
       return;
     } catch (onRejected) {
@@ -135,7 +135,7 @@ export class WordService {
 
   async deleteWordTypeUnitLink(link: WordTypeLink, unit: WordTypeUnit) {
     try {
-      const request = {wordTypeUnitLinkId: unit.id, wordTypeLinkId: link.id}
+      const request = {wordTypeUnitLinkId: unit.id, wordTypeLinkId: link.id};
       await this.http.put(env.apiUrl + '/word_type_unit_link/delete/', request).toPromise();
       return;
     } catch (onRejected) {
@@ -154,7 +154,7 @@ export class WordService {
 
   async sendAnswer(id: number, right: boolean, type: InterrogatorType): Promise<Object> {
     try {
-      const request = {id: id, right: right, interrogation_type: type}
+      const request = {id: id, right: right, interrogation_type: type};
       return await this.http.post(env.apiUrl + '/answer', request).toPromise();
     } catch (onRejected) {
       console.error(onRejected);

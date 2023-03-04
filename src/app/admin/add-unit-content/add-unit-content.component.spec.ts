@@ -17,7 +17,7 @@ describe('AddUnitContentComponent', () => {
       imports: [ HttpClientTestingModule, FormsModule ],
       providers: [{provide: WordService}, {provide: ActivatedRoute,  useValue: { paramMap: new Subject() } } ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

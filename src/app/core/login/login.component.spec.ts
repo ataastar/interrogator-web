@@ -15,7 +15,7 @@ describe('LoginComponent', () => {
       declarations: [ LoginComponent ],
       imports: [RouterTestingModule, HttpClientTestingModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
   beforeEach(() => {
     fixture = TestBed.createComponent(LoginComponent);

@@ -32,15 +32,15 @@ describe('InterrogatorComponent', () => {
 
   it('Word categorization should return empty, if input is empty', () => {
     const component = setup();
-    const words: GuessedWord[] = []
+    const words: GuessedWord[] = [];
     const a = component.categorizeWords(words, true);
     expect(a.length).toEqual(0);
   });
 
   it('Word categorization 1 word in the 1. group', () => {
     const component = setup();
-    const words: GuessedWord[] = []
-    let _1MinuteAgo = new Date();
+    const words: GuessedWord[] = [];
+    const _1MinuteAgo = new Date();
     _1MinuteAgo.setTime(_1MinuteAgo.getTime() - _1Minute);
     words.push(createGuessedWord(1, _1MinuteAgo, _1MinuteAgo));
     const a = component.categorizeWords(words, true);
@@ -50,8 +50,8 @@ describe('InterrogatorComponent', () => {
 
   it('Word categorization 2 word in the 1. group', () => {
     const component = setup();
-    const words: GuessedWord[] = []
-    let _1MinuteAgo = new Date();
+    const words: GuessedWord[] = [];
+    const _1MinuteAgo = new Date();
     _1MinuteAgo.setTime(_1MinuteAgo.getTime() - _1Minute);
     words.push(createGuessedWord(1, _1MinuteAgo, _1MinuteAgo));
     words.push(createGuessedWord(1, _1MinuteAgo, _1MinuteAgo));
@@ -62,11 +62,11 @@ describe('InterrogatorComponent', () => {
 
   it('Word categorization 1 word in the 1. group and 2 in the 2. group', () => {
     const component = setup();
-    const words: GuessedWord[] = []
-    let _1MinuteAgo = new Date(new Date().getTime() - _1Minute);
+    const words: GuessedWord[] = [];
+    const _1MinuteAgo = new Date(new Date().getTime() - _1Minute);
     words.push(createGuessedWord(1, _1MinuteAgo, _1MinuteAgo));
     words.push(createGuessedWord(2, _1MinuteAgo, _1MinuteAgo));
-    let _5MinuteAgo = new Date(new Date().getTime() - _1Minute * 5);
+    const _5MinuteAgo = new Date(new Date().getTime() - _1Minute * 5);
     words.push(createGuessedWord(3, _5MinuteAgo, _5MinuteAgo));
     const a = component.categorizeWords(words, true);
     expect(a.length).toEqual(2);
@@ -79,8 +79,8 @@ describe('InterrogatorComponent', () => {
 
     expect(component.fillWordArrays()).toBeFalsy();
 
-    const words: GuessedWord[] = []
-    let _1MinuteAgo = new Date(new Date().getTime() - _1Minute);
+    const words: GuessedWord[] = [];
+    const _1MinuteAgo = new Date(new Date().getTime() - _1Minute);
     words.push(createGuessedWord(1, _1MinuteAgo, _1MinuteAgo, 'a1', 'b1'));
     const a = component.categorizeWords(words, true);
     expect(a.length).toEqual(1);
@@ -97,7 +97,7 @@ describe('InterrogatorComponent', () => {
     expect(component.checked).toBeTruthy('to be checked');
     expect(component.wrong).toBeFalsy('the answer right, so can\'t be wrong');
     expect(component.actualWords.length).toBe(0, 'Can not be any word to interrogate');
-    expect(component.currentlyAnswered.length).toBe(0, 'No any wrongly answered word')
+    expect(component.currentlyAnswered.length).toBe(0, 'No any wrongly answered word');
 
   });
 
@@ -106,8 +106,8 @@ describe('InterrogatorComponent', () => {
 
     expect(component.fillWordArrays()).toBeFalsy();
 
-    const words: GuessedWord[] = []
-    let _1MinuteAgo = new Date(new Date().getTime() - _1Minute);
+    const words: GuessedWord[] = [];
+    const _1MinuteAgo = new Date(new Date().getTime() - _1Minute);
     words.push(createGuessedWord(1, _1MinuteAgo, _1MinuteAgo, 'a1', 'b1'));
     const a = component.categorizeWords(words, true);
     expect(a.length).toEqual(1);
@@ -125,7 +125,7 @@ describe('InterrogatorComponent', () => {
     expect(component.checked).toBeTruthy('to be checked');
     expect(component.wrong).toBeTruthy('the answer was wrong');
     expect(component.actualWords.length).toBe(1, 'the 1 word is should be interrogated');
-    expect(component.currentlyAnswered.length).toBe(0, '1 wrongly answered word, but it is the last')
+    expect(component.currentlyAnswered.length).toBe(0, '1 wrongly answered word, but it is the last');
 
     // right answer
     component.next();
@@ -134,7 +134,7 @@ describe('InterrogatorComponent', () => {
     expect(component.checked).toBeTruthy('to be checked');
     expect(component.wrong).toBeFalsy('the answer right, so can\'t be wrong');
     expect(component.actualWords.length).toBe(0, 'Can not be any word to interrogate');
-    expect(component.currentlyAnswered.length).toBe(0, '1 wrongly answered word, but it is the last')
+    expect(component.currentlyAnswered.length).toBe(0, '1 wrongly answered word, but it is the last');
 
   });
 
@@ -145,9 +145,9 @@ describe('InterrogatorComponent', () => {
 
     expect(component.fillWordArrays()).toBeFalsy();
 
-    const words: GuessedWord[] = []
-    let _1MinuteAgo = new Date(new Date().getTime() - _1Minute);
-    const word1 = createGuessedWord(1, _1MinuteAgo, _1MinuteAgo, 'a1', to1)
+    const words: GuessedWord[] = [];
+    const _1MinuteAgo = new Date(new Date().getTime() - _1Minute);
+    const word1 = createGuessedWord(1, _1MinuteAgo, _1MinuteAgo, 'a1', to1);
     words.push(word1);
     const word2 = createGuessedWord(2, _1MinuteAgo, _1MinuteAgo, 'aa1', to2);
     words.push(word2);
@@ -176,7 +176,7 @@ describe('InterrogatorComponent', () => {
 
     const now = new Date().getTime();
 
-    const words: GuessedWord[] = []
+    const words: GuessedWord[] = [];
     const word1 = addWordToArray(words, 1, 'a', now - _1Minute);
     const word2 = addWordToArray(words, 2, 'b', now - _1Minute * 4);
     const word3 = addWordToArray(words, 3, 'c', now - _1Minute * 4 * 4);
@@ -219,7 +219,7 @@ describe('InterrogatorComponent', () => {
 
     const now = new Date().getTime();
 
-    const words: GuessedWord[] = []
+    const words: GuessedWord[] = [];
     const word1 = addWordToArray(words, 1, 'a', now - _1Minute);
     const word2 = addWordToArray(words, 2, 'b', now - _1Minute);
     const word3 = addWordToArray(words, 3, 'c', now - _1Minute * 4);
@@ -274,7 +274,7 @@ describe('InterrogatorComponent', () => {
 
     const now = new Date().getTime();
 
-    const words: GuessedWord[] = []
+    const words: GuessedWord[] = [];
     const word1 = addWordToArray(words, 1, 'a', now - _1Minute);
     const word2 = addWordToArray(words, 2, 'b', now - _1Minute);
     const word3 = addWordToArray(words, 3, 'c', now - _1Minute);
@@ -330,7 +330,7 @@ describe('InterrogatorComponent', () => {
 
     const now = new Date().getTime();
 
-    const words: GuessedWord[] = []
+    const words: GuessedWord[] = [];
     const word1 = addWordToArray(words, 1, 'a', now - _1Minute * 4 * 4);
     const word2 = addWordToArray(words, 2, 'b', now - _1Minute * 4 * 4);
     const word3 = addWordToArray(words, 3, 'c', now - _1Minute * 4);
@@ -371,11 +371,11 @@ describe('InterrogatorComponent', () => {
   it('Test getRandomWord', () => {
     const component = setup(setupMockWordService());
 
-    let w1 = createGuessedWord(1);
-    let w2 = createGuessedWord(2);
-    let w3 = createGuessedWord(3);
-    let w4 = createGuessedWord(4);
-    let w5 = createGuessedWord(5);
+    const w1 = createGuessedWord(1);
+    const w2 = createGuessedWord(2);
+    const w3 = createGuessedWord(3);
+    const w4 = createGuessedWord(4);
+    const w5 = createGuessedWord(5);
 
     spyOn(component, 'getRandomIndex').and.returnValue(w1.word.id);
 

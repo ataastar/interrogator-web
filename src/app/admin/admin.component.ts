@@ -5,22 +5,22 @@ import { WordService } from '../services/word-service';
 
 
 @Component({
-    selector: 'admin',
-    templateUrl: './admin.html',
+  selector: 'admin',
+  templateUrl: './admin.html',
 })
 export class AdminComponent {
 
-    public groups: any;
+  public groups: any;
 
-    constructor(private wordService: WordService, private route: ActivatedRoute, private router: Router) {
-    }
+  constructor(private wordService: WordService, private route: ActivatedRoute, private router: Router) {
+  }
 
-    ngOnInit(): void {
-        this.wordService.getGroups().then(groups => this.groups = groups);
-    }
+  ngOnInit(): void {
+    this.wordService.getGroups().then(groups => this.groups = groups);
+  }
 
-    interrogate(key: string): void {
-        this.router.navigate(['/interrogator', key, 'db']);
-    }
+  interrogate(key: string): void {
+    this.router.navigate(['/interrogator', key, 'db']);
+  }
 
 }

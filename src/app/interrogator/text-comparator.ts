@@ -12,7 +12,7 @@ export class TextComparator {
     if (actual === null) {
       return;
     }
-    for (let expected of expectedArray) {
+    for (const expected of expectedArray) {
       if (expected.phrase === actual) {
         return true;
       }
@@ -51,20 +51,20 @@ export class TextComparator {
 
   private static removeUnnecessaryCharacters(text: string) {
     let result = '';
-    for (let char of text) {
+    for (const char of text) {
       switch (char) {
-        case '?':
-        case '.':
-        case '!':
-        case ':':
-        case ',':
-        case ';':
-        case ' ':
-        case '-':
-        case '\'':
-          break;
-        default:
-          result = result + char;
+      case '?':
+      case '.':
+      case '!':
+      case ':':
+      case ',':
+      case ';':
+      case ' ':
+      case '-':
+      case '\'':
+        break;
+      default:
+        result = result + char;
       }
     }
     return result;

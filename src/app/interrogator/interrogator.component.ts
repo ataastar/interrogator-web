@@ -51,11 +51,11 @@ export class InterrogatorComponent {
   /**
    * The checked logical data. True if user has sent to check the input word
    */
-  checked: boolean = false;
+  checked = false;
   /**
    * Sign that the input word is right
    */
-  wrong: boolean = false;
+  wrong = false;
   /**
    * The comparator
    */
@@ -73,7 +73,7 @@ export class InterrogatorComponent {
     } else {
       this.route.paramMap
         .pipe(switchMap((params: ParamMap) => {
-          let unitId = params.get('id');
+          const unitId = params.get('id');
           if (unitId) {
             return this.wordService.getWords(params.get('id'));
           } else {
@@ -82,16 +82,16 @@ export class InterrogatorComponent {
             });
           }
         })).subscribe(words => {
-        if (words) {
-          this.categorizeWords(new GuessedWordConverter().convertToGuessed(words));
-          this.fillWordArrays();
-          this.next();
-        }
-      });
+          if (words) {
+            this.categorizeWords(new GuessedWordConverter().convertToGuessed(words));
+            this.fillWordArrays();
+            this.next();
+          }
+        });
     }
   }
 
-  categorizeWords(words: GuessedWord[], filterForExpired: boolean = true): Array<Array<GuessedWord>> {
+  categorizeWords(words: GuessedWord[], filterForExpired = true): Array<Array<GuessedWord>> {
     if (words == null) {
       return null;
     }
@@ -100,7 +100,7 @@ export class InterrogatorComponent {
     if (filterForExpired) {
       words = words.filter(w => {
         //console.log(w.getNextInterrogationTimeAsMillis());
-        return w.word.nextInterrogationTime == null || w.getNextInterrogationTimeAsMillis() <= now
+        return w.word.nextInterrogationTime == null || w.getNextInterrogationTimeAsMillis() <= now;
       });
     }
     words = words.sort((a, b) => (a.word.lastAnswerTime < b.word.lastAnswerTime ? -1 : 1));
@@ -144,7 +144,7 @@ export class InterrogatorComponent {
     }
     let fillAllFirstLevel = this.needToInterrogate.length - this.wrongAnswerCount == 0; // the first group of words were interrogated or this is the first fill
     while (wordCanBeAddedCount > 0 && this.categorizedWords.length > 0) {
-      let currentlyAddedWords: GuessedWord[] = [];
+      const currentlyAddedWords: GuessedWord[] = [];
       let currentlyAddedCount = 0;
       for (const word of this.categorizedWords[0]) { // get the first group of words and add to the actual words
         //console.log('from categorizedWords: ' + JSON.stringify(word.word));
@@ -191,7 +191,7 @@ export class InterrogatorComponent {
       }
     }
     if (!found) {
-      words.push(word)
+      words.push(word);
     }
     // add to the actualWords list
     found = false;
@@ -201,7 +201,7 @@ export class InterrogatorComponent {
       }
     }
     if (!found) {
-      this.actualWords.push(word)
+      this.actualWords.push(word);
     }
     return !found;
   }
@@ -238,14 +238,14 @@ export class InterrogatorComponent {
     this.checked = true;
     // play the audio if available
     if (this.guessed.word.audio) {
-      let player: any = document.getElementById('audioplayer');
+      const player: any = document.getElementById('audioplayer');
       player.play();
     }
   }
 
   private interrogateWordsWithWrongAnswer() {
     //console.log('interrogateWordsWithWrongAnswer...')
-    const wordsWithWrongAnswer: GuessedWord[] = []
+    const wordsWithWrongAnswer: GuessedWord[] = [];
     for (const word of this.actualWords) {
       if (word.getWrongAnswerNumber() > 0) {
         wordsWithWrongAnswer.push(word);
@@ -268,7 +268,7 @@ export class InterrogatorComponent {
       //console.log(JSON.stringify(word));
       this.actualWords.splice(index, 1);
     } else {
-      console.log("Can not find word in the actual array!!!");
+      console.log('Can not find word in the actual array!!!');
       console.log(word);
       console.log(this.actualWords);
     }
@@ -310,7 +310,7 @@ export class InterrogatorComponent {
         forRandom.push(word);
       }
     }
-    let remainingWordsNumber = forRandom.length;
+    const remainingWordsNumber = forRandom.length;
     // if no more words, then return null
     if (remainingWordsNumber === 0) {
       return null;
@@ -330,11 +330,11 @@ export class InterrogatorComponent {
   }
 
   getImageUrl() {
-    return //require('../../assets/images/' + this.word.imageUrl);
+    return; //require('../../assets/images/' + this.word.imageUrl);
   }
 
   getAudio() {
-    return //require('../../assets/audios/' + this.word.audio);
+    return; //require('../../assets/audios/' + this.word.audio);
   }
 
   back(): void {

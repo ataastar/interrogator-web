@@ -17,7 +17,7 @@ describe('ShowPhrasesComponent', () => {
       declarations: [ ShowPhrasesComponent ],
       imports: [ HttpClientTestingModule, RouterTestingModule ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

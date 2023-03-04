@@ -44,9 +44,9 @@ export class AddUnitContentComponent implements OnInit {
   }
 
   public toString(phraseArray: Phrase[]): string {
-    let result = "";
+    let result = '';
     for (const phrase of phraseArray) {
-      result = result + ";" + phrase.phrase;
+      result = result + ';' + phrase.phrase;
     }
     result = result.substr(1);
     return result;
@@ -65,12 +65,12 @@ export class AddUnitContentComponent implements OnInit {
       return;
     }
 
-    let translation = new TranslationToSave(this.unitId, this.getPhraseStrings(this.fromPhrases),
-      this.getPhraseStrings(this.toPhrases), this.example, this.translatedExample)
+    const translation = new TranslationToSave(this.unitId, this.getPhraseStrings(this.fromPhrases),
+      this.getPhraseStrings(this.toPhrases), this.example, this.translatedExample);
 
     this.wordService.addUnitContent(translation).then(unitContentId => {
       if (unitContentId) {
-        let word = new Word(unitContentId, this.fromPhrases, this.toPhrases, this.example, this.translatedExample);
+        const word = new Word(unitContentId, this.fromPhrases, this.toPhrases, this.example, this.translatedExample);
         this.unitWords.push(word);
         // clear the inputs
         this.fromPhrases = [new Phrase('')];
@@ -98,7 +98,7 @@ export class AddUnitContentComponent implements OnInit {
   }
 
   private getPhraseStrings(phrases: Phrase[]): string[] {
-    let strings: string[] = [];
+    const strings: string[] = [];
     phrases.forEach(phrase => {
       strings.push(phrase.phrase);
     });

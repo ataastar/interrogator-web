@@ -1,3 +1,3 @@
 export class ToPhrase {
-    constructor (public form: string, public phrases: string[]) {}
+  constructor (public form: string, public phrases: string[]) {}
 }

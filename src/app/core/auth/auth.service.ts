@@ -16,9 +16,9 @@ export class AuthService {
   login(email: string, password: string) {
     return this.http.post(env.apiUrl + '/api/login', { email, password })
       .pipe(tap(authResult => {
-            this.setSession(authResult)
-          }
-        )
+        this.setSession(authResult);
+      }
+      )
       )
       .pipe(shareReplay(1));
   }
@@ -28,7 +28,7 @@ export class AuthService {
     return this.http.post(env.apiUrl + '/api/refreshToken', { refreshToken: localStorage.getItem(AuthService.REFRESH_TOKEN_ID) })
       .pipe(tap(authResult => {
         console.log('refresh arrived');
-        this.setSession(authResult)
+        this.setSession(authResult);
       }));
   }
 

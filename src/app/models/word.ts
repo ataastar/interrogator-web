@@ -1,4 +1,4 @@
-import { Phrase } from "./phrase";
+import { Phrase } from './phrase';
 
 export class Word {
   id: number;

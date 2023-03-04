@@ -27,7 +27,7 @@ const routes: Routes = [
   {
     path: 'admin/addUnitContent/:id',
     component: AddUnitContentComponent, canActivate: [AuthGuard]
-},
+  },
   {
     path: 'interrogator/show/:id',
     component: ShowPhrasesComponent, canActivate: [AuthGuard]

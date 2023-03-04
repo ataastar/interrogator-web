@@ -6,16 +6,16 @@ import { CommonModule } from '@angular/common';
 import { AdminComponent } from './admin.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        HttpClientModule
-    ],
-    declarations: [
-        AdminComponent
-    ],
-    exports: [
-      AdminComponent
-    ]
+  imports: [
+    CommonModule,
+    FormsModule,
+    HttpClientModule
+  ],
+  declarations: [
+    AdminComponent
+  ],
+  exports: [
+    AdminComponent
+  ]
 })
 export class AdminModule {}

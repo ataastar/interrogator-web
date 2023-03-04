@@ -3,9 +3,9 @@ import { Word } from './word';
 export class GuessedWord {
   word: Word;
 
-  lastAnswerWrong: boolean = false;
-  private wrongAnswerNumber: number = 0;
-  private correctAnswerNumber: number = 0;
+  lastAnswerWrong = false;
+  private wrongAnswerNumber = 0;
+  private correctAnswerNumber = 0;
 
   constructor(word: Word) {
     this.word = word;

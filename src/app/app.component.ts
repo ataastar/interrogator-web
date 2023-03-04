@@ -3,8 +3,8 @@ import { AuthService } from './core/auth/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'learn-english-app',
-    templateUrl: './app.component.html',
+  selector: 'learn-english-app',
+  templateUrl: './app.component.html',
 })
 export class AppComponent {
 

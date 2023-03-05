@@ -1,13 +1,16 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { LoginComponent } from './login/login.component';
 import { InterrogatorComponent } from '../interrogator/interrogator.component';
 import { ShowPhrasesComponent } from '../interrogator/show-phrases/show-phrases.component';
 import { AddUnitContentComponent } from '../admin/add-unit-content/add-unit-content.component';
 import { WordTypesComponent } from '../interrogator/word-type/display/word-types.component';
-import { DisplayWordTypeUnitContentComponent } from '../interrogator/word-type/display-word-type-unit-content.component';
+import {
+  DisplayWordTypeUnitContentComponent
+} from '../interrogator/word-type/display-word-type-unit-content.component';
 import { AuthGuard } from './auth/auth-guard';
+import { isAdmin } from './auth/auth.service';
 
 const routes: Routes = [
   {
@@ -19,14 +22,9 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent, canActivate: [AuthGuard]
   },
-  /*{
-    path: 'admin',
-    canActivate: [AuthGuardService],
-    loadChildren: '../admin/admin.module#AdminModule'
-  },*/
   {
     path: 'admin/addUnitContent/:id',
-    component: AddUnitContentComponent, canActivate: [AuthGuard]
+    component: AddUnitContentComponent, canActivate: [isAdmin]
   },
   {
     path: 'interrogator/show/:id',

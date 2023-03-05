@@ -17,6 +17,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './core/auth/auth.interceptor';
 import { AuthGuard } from './core/auth/auth-guard';
 import { MatButtonModule } from '@angular/material/button';
+import { HasRole } from './core/directives/has-role.directive';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { MatButtonModule } from '@angular/material/button';
   declarations: [
     AppComponent,
     ShowPhrasesComponent,
-    AddUnitContentComponent
+    AddUnitContentComponent,
+    HasRole
   ],
   bootstrap: [AppComponent],
   providers: [WordService, AuthGuard, {

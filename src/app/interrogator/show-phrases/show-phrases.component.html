@@ -1,22 +1,24 @@
 <div style="align-content: center; width: 100%;">
-    <input type="button" (click)="interrogateHere()" value="Kikérdez" class="btn btn-secondary">
-    <input type="button" (click)="interrogate()" value="Kikérdez írásban" class="btn btn-secondary">
-    <!--input type="button" (click)="addNew()" value="Hozzáad" class="btn btn-secondary"-->
-    <table align="center" class="table table-sm table-striped table-bordered table-hover">
-        <tbody>
-            <tr *ngFor="let guessed of words; let i=index" (click)="display(i)">
-                <td style="width: 50%;">{{ toString(guessed.word.from) }}
-                    <label style="font-size: smaller; font-style: italic;" *ngIf="guessed.word.example">/{{guessed.word.example}}/</label>
-                </td>
-                <td style="width: 50%;">
+  <input type="button" (click)="interrogateHere()" value="Kikérdez" class="btn btn-secondary">
+  <input type="button" (click)="interrogate()" value="Kikérdez írásban" class="btn btn-secondary">
+  <!--input type="button" (click)="addNew()" value="Hozzáad" class="btn btn-secondary"-->
+  <table class="table table-sm table-striped table-bordered table-hover">
+    <tbody>
+    <tr *ngFor="let guessed of words; let i=index" (click)="display(i)">
+      <td style="width: 50%;">{{ toString(guessed.word.from) }}
+        <label style="font-size: smaller; font-style: italic;" *ngIf="guessed.word.example">/{{guessed.word.example}}
+          /</label>
+      </td>
+      <td style="width: 50%;">
                     <span *ngIf="wordsDisplayed[i]">{{ toString(guessed.word.to) }}
-                        <label style="font-size: smaller; font-style: italic;" *ngIf="guessed.word.translatedExample">/{{guessed.word.translatedExample}}/</label>
+                      <label style="font-size: smaller; font-style: italic;"
+                             *ngIf="guessed.word.translatedExample">/{{guessed.word.translatedExample}}/</label>
                     </span>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <input type="button" (click)="interrogateHere()" value="Kikérdez" class="btn btn-secondary">
-    <input type="button" (click)="interrogate()" value="Kikérdez írásban" class="btn btn-secondary">
-    <!--input type="button" (click)="addNew()" value="Hozzáad" class="btn btn-secondary"-->
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <input type="button" (click)="interrogateHere()" value="Kikérdez" class="btn btn-secondary">
+  <input type="button" (click)="interrogate()" value="Kikérdez írásban" class="btn btn-secondary">
+  <!--input type="button" (click)="addNew()" value="Hozzáad" class="btn btn-secondary"-->
 </div>

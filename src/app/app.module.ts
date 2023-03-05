@@ -16,6 +16,7 @@ import { AddUnitContentComponent } from './admin/add-unit-content/add-unit-conte
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './core/auth/auth.interceptor';
 import { AuthGuard } from './core/auth/auth-guard';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   imports: [
@@ -25,7 +26,7 @@ import { AuthGuard } from './core/auth/auth-guard';
     HttpClientModule,
     InterrogatorModule,
     AdminModule,
-    CoreModule
+    CoreModule, MatButtonModule
   ],
   declarations: [
     AppComponent,

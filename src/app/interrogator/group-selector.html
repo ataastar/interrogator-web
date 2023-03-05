@@ -1,5 +1,5 @@
-<div class="row">
-  <div *ngFor="let group of groups">
+<div>
+  <div *ngFor="let group of groups" style="float: left">
     <button mat-button [matMenuTriggerFor]="menu">{{group.name}}</button>
     <mat-menu #menu="matMenu">
       <button *ngFor="let subGroup of group.group" mat-menu-item

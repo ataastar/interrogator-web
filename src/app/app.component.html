@@ -1,12 +1,13 @@
-<div class="row">
-    <div class="col-10">
-        <group-selector *ngIf="logoutEnabled()"></group-selector>
-    </div>
-    <div class="col-1">
-        <word-type-unit-selector *ngIf="logoutEnabled()"></word-type-unit-selector>
-    </div>
-  <div class="col-1">
-    <a href="#" (click)="logout()" *ngIf="logoutEnabled()">Logout</a>
+<div>
+  <div>
+    <group-selector *ngIf="logoutEnabled()"></group-selector>
   </div>
+  <div style="float: right">
+    <a mat-button href="#" (click)="logout()" *ngIf="logoutEnabled()">Logout</a>
+  </div>
+  <div style="float: right">
+    <word-type-unit-selector *ngIf="logoutEnabled()"></word-type-unit-selector>
+  </div>
+  <div style="clear: left; width: 100%"></div>
 </div>
 <router-outlet></router-outlet>

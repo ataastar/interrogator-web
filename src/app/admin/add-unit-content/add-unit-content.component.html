@@ -11,23 +11,24 @@
             <label style="font-size: smaller; font-style: italic;" *ngIf="word.translatedExample">/{{word.translatedExample}}/</label>
         </div>
         <div class="col-2">
-            <input type="button" (click)="remove(word)" name="remove" id="remove" class="btn btn-secondary"
-                value="Töröl" />
+          <button mat-fab color="warn" aria-label="Töröl" (click)="remove(word)" style="width: 28px; height: 28px">
+            <mat-icon style="font-size: 20px">delete</mat-icon>
+          </button>
         </div>
     </div>
     <div class="form-group row">
-        <div class="col-4">
-            <div *ngFor="let phrase of fromPhrases; let in=index">
-                <input type="text" [(ngModel)]="fromPhrases[in].phrase" name="from{{in}}" autofocus id="from{{in}}"
-                    class="form-control" #name="ngModel" required />
-            </div>
+      <div class="col-4">
+        <div *ngFor="let phrase of fromPhrases; let i=index">
+          <input type="text" [(ngModel)]="fromPhrases[i].phrase" name="from{{i}}" autofocus id="from{{i}}"
+                 class="form-control" #name="ngModel" required/>
         </div>
-        <div class="col-4">
-            <div *ngFor="let phrase of toPhrases; let in=index">
-                <input type="text" [(ngModel)]="toPhrases[in].phrase" name="to{{in}}" autofocus id="to{{in}}"
-                    class="form-control" #name="ngModel" required />
-            </div>
+      </div>
+      <div class="col-4">
+        <div *ngFor="let phrase of toPhrases; let i=index">
+          <input type="text" [(ngModel)]="toPhrases[i].phrase" name="to{{i}}" autofocus id="to{{i}}"
+                 class="form-control" #name="ngModel" required/>
         </div>
+      </div>
     </div>
     <div class="form-group row">
         <div class="col-4">

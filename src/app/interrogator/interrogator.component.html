@@ -40,7 +40,7 @@
       </div>
       <audio [src]="getAudio()" *ngIf="guessed.word.audio" id="audioplayer"></audio>
     </div>
-  <div *ngIf="actualWords && actualWords.length > 0 && !guessed">
+  <div *ngIf="!guessed">
     Gratulálunk! Sikeresen befejezted.
   </div>
 </form>

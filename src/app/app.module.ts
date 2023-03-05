@@ -18,6 +18,7 @@ import { AuthInterceptor } from './core/auth/auth.interceptor';
 import { AuthGuard } from './core/auth/auth-guard';
 import { MatButtonModule } from '@angular/material/button';
 import { HasRole } from './core/directives/has-role.directive';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { HasRole } from './core/directives/has-role.directive';
     HttpClientModule,
     InterrogatorModule,
     AdminModule,
-    CoreModule, MatButtonModule
+    CoreModule, MatButtonModule,
+    MatIconModule
   ],
   declarations: [
     AppComponent,

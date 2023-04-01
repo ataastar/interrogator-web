@@ -64,13 +64,8 @@ export class WordService {
   }
 
   async removeUnitContent(unitContentId: number) {
-    try {
       const body = {unitContentId: (unitContentId)};
       return await this.http.put(env.apiUrl + '/word/remove', body).toPromise();
-    } catch (onRejected) {
-      console.error(onRejected);
-      return null;
-    }
   }
 
   /*async activateWordTypeLink(linkId: number) {

@@ -81,15 +81,17 @@ export class AddUnitContentComponent implements OnInit {
     });
   }
 
+  edit(wordToRemove: Word): void {
+
+  }
+
   remove(wordToRemove: Word): void {
-    this.wordService.removeUnitContent(wordToRemove.id).then(res => {
-      if (res) {
-        const index = this.unitWords.indexOf(wordToRemove, 0);
-        if (index > -1) {
-          this.unitWords.splice(index, 1);
-        }
+    this.wordService.removeUnitContent(wordToRemove.id).then(() => {
+      const index = this.unitWords.indexOf(wordToRemove, 0);
+      if (index > -1) {
+        this.unitWords.splice(index, 1);
       }
-    });
+    }, error => alert(error));
     return;
   }
 

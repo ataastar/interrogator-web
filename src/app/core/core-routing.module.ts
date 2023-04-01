@@ -40,7 +40,7 @@ const routes: Routes = [
   },
   { // admin page to add phrase to word type unit
     path: 'wordType',
-    component: WordTypesComponent, canActivate: [AuthGuard]
+    component: WordTypesComponent, canActivate: [isAdmin]
   },
   {
     path: 'wordTypeUnit/:id',

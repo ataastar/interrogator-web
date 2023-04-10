@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Word } from 'src/app/models/word';
 import { WordService } from 'src/app/services/word-service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 import { Phrase } from 'src/app/models/phrase';
 import { TranslationToSave } from 'src/app/models/translation-to-save';
 
@@ -26,20 +25,20 @@ export class AddUnitContentComponent implements OnInit {
   ngOnInit() {
     this.unitWords = this.wordService.getActualWords();
     if (!this.unitWords) {
-      this.route.paramMap.pipe(switchMap((params: ParamMap) => {
+      this.route.paramMap.subscribe((params) => {
         this.unitId = params.get('id');
-        return this.wordService.getWords(this.unitId);
-      })).subscribe(words => {
-        if (words != null) {
-          this.unitWords = words;
-        } else {
-          this.unitWords = new Array(0);
-        }
+        this.wordService.getWords(this.unitId).then(words => {
+          if (words != null) {
+            this.unitWords = words;
+          } else {
+            this.unitWords = new Array(0);
+          }
+        })
       });
     } else {
-      this.route.paramMap.pipe(switchMap((params: ParamMap) => {
-        return this.unitId = params.get('id');
-      }));
+      this.route.paramMap.subscribe((params) => {
+        this.unitId = params.get('id');
+      })
     }
   }
 
@@ -81,7 +80,7 @@ export class AddUnitContentComponent implements OnInit {
     });
   }
 
-  edit(wordToRemove: Word): void {
+  edit(wordToEdit: Word): void {
 
   }
 

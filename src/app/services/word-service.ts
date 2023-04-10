@@ -22,7 +22,7 @@ export class WordService {
 
   async getWords(key: string) {
     try {
-      const res = await this.http.get<object>(env.apiUrl + '/words/' + key)
+      const res = await this.http.get<object>(env.apiUrl + '/word/' + key)
         .toPromise();
       const json = res != null ? res : null;
       const unit = json != null ? (json[0].content != null ? json[0].content : json[0]) : null;
@@ -55,7 +55,7 @@ export class WordService {
 
   async addUnitContent(translation: TranslationToSave) {
     try {
-      const res = await this.http.put<any>(env.apiUrl + '/word/', translation).toPromise();
+      const res = await this.http.post<any>(env.apiUrl + '/word/', translation).toPromise();
       return res.unitContentId;
     } catch (onRejected) {
       console.error(onRejected);

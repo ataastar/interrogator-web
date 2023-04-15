@@ -45,7 +45,7 @@ export class WordService {
 
   async getGroups(): Promise<Group[]> {
     try {
-      const res = await this.http.get<object>(env.apiUrl + '/word_groups').toPromise();
+      const res = await this.http.get<object>(env.apiUrl + '/units').toPromise();
       return res[0].groups;
     } catch (onRejected) {
       console.error(onRejected);
@@ -64,8 +64,7 @@ export class WordService {
   }
 
   async removeUnitContent(unitContentId: number) {
-      const body = {unitContentId: (unitContentId)};
-      return await this.http.put(env.apiUrl + '/word/remove', body).toPromise();
+      return await this.http.delete(env.apiUrl + '/word/' + unitContentId).toPromise();
   }
 
   /*async activateWordTypeLink(linkId: number) {

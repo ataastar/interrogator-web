@@ -87,8 +87,7 @@ export class WordService {
 
   async getWordTypeContent(wordTypeId: number, fromLanguageId: number, toLanguageId: number): Promise<WordTypeContent> {
     try {
-      const body = { wordTypeId: wordTypeId, fromLanguageId: fromLanguageId, toLanguageId: toLanguageId };
-      const res = await this.http.post<object>(env.apiUrl + '/word_type', body).toPromise();
+      const res = await this.http.get<object>(env.apiUrl + '/word_types/words/' + wordTypeId + '/' + fromLanguageId + '/' + toLanguageId).toPromise();
       return ToWordTypeContentMapper.map(res[0].content);
     } catch (onRejected) {
       console.error(onRejected);
@@ -98,7 +97,7 @@ export class WordService {
 
   async getWordTypeUnitContent(wordTypeUnitId: number, fromLanguageId: number): Promise<WordTypeContent> {
     try {
-      const res = await this.http.get<object>(env.apiUrl + '/word_type_unit/' + wordTypeUnitId + '/' + fromLanguageId).toPromise();
+      const res = await this.http.get<object>(env.apiUrl + '/word_types/unit/words' + wordTypeUnitId + '/' + fromLanguageId).toPromise();
       return ToWordTypeContentMapper.map(res[0].content);
     } catch (onRejected) {
       console.error(onRejected);

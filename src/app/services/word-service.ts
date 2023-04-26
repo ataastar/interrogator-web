@@ -118,8 +118,8 @@ export class WordService {
 
   async addWordTypeUnitLink(link: WordTypeLink, unit: WordTypeUnit) {
     try {
-      const request = {wordTypeUnitLinkId: unit.id, wordTypeLinkId: link.id};
-      await this.http.put(env.apiUrl + '/word_type_unit_link/add/', request).toPromise();
+      const request = {wordTypeUnitId: unit.id, wordTypeLinkId: link.id};
+      await this.http.put(env.apiUrl + '/word_types/units/link/', request).toPromise();
       return;
     } catch (onRejected) {
       console.error(onRejected);
@@ -129,8 +129,8 @@ export class WordService {
 
   async deleteWordTypeUnitLink(link: WordTypeLink, unit: WordTypeUnit) {
     try {
-      const request = {wordTypeUnitLinkId: unit.id, wordTypeLinkId: link.id};
-      await this.http.put(env.apiUrl + '/word_type_unit_link/delete/', request).toPromise();
+      const request = {wordTypeUnitId: unit.id, wordTypeLinkId: link.id};
+      await this.http.delete(env.apiUrl + '/word_types/units/link/', request).toPromise();
       return;
     } catch (onRejected) {
       console.error(onRejected);
@@ -148,7 +148,7 @@ export class WordService {
 
   async sendAnswer(id: number, right: boolean, type: InterrogatorType): Promise<object> {
     try {
-      const request = { id: id, right: right, interrogation_type: type };
+      const request = { id: id, right: right, interrogationType: type };
       return await this.http.post(env.apiUrl + '/answer', request).toPromise();
     } catch (onRejected) {
       console.error(onRejected);

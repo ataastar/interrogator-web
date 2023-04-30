@@ -107,7 +107,7 @@ export class WordService {
 
   async getWordTypeUnits() {
     try {
-      const res = await this.http.get<object>(env.apiUrl + '/word_type_unit').toPromise();
+      const res = await this.http.get<object>(env.apiUrl + '/word_types/units').toPromise();
       return res[0].groups;
     } catch (onRejected) {
       console.error(onRejected);

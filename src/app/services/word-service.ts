@@ -97,7 +97,7 @@ export class WordService {
 
   async getWordTypeUnitContent(wordTypeUnitId: number, fromLanguageId: number): Promise<WordTypeContent> {
     try {
-      const res = await this.http.get<object>(env.apiUrl + '/word_types/units/words' + wordTypeUnitId + '/' + fromLanguageId).toPromise();
+      const res = await this.http.get<object>(env.apiUrl + '/word_types/units/words/' + wordTypeUnitId + '/' + fromLanguageId).toPromise();
       return ToWordTypeContentMapper.map(res[0].content);
     } catch (onRejected) {
       console.error(onRejected);
@@ -129,8 +129,7 @@ export class WordService {
 
   async deleteWordTypeUnitLink(link: WordTypeLink, unit: WordTypeUnit) {
     try {
-      const request = {wordTypeUnitId: unit.id, wordTypeLinkId: link.id};
-      await this.http.delete(env.apiUrl + '/word_types/units/link/', request).toPromise();
+      await this.http.delete(env.apiUrl + '/word_types/units/link/' + unit.id + '/' +link.id).toPromise();
       return;
     } catch (onRejected) {
       console.error(onRejected);

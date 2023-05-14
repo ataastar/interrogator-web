@@ -35,6 +35,21 @@ export class WordService {
     }
   }
 
+  async getTranslationForUnit(code: string) {
+    try {
+      const res = await this.http.get<object>(env.apiUrl + '/translation/' + code)
+        .toPromise();
+      const json = res != null ? res : null;
+      const unit = json != null ? (json[0].content != null ? json[0].content : json[0]) : null;
+      this.actualPhrases = unit != null ? unit.translations : null;
+      this.selectedUnitName = unit != null ? unit.name : '';
+      return this.actualPhrases;
+    } catch (onRejected) {
+      console.error(onRejected);
+      return null;
+    }
+  }
+
   getActualWords(): Word[] {
     return this.actualPhrases;
   }

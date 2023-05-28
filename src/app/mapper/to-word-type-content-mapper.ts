@@ -12,7 +12,7 @@ export class ToWordTypeContentMapper {
       for (const [, v] of Object.entries(row.toPhrases)) {
         toPhrases.push(new ToPhrase(Object.keys(v)[0], v[Object.keys(v)[0]] as string[]));
       }
-      const wordTypeUnitIds: number[] = row.wordTypeUnits ? row.wordTypeUnits as number[] : [];
+      const wordTypeUnitIds: number[] = row.wordTypeUnitIds ? row.wordTypeUnitIds as number[] : [];
       links.push(new WordTypeLink(row.id, fromPhrases, toPhrases, wordTypeUnitIds));
     }
     const wordTypeUnits: WordTypeUnit[] = [];

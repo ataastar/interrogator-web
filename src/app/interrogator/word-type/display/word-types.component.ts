@@ -62,19 +62,19 @@ export class WordTypesComponent implements OnInit {
 
   private linkAddToUnit(link: WordTypeLink, unit: WordTypeUnit) {
     this.linkRemoveFromUnit(link, unit);
-    link.wordTypeUnits.push(unit.id);
+    link.wordTypeUnitIds.push(unit.id);
   }
 
 
   private linkRemoveFromUnit(link: WordTypeLink, unit: WordTypeUnit) {
-    const index = link.wordTypeUnits.indexOf(unit.id, 0);
+    const index = link.wordTypeUnitIds.indexOf(unit.id, 0);
     if (index > -1) {
-      link.wordTypeUnits.splice(index, 1);
+      link.wordTypeUnitIds.splice(index, 1);
     }
   }
 
   isInUnit(link: WordTypeLink, unit: WordTypeUnit): boolean {
-    return link.wordTypeUnits.includes(unit.id);
+    return link.wordTypeUnitIds.includes(unit.id);
   }
 
 }

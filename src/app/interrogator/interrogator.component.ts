@@ -163,7 +163,7 @@ export class InterrogatorComponent {
         }
       }
       // need to remove the first group if:
-      // 1. fillAllFirstLevel is true (all was interrogated from the first group or it is the initial fill)
+      // 1. fillAllFirstLevel is true (all was interrogated from the first group, or it is the initial fill)
       // 2. or all of the words were added to the actual array from the first group
       if (fillAllFirstLevel || currentlyAddedCount >= this.categorizedWords[0].length) {
         //console.log('need to remove the first array of categorizedWords.');

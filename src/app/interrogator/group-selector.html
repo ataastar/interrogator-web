@@ -2,7 +2,7 @@
   <div *ngFor="let group of groups" style="float: left">
     <button mat-button [matMenuTriggerFor]="menu">{{group.name}}</button>
     <mat-menu #menu="matMenu">
-      <button *ngFor="let subGroup of group.group" mat-menu-item
+      <button *ngFor="let subGroup of group.units" mat-menu-item
               (click)="interrogate(group, subGroup)">{{subGroup.name}}</button>
     </mat-menu>
   </div>

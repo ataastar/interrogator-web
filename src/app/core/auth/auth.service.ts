@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { shareReplay, tap } from 'rxjs/operators';
-import { environment as env } from '../../../environments/environment';
 import { CanActivateFn } from '@angular/router';
+import { AuthService as ApiAuth, ResLogin } from '@ataastar/interrogator-api-ts-oa';
 
 @Injectable()
 export class AuthService {
@@ -11,12 +11,12 @@ export class AuthService {
   public static REFRESH_TOKEN_ID = 'refresh_token';
   public static ROLES_ID = 'roles';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private apiAuth: ApiAuth) {
 
   }
 
   login(email: string, password: string) {
-    return this.http.post(env.apiUrl + '/api/login', { email, password })
+    return this.apiAuth.login({email: email, password: password})
       .pipe(tap(authResult => {
             this.doLogin(authResult);
           }
@@ -26,15 +26,13 @@ export class AuthService {
   }
 
   refreshToken() {
-    //console.log('refresh token');
-    return this.http.post(env.apiUrl + '/api/refreshToken', { refreshToken: localStorage.getItem(AuthService.REFRESH_TOKEN_ID) })
+    return this.apiAuth.refreshToken({refreshToken: localStorage.getItem(AuthService.REFRESH_TOKEN_ID)})
       .pipe(tap(authResult => {
-        //console.log('refresh arrived');
         this.doLogin(authResult);
       }));
   }
 
-  private doLogin(authResult) {
+  private doLogin(authResult: ResLogin) {
     localStorage.setItem(AuthService.TOKEN_ID, authResult.idToken);
     localStorage.setItem(AuthService.REFRESH_TOKEN_ID, authResult.refreshToken);
     localStorage.setItem(AuthService.ROLES_ID, authResult.roles);

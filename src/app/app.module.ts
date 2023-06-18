@@ -19,6 +19,8 @@ import { AuthGuard } from './core/auth/auth-guard';
 import { MatButtonModule } from '@angular/material/button';
 import { HasRole } from './core/directives/has-role.directive';
 import { MatIconModule } from '@angular/material/icon';
+import { environment } from '../environments/environment';
+import { BASE_PATH } from '@ataastar/interrogator-api-ts-oa';
 
 @NgModule({
   imports: [
@@ -42,6 +44,6 @@ import { MatIconModule } from '@angular/material/icon';
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
     multi: true
-  }]
+  }, { provide: BASE_PATH, useValue: environment.apiUrl }]
 })
 export class AppModule { }

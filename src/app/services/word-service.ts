@@ -2,13 +2,20 @@ import { Injectable } from '@angular/core';
 import { Word } from '../models/word';
 import { TranslationToSave } from '../models/translation-to-save';
 import { environment as env } from 'src/environments/environment';
-import { ToWordTypeContentMapper } from '../mapper/to-word-type-content-mapper';
-import { WordTypeContent } from '../models/word-type/word-type-content';
-import { WordTypeLink } from '../models/word-type/word-type-link';
-import { WordTypeUnit } from '../models/word-type/word-type-unit';
 import { HttpClient } from '@angular/common/http';
-import { InterrogatorType } from '../interrogator/enum/interrogator-type';
 import { Group } from '../models/group';
+import {
+  ReqAddAnswer,
+  ResWordTypeTranslation,
+  ResWordTypeTranslationRowsInner,
+  ResWordTypeUnitTranslation,
+  TranslationService,
+  UnitLeaf,
+  WordTypeService,
+  WordTypeUnit
+} from '@ataastar/interrogator-api-ts-oa';
+import { Observable } from 'rxjs';
+import InterrogationTypeEnum = ReqAddAnswer.InterrogationTypeEnum;
 
 @Injectable()
 export class WordService {
@@ -17,7 +24,7 @@ export class WordService {
   private actualPhrases: Word[];
   private selectedUnitName: string;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private translationService: TranslationService, private wordTypeService: WordTypeService) {
   }
 
   async getWords(key: string) {
@@ -100,30 +107,27 @@ export class WordService {
     }
   }*/
 
-  async getWordTypeContent(wordTypeId: number, fromLanguageId: number, toLanguageId: number): Promise<WordTypeContent> {
+  getWordTypeContent(wordTypeId: number, fromLanguageId: number, toLanguageId: number): Observable<ResWordTypeTranslation> {
     try {
-      const res = await this.http.get<object>(env.apiUrl + '/word_types/words/' + wordTypeId + '/' + fromLanguageId + '/' + toLanguageId).toPromise();
-      return ToWordTypeContentMapper.map(res[0].content);
+      return this.wordTypeService.getWordTypeTranslations(wordTypeId, fromLanguageId, toLanguageId);
     } catch (onRejected) {
       console.error(onRejected);
       return null;
     }
   }
 
-  async getWordTypeUnitContent(wordTypeUnitId: number, fromLanguageId: number): Promise<WordTypeContent> {
+  getWordTypeUnitContent(wordTypeUnitId: number, fromLanguageId: number): Observable<ResWordTypeUnitTranslation> {
     try {
-      const res = await this.http.get<object>(env.apiUrl + '/word_types/units/words/' + wordTypeUnitId + '/' + fromLanguageId).toPromise();
-      return ToWordTypeContentMapper.map(res[0].content);
+      return this.wordTypeService.getWordTypeUnitTranslations(wordTypeUnitId, fromLanguageId);
     } catch (onRejected) {
       console.error(onRejected);
       return null;
     }
   }
 
-  async getWordTypeUnits() {
+  getWordTypeUnits(): Observable<UnitLeaf[]> {
     try {
-      const res = await this.http.get<object>(env.apiUrl + '/word_types/units').toPromise();
-      return res[0].groups;
+      return this.wordTypeService.getWordTypeUnits();
     } catch (onRejected) {
       console.error(onRejected);
       return null;
@@ -131,39 +135,39 @@ export class WordService {
   }
 
 
-  async addWordTypeUnitLink(link: WordTypeLink, unit: WordTypeUnit) {
+  addWordTypeUnitLink(link: ResWordTypeTranslationRowsInner, unit: WordTypeUnit): Observable<any> {
     try {
-      const request = {wordTypeUnitId: unit.id, wordTypeLinkId: link.id};
-      await this.http.put(env.apiUrl + '/word_types/units/link/', request).toPromise();
-      return;
+      return this.wordTypeService.addWordTypeUnitLink({ wordTypeUnitId: unit.id, wordTypeLinkId: link.id });
     } catch (onRejected) {
       console.error(onRejected);
       return;
     }
   }
 
-  async deleteWordTypeUnitLink(link: WordTypeLink, unit: WordTypeUnit) {
+  deleteWordTypeUnitLink(link: ResWordTypeTranslationRowsInner, unit: WordTypeUnit): Observable<any> {
     try {
-      await this.http.delete(env.apiUrl + '/word_types/units/link/' + unit.id + '/' +link.id).toPromise();
-      return;
+      return this.wordTypeService.deleteWordTypeUnitLink(unit.id, link.id)
     } catch (onRejected) {
       console.error(onRejected);
       return;
     }
   }
 
-  async wrongAnswer(id: number, type: InterrogatorType): Promise<object> {
+  async wrongAnswer(id: number, type: InterrogationTypeEnum): Promise<object> {
     return this.sendAnswer(id, false, type);
   }
 
-  async rightAnswer(id: number, type: InterrogatorType): Promise<object> {
+  async rightAnswer(id: number, type: InterrogationTypeEnum): Promise<object> {
     return this.sendAnswer(id, true, type);
   }
 
-  async sendAnswer(id: number, right: boolean, type: InterrogatorType): Promise<object> {
+  async sendAnswer(id: number, right: boolean, type: InterrogationTypeEnum): Promise<object> {
     try {
-      const request = { id: id, right: right, interrogationType: type };
-      return await this.http.post(env.apiUrl + '/answer', request).toPromise();
+      return await this.translationService.storeAnswer({
+        unitContentId: id,
+        right: right,
+        interrogationType: type
+      }).toPromise();
     } catch (onRejected) {
       console.error(onRejected);
       return null;

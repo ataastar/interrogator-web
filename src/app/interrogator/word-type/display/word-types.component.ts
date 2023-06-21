@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { WordTypeContent } from 'src/app/models/word-type/word-type-content';
-import { WordTypeLink } from 'src/app/models/word-type/word-type-link';
-import { WordTypeUnit } from 'src/app/models/word-type/word-type-unit';
 import { WordService } from 'src/app/services/word-service';
+import { ResWordTypeTranslation } from '@ataastar/interrogator-api-ts-oa/model/resWordTypeTranslation';
+import { ResWordTypeTranslationRowsInner, WordTypeUnit } from '@ataastar/interrogator-api-ts-oa';
 
 @Component({
   selector: 'word-types',
@@ -12,8 +11,8 @@ import { WordService } from 'src/app/services/word-service';
 })
 export class WordTypesComponent implements OnInit {
 
-  wordTypeContent: WordTypeContent = null;
-  displayedWordTypeLinks: WordTypeLink[] = null;
+  wordTypeContent: ResWordTypeTranslation = null;
+  displayedWordTypeLinks: ResWordTypeTranslationRowsInner[] = null;
   displayedWordTypeUnits: WordTypeUnit[] = null;
   forms: string[];
 
@@ -21,10 +20,10 @@ export class WordTypesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.wordService.getWordTypeContent(1, 2, 1).then(result => {
+    this.wordService.getWordTypeContent(1, 2, 1).subscribe(result => {
       this.wordTypeContent = result;
       this.forms = this.wordTypeContent.forms;
-      this.displayedWordTypeLinks = this.wordTypeContent.links;
+      this.displayedWordTypeLinks = this.wordTypeContent.rows;
       this.displayedWordTypeUnits = this.wordTypeContent.wordTypeUnits;
       this.sort();
     });
@@ -34,47 +33,48 @@ export class WordTypesComponent implements OnInit {
     this.router.navigate(['/interrogator']);
   }
 
-  showTo(link: WordTypeLink, form: string) {
+  showTo(link: ResWordTypeTranslationRowsInner, form: string) {
     for (const toPhrase of link.toPhrases) {
-      if (form === toPhrase.form) {
-        return toPhrase.phrases.toString();
+      for (const toPhraseKey of Object.keys(toPhrase)) {
+        if (form === toPhraseKey) {
+          return toPhrase[toPhraseKey].toString();
+        }
       }
     }
     return 'nincs';
   }
 
   private sort() {
-    this.displayedWordTypeLinks.sort((a, b) => (a.toPhrases.filter(p => p.form === 'Verb')[0].phrases[0]
-      > b.toPhrases.filter(p => p.form === 'Verb')[0].phrases[0]) ? 1 : -1);
+    this.displayedWordTypeLinks.sort((a, b) => (a.toPhrases.filter((value) => value['Verb'])[0] > b.toPhrases.filter((value) => value['Verb'])[0]) ? -1 : 1);
   }
 
-  toggleUnit(link: WordTypeLink, unit: WordTypeUnit) {
+  toggleUnit(link: ResWordTypeTranslationRowsInner, unit: WordTypeUnit) {
     if (this.isInUnit(link, unit)) {
-      this.wordService.deleteWordTypeUnitLink(link, unit).then(() => {
+      this.wordService.deleteWordTypeUnitLink(link, unit).subscribe(() => {
         this.linkRemoveFromUnit(link, unit);
       });
     } else {
-      this.wordService.addWordTypeUnitLink(link, unit).then(() => {
+      this.wordService.addWordTypeUnitLink(link, unit).subscribe(() => {
         this.linkAddToUnit(link, unit);
       });
     }
   }
 
-  private linkAddToUnit(link: WordTypeLink, unit: WordTypeUnit) {
+  private linkAddToUnit(link: ResWordTypeTranslationRowsInner, unit: WordTypeUnit) {
     this.linkRemoveFromUnit(link, unit);
     link.wordTypeUnitIds.push(unit.id);
   }
 
 
-  private linkRemoveFromUnit(link: WordTypeLink, unit: WordTypeUnit) {
+  private linkRemoveFromUnit(link: ResWordTypeTranslationRowsInner, unit: WordTypeUnit) {
     const index = link.wordTypeUnitIds.indexOf(unit.id, 0);
     if (index > -1) {
       link.wordTypeUnitIds.splice(index, 1);
     }
   }
 
-  isInUnit(link: WordTypeLink, unit: WordTypeUnit): boolean {
-    return link.wordTypeUnitIds.includes(unit.id);
+  isInUnit(link: ResWordTypeTranslationRowsInner, unit: WordTypeUnit): boolean {
+    return link.wordTypeUnitIds != null && link.wordTypeUnitIds.includes(unit.id);
   }
 
 }

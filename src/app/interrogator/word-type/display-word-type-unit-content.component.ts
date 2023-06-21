@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
-import { WordTypeLink } from 'src/app/models/word-type/word-type-link';
+import { ActivatedRoute, Router } from '@angular/router';
 import { WordService } from 'src/app/services/word-service';
-import { WordTypeContent } from '../../models/word-type/word-type-content';
 import { ArrayUtil } from '../../util/array-util';
+import { ResWordTypeUnitTranslation, WordTypeTranslation } from '@ataastar/interrogator-api-ts-oa';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'display-word-type-unit-content',
@@ -13,29 +12,28 @@ import { ArrayUtil } from '../../util/array-util';
 })
 export class DisplayWordTypeUnitContentComponent implements OnInit {
 
-  wordTypeLinks: WordTypeLink[] = null;
+  wordTypeLinks: WordTypeTranslation[] = null;
   wordsDisplayed: boolean[];
   forms: string[];
 
   constructor(private wordService: WordService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-    this.route.paramMap
-      .pipe(switchMap((params: ParamMap) => {
-        const unitId = params.get('id');
-        if (unitId) {
-          return this.wordService.getWordTypeUnitContent(Number(unitId), 2);
-        } else {
-          return new Promise<WordTypeContent>((resolve) => { resolve(null); });
-        }
-      })).subscribe(result => {
-        if (result) {
-          this.forms = result.forms;
-          this.wordTypeLinks = result.links;
-          this.sort();
-          this.displayAll();
-        }
-      });
+    this.route.paramMap.subscribe((params) => {
+      const unitId = params.get('id');
+      if (unitId) {
+        return this.wordService.getWordTypeUnitContent(Number(unitId), 2).subscribe(result => {
+          if (result) {
+            this.forms = result.forms;
+            this.wordTypeLinks = result.rows;
+            this.sort();
+            this.displayAll();
+          }
+        });
+      } else {
+        return of<ResWordTypeUnitTranslation>(null);
+      }
+    });
   }
 
   home(): void {
@@ -51,10 +49,12 @@ export class DisplayWordTypeUnitContentComponent implements OnInit {
     this.wordsDisplayed[index] = true;
   }
 
-  showTo(link: WordTypeLink, form: string) {
+  showTo(link: WordTypeTranslation, form: string) {
     for (const toPhrase of link.toPhrases) {
-      if (form === toPhrase.form) {
-        return toPhrase.phrases.toString();
+      for (const toPhraseKey of Object.keys(toPhrase)) {
+        if (form === toPhraseKey) {
+          return toPhrase[toPhraseKey].toString();
+        }
       }
     }
     return '-';
@@ -74,8 +74,8 @@ export class DisplayWordTypeUnitContentComponent implements OnInit {
   }
 
   private sort() {
-    this.wordTypeLinks.sort((a, b) => (a.toPhrases.filter(p => p.form === 'Verb')[0].phrases[0]
-      > b.toPhrases.filter(p => p.form === 'Verb')[0].phrases[0]) ? 1 : -1);
+    this.wordTypeLinks.sort((a, b) => (a.toPhrases.filter((value) => value['Verb'] != null)[0]
+      > b.toPhrases.filter((value) => value['Verb'] != null)[0]) ? -1 : 1);
   }
 
 }

@@ -8,8 +8,9 @@ import { switchMap } from 'rxjs/operators';
 import { GuessedWordConverter } from './guessed-word-converter';
 import { Word } from '../models/word';
 import { TextComparator } from './text-comparator';
-import { InterrogatorType } from './enum/interrogator-type';
 import { Phrase } from '../models/phrase';
+import { ReqAddAnswer } from '@ataastar/interrogator-api-ts-oa';
+import InterrogationTypeEnum = ReqAddAnswer.InterrogationTypeEnum;
 
 /**
  * Interrogates the words of the unit content. (all the word or just the words which should be interrogated by next interrogation date)
@@ -212,7 +213,7 @@ export class InterrogatorComponent {
       if (!this.guessed.lastAnswerWrong || this.actualWords.length === 1) {
         this.removeWordFromActualArrays(this.guessed);
         if (this.guessed.getWrongAnswerNumber() == 0) { // if the first was right, then send it to the server
-          this.wordService.rightAnswer(this.guessed.word.id, InterrogatorType.WRITING);
+          this.wordService.rightAnswer(this.guessed.word.id, InterrogationTypeEnum.Writing);
           //console.log('wrongAnswerCount: ' + this.wrongAnswerCount);
           if (this.wrongAnswerCount < 5) { // no need to add new word to interrogate if we reached the maximum wrong answer count
             this.fillWordArrays();
@@ -222,7 +223,7 @@ export class InterrogatorComponent {
       this.guessed.incrementCorrectAnswer();
     } else {
       if (this.guessed.getWrongAnswerNumber() == 0) {
-        this.wordService.wrongAnswer(this.guessed.word.id, InterrogatorType.WRITING); // TODO handle globally if something go wrong such a call
+        this.wordService.wrongAnswer(this.guessed.word.id, InterrogationTypeEnum.Writing); // TODO handle globally if something go wrong such a call
         this.wrongAnswerCount++;
         //console.log('wrong input for: ' + this.guessed.word.from);
       }

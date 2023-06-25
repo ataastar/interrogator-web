@@ -1,12 +1,11 @@
 import { InterrogatorComponent } from './interrogator.component';
 import { GuessedWord } from '../models/guessed-word';
-import { Word } from '../models/word';
-import { Phrase } from '../models/phrase';
+import { Translation, TranslationPart } from '@ataastar/interrogator-api-ts-oa';
 
 function setupWordService() {
   const wordServiceSpy =
     jasmine.createSpyObj('WordService', ['getActualWords']);
-  const stubValue = [createGuessedWord(1, new Date(), new Date())];
+  const stubValue = [createTranslation(1, new Date(), new Date())];
   wordServiceSpy.getActualWords.and.returnValue(stubValue);
   return wordServiceSpy;
 }
@@ -41,7 +40,7 @@ describe('InterrogatorComponent', () => {
     const words: GuessedWord[] = [];
     const _1MinuteAgo = new Date();
     _1MinuteAgo.setTime(_1MinuteAgo.getTime() - _1Minute);
-    words.push(createGuessedWord(1, _1MinuteAgo, _1MinuteAgo));
+    words.push(createTranslation(1, _1MinuteAgo, _1MinuteAgo));
     const a = component.categorizeWords(words, true);
     expect(a.length).toEqual(1);
     expect(a[0].length).toEqual(1);
@@ -52,8 +51,8 @@ describe('InterrogatorComponent', () => {
     const words: GuessedWord[] = [];
     const _1MinuteAgo = new Date();
     _1MinuteAgo.setTime(_1MinuteAgo.getTime() - _1Minute);
-    words.push(createGuessedWord(1, _1MinuteAgo, _1MinuteAgo));
-    words.push(createGuessedWord(1, _1MinuteAgo, _1MinuteAgo));
+    words.push(createTranslation(1, _1MinuteAgo, _1MinuteAgo));
+    words.push(createTranslation(1, _1MinuteAgo, _1MinuteAgo));
     const a = component.categorizeWords(words, true);
     expect(a.length).toEqual(1);
     expect(a[0].length).toEqual(2);
@@ -63,10 +62,10 @@ describe('InterrogatorComponent', () => {
     const component = setup();
     const words: GuessedWord[] = [];
     const _1MinuteAgo = new Date(new Date().getTime() - _1Minute);
-    words.push(createGuessedWord(1, _1MinuteAgo, _1MinuteAgo));
-    words.push(createGuessedWord(2, _1MinuteAgo, _1MinuteAgo));
+    words.push(createTranslation(1, _1MinuteAgo, _1MinuteAgo));
+    words.push(createTranslation(2, _1MinuteAgo, _1MinuteAgo));
     const _5MinuteAgo = new Date(new Date().getTime() - _1Minute * 5);
-    words.push(createGuessedWord(3, _5MinuteAgo, _5MinuteAgo));
+    words.push(createTranslation(3, _5MinuteAgo, _5MinuteAgo));
     const a = component.categorizeWords(words, true);
     expect(a.length).toEqual(2);
     expect(a[0].length).toEqual(1);
@@ -80,7 +79,7 @@ describe('InterrogatorComponent', () => {
 
     const words: GuessedWord[] = [];
     const _1MinuteAgo = new Date(new Date().getTime() - _1Minute);
-    words.push(createGuessedWord(1, _1MinuteAgo, _1MinuteAgo, 'a1', 'b1'));
+    words.push(createTranslation(1, _1MinuteAgo, _1MinuteAgo, 'a1', 'b1'));
     const a = component.categorizeWords(words, true);
     expect(a.length).toEqual(1);
     expect(a[0].length).toEqual(1);
@@ -107,7 +106,7 @@ describe('InterrogatorComponent', () => {
 
     const words: GuessedWord[] = [];
     const _1MinuteAgo = new Date(new Date().getTime() - _1Minute);
-    words.push(createGuessedWord(1, _1MinuteAgo, _1MinuteAgo, 'a1', 'b1'));
+    words.push(createTranslation(1, _1MinuteAgo, _1MinuteAgo, 'a1', 'b1'));
     const a = component.categorizeWords(words, true);
     expect(a.length).toEqual(1);
     expect(a[0].length).toEqual(1);
@@ -146,9 +145,9 @@ describe('InterrogatorComponent', () => {
 
     const words: GuessedWord[] = [];
     const _1MinuteAgo = new Date(new Date().getTime() - _1Minute);
-    const word1 = createGuessedWord(1, _1MinuteAgo, _1MinuteAgo, 'a1', to1);
+    const word1 = createTranslation(1, _1MinuteAgo, _1MinuteAgo, 'a1', to1);
     words.push(word1);
-    const word2 = createGuessedWord(2, _1MinuteAgo, _1MinuteAgo, 'aa1', to2);
+    const word2 = createTranslation(2, _1MinuteAgo, _1MinuteAgo, 'aa1', to2);
     words.push(word2);
     const a = component.categorizeWords(words, true);
     expect(a.length).toEqual(1);
@@ -163,7 +162,7 @@ describe('InterrogatorComponent', () => {
     spyOn(component, 'getRandomWord').and.returnValue(word1);
     checkAndAssertAnswer(component, word1, word1, 1, 'aa1 is remained in the array', 1, 'One of it was interrogated', 0, 'No any wrongly answered word');
     expect(component.checked).toBeTruthy('to be checked');
-    expect(component.actualWords[0].word.from[0].phrase).toBe('aa1', 'aa1 is remained in the array');
+    expect(component.actualWords[0].translation.from[0].phrase).toBe('aa1', 'aa1 is remained in the array');
 
     // right answer
     checkAndAssertAnswer(component, word2, word2, 0, 'Can not be any word to interrogate', 0, 'all was interrogated', 0, 'No any wrongly answered word');
@@ -370,11 +369,11 @@ describe('InterrogatorComponent', () => {
   it('Test getRandomWord', () => {
     const component = setup(setupMockWordService());
 
-    const w1 = createGuessedWord(1);
-    const w2 = createGuessedWord(2);
-    const w3 = createGuessedWord(3);
-    const w4 = createGuessedWord(4);
-    const w5 = createGuessedWord(5);
+    const w1 = createTranslation(1);
+    const w2 = createTranslation(2);
+    const w3 = createTranslation(3);
+    const w4 = createTranslation(4);
+    const w5 = createTranslation(5);
 
     spyOn(component, 'getRandomIndex').and.returnValue(w1.word.id);
 
@@ -408,7 +407,7 @@ describe('InterrogatorComponent', () => {
 function checkAndAssertAnswer(c: InterrogatorComponent, nextWord: GuessedWord, answerWord: GuessedWord, expectedActualWordLength: number, expectedActualWordLengthExp: string, needToInterrogateLength: number, needToInterrogateLengthExp: string, expectedCurrentlyAnsweredLength?: number, expectedCurrentlyAnsweredLengthExp?: string) {
   c.getRandomWord = jasmine.createSpy().and.returnValue(nextWord);
   c.next();
-  c.to = answerWord.word.to[0].phrase;
+  c.to = answerWord.translation.to[0].phrase;
   c.check();
   if (answerWord == nextWord) {
     expect(c.wrong).toBeFalsy('Right answer');
@@ -423,11 +422,23 @@ function checkAndAssertAnswer(c: InterrogatorComponent, nextWord: GuessedWord, a
 }
 
 function addWordToArray(words: GuessedWord[], id: number, fromPhrase: string, time: number): GuessedWord {
-  const word = createGuessedWord(id, new Date(time), new Date(time), fromPhrase, fromPhrase + 'to');
+  const word = createTranslation(id, new Date(time), new Date(time), fromPhrase, fromPhrase + 'to');
   words.push(word);
   return word;
 }
 
-function createGuessedWord(id: number, nextInterrogationTime?: Date, lastAnswerTime?: Date, fromWord?: string, toWord?: string): GuessedWord {
-  return new GuessedWord(new Word(id, [new Phrase(fromWord, 1)], [new Phrase(toWord, 2)], null, null, nextInterrogationTime ? nextInterrogationTime.toUTCString() : null, lastAnswerTime ? lastAnswerTime.toUTCString() : null));
+function createTranslation(unitContentId: number, lastAnswerTime?: Date, nextInterrogationTime?: Date, fromPhrase?: string, toPhrase?: string): Translation {
+  const phrasesByLanguageId: { [p: string]: TranslationPart[] } = {};
+  if (fromPhrase) {
+    phrasesByLanguageId[1] = [{ fromPhrase }];
+  }
+  if (toPhrase) {
+    phrasesByLanguageId[2] = this.toPhrase;
+  }
+  return {
+    unitContentId: unitContentId,
+    lastAnswerTime: lastAnswerTime ? lastAnswerTime.toUTCString() : null,
+    nextInterrogationTime: nextInterrogationTime ? nextInterrogationTime.toUTCString() : null,
+    phrasesByLanguageId: phrasesByLanguageId
+  };
 }

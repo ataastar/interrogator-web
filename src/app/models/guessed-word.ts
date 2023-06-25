@@ -1,14 +1,14 @@
-import { Word } from './word';
+import { Translation } from '@ataastar/interrogator-api-ts-oa/model/translation';
 
 export class GuessedWord {
-  word: Word;
+  translation: Translation;
 
   lastAnswerWrong = false;
   private wrongAnswerNumber = 0;
   private correctAnswerNumber = 0;
 
-  constructor(word: Word) {
-    this.word = word;
+  constructor(word: Translation) {
+    this.translation = word;
   }
 
   public getWrongAnswerNumber(): number {
@@ -26,10 +26,10 @@ export class GuessedWord {
   }
 
   getNextInterrogationTimeAsMillis() {
-    return this.word.nextInterrogationTime != null ? new Date(this.word.nextInterrogationTime).getTime() : null;
+    return this.translation.nextInterrogationTime != null ? new Date(this.translation.nextInterrogationTime).getTime() : null;
   }
 
   getLastAnswerTimeAsMillis() {
-    return this.word.lastAnswerTime != null ? new Date(this.word.lastAnswerTime).getTime() : null;
+    return this.translation.lastAnswerTime != null ? new Date(this.translation.lastAnswerTime).getTime() : null;
   }
 }

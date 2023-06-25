@@ -3,10 +3,10 @@
         <div>
 
           <div>
-            <div style="float: left">{{toString(guessed.word.from)}}</div>
-            <div *ngIf="guessed.word.example"
+            <div style="float: left">{{toString(guessed.translation.phrasesByLanguageId[fromLanguageId])}}</div>
+            <div *ngIf="guessed.translation.example"
                  style="margin-left: 10px; font-size: smaller; font-style: italic; float: left">
-              /{{guessed.word.example}}/
+              /{{guessed.translation.example}}/
             </div>
           </div>
           <div class="form-group row" style="clear: left; max-width: 500px">
@@ -19,26 +19,27 @@
               <input type="submit" (click)="next()" value="Tovább" *ngIf="checked" class="btn btn-primary">
             </div>
           </div>
-          <label *ngIf="checked && guessed.word.pronunciation" class="col-form-label col-3">
+          <!--label *ngIf="checked && guessed.word.pronunciation" class="col-form-label col-3">
             {{guessed.word.pronunciation}}
-          </label>
-          <div class="alert alert-success" *ngIf="checked && !wrong" role="alert">Helyes! ({{toString(guessed.word.to)}}
+          </label-->
+          <div class="alert alert-success" *ngIf="checked && !wrong" role="alert">Helyes!
+            ({{toString(guessed.translation.phrasesByLanguageId[toLanguageId])}}
             )
             <div
-              *ngIf="guessed.word.translatedExample">[{{guessed.word.translatedExample}}]
+              *ngIf="guessed.translation.translatedExample">[{{guessed.translation.translatedExample}}]
             </div>
           </div>
           <div class="alert alert-danger" *ngIf="checked && wrong" role="alert">
-            <div>helyes válasz: {{ toString(guessed.word.to) }}</div>
-            <div *ngIf="guessed.word.translatedExample">[{{guessed.word.translatedExample}}]</div>
+            <div>helyes válasz: {{ toString(guessed.translation.phrasesByLanguageId[toLanguageId]) }}</div>
+            <div *ngIf="guessed.translation.translatedExample">[{{guessed.translation.translatedExample}}]</div>
           </div>
 
 
         </div>
-      <div>
+      <!--div>
         <img *ngIf="guessed.word.imageUrl" [src]="getImageUrl()" alt=""/>
       </div>
-      <audio [src]="getAudio()" *ngIf="guessed.word.audio" id="audioplayer"></audio>
+      <audio [src]="getAudio()" *ngIf="guessed.word.audio" id="audioplayer"></audio-->
     </div>
   <div *ngIf="!guessed">
     Gratulálunk! Sikeresen befejezted.

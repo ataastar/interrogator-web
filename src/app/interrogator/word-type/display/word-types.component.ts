@@ -45,7 +45,8 @@ export class WordTypesComponent implements OnInit {
   }
 
   private sort() {
-    this.displayedWordTypeLinks.sort((a, b) => (a.toPhrases.filter((value) => value['Verb'])[0] > b.toPhrases.filter((value) => value['Verb'])[0]) ? -1 : 1);
+    this.displayedWordTypeUnits.sort((a, b) => (a.name > b.name ? 1 : -1));
+    this.displayedWordTypeLinks.sort((a, b) => (a.toPhrases.filter((value) => value['Verb'] != null)[0]['Verb'][0] > b.toPhrases.filter((value) => value['Verb'] != null)[0]['Verb'][0]) ? 1 : -1);
   }
 
   toggleUnit(link: ResWordTypeTranslationRowsInner, unit: WordTypeUnit) {
@@ -67,6 +68,9 @@ export class WordTypesComponent implements OnInit {
 
 
   private linkRemoveFromUnit(link: ResWordTypeTranslationRowsInner, unit: WordTypeUnit) {
+    if (link.wordTypeUnitIds == null) {
+      link.wordTypeUnitIds = []
+    }
     const index = link.wordTypeUnitIds.indexOf(unit.id, 0);
     if (index > -1) {
       link.wordTypeUnitIds.splice(index, 1);

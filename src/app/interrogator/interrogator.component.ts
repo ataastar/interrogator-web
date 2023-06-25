@@ -3,13 +3,9 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 import { WordService } from '../services/word-service';
 import { GuessedWord } from '../models/guessed-word';
-
-import { switchMap } from 'rxjs/operators';
 import { GuessedWordConverter } from './guessed-word-converter';
-import { Word } from '../models/word';
 import { TextComparator } from './text-comparator';
-import { Phrase } from '../models/phrase';
-import { ReqAddAnswer } from '@ataastar/interrogator-api-ts-oa';
+import { ReqAddAnswer, TranslationPart } from '@ataastar/interrogator-api-ts-oa';
 import InterrogationTypeEnum = ReqAddAnswer.InterrogationTypeEnum;
 
 /**
@@ -62,33 +58,33 @@ export class InterrogatorComponent {
    */
   comparator: TextComparator = new TextComparator();
 
+  fromLanguageId: number;
+  toLanguageId: number;
+
   constructor(private wordService: WordService, private route: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit() {
+    this.fromLanguageId = this.wordService.fromLanguageId;
+    this.toLanguageId = this.wordService.toLanguageId
     const categorizeWords = this.categorizeWords(new GuessedWordConverter().convertToGuessed(this.wordService.getActualWords()));
     const categorizeWordsLength = categorizeWords != null ? categorizeWords.length : 0; // need to store the length because list is modified later
     this.fillWordArrays();
     if (categorizeWordsLength > 0) {
       this.next();
     } else {
-      this.route.paramMap
-        .pipe(switchMap((params: ParamMap) => {
-          const unitId = params.get('id');
-          if (unitId) {
-            return this.wordService.getWords(params.get('id'));
-          } else {
-            return new Promise<Word[]>((resolve) => {
-              resolve(null);
-            });
-          }
-        })).subscribe(words => {
-          if (words) {
-            this.categorizeWords(new GuessedWordConverter().convertToGuessed(words));
-            this.fillWordArrays();
-            this.next();
-          }
-        });
+      this.route.paramMap.subscribe((params: ParamMap) => {
+        const unitId = params.get('id');
+        if (unitId) {
+          return this.wordService.getWords(params.get('id')).subscribe(translations => {
+            if (translations) {
+              this.categorizeWords(new GuessedWordConverter().convertToGuessed(translations.translations));
+              this.fillWordArrays();
+              this.next();
+            }
+          });
+        }
+      });
     }
   }
 
@@ -101,19 +97,19 @@ export class InterrogatorComponent {
     if (filterForExpired) {
       words = words.filter(w => {
         //console.log(w.getNextInterrogationTimeAsMillis());
-        return w.word.nextInterrogationTime == null || w.getNextInterrogationTimeAsMillis() <= now;
+        return w.translation.nextInterrogationTime == null || w.getNextInterrogationTimeAsMillis() <= now;
       });
     }
-    words = words.sort((a, b) => (a.word.lastAnswerTime < b.word.lastAnswerTime ? -1 : 1));
+    words = words.sort((a, b) => (a.translation.lastAnswerTime < b.translation.lastAnswerTime ? -1 : 1));
     //console.log(words);
     let firstAnswerTimeDiff: number = null;
     const result: Array<Array<GuessedWord>> = new Array<Array<GuessedWord>>();
     let actualArray: Array<GuessedWord> = new Array<GuessedWord>();
     for (const word of words) {
-      if (firstAnswerTimeDiff == null && word.word.lastAnswerTime != null) {
+      if (firstAnswerTimeDiff == null && word.translation.lastAnswerTime != null) {
         firstAnswerTimeDiff = now - word.getLastAnswerTimeAsMillis();
       }
-      if (firstAnswerTimeDiff == null && word.word.lastAnswerTime != null || firstAnswerTimeDiff / 3 > now - word.getLastAnswerTimeAsMillis()) {
+      if (firstAnswerTimeDiff == null && word.translation.lastAnswerTime != null || firstAnswerTimeDiff / 3 > now - word.getLastAnswerTimeAsMillis()) {
         result.push(actualArray);
         actualArray = [];
         firstAnswerTimeDiff = now - word.getLastAnswerTimeAsMillis();
@@ -187,7 +183,7 @@ export class InterrogatorComponent {
     // add to the actualWords list
     let found = false;
     for (const wordInList of words) {
-      if (wordInList.word.id == word.word.id) {
+      if (wordInList.translation.unitContentId == word.translation.unitContentId) {
         found = true;
       }
     }
@@ -197,7 +193,7 @@ export class InterrogatorComponent {
     // add to the actualWords list
     found = false;
     for (const wordInList of this.actualWords) {
-      if (wordInList.word.id == word.word.id) {
+      if (wordInList.translation.unitContentId == word.translation.unitContentId) {
         found = true;
       }
     }
@@ -208,12 +204,12 @@ export class InterrogatorComponent {
   }
 
   check(): void {
-    if (this.comparator.isEqual(this.guessed.word.to, this.to)) {
+    if (this.comparator.isEqual(this.guessed.translation.phrasesByLanguageId[this.toLanguageId], this.to)) {
       // if this is the last or the previous answer was also right, then remove from the array
       if (!this.guessed.lastAnswerWrong || this.actualWords.length === 1) {
         this.removeWordFromActualArrays(this.guessed);
         if (this.guessed.getWrongAnswerNumber() == 0) { // if the first was right, then send it to the server
-          this.wordService.rightAnswer(this.guessed.word.id, InterrogationTypeEnum.Writing);
+          this.wordService.rightAnswer(this.guessed.translation.unitContentId, InterrogationTypeEnum.Writing);
           //console.log('wrongAnswerCount: ' + this.wrongAnswerCount);
           if (this.wrongAnswerCount < 5) { // no need to add new word to interrogate if we reached the maximum wrong answer count
             this.fillWordArrays();
@@ -223,7 +219,7 @@ export class InterrogatorComponent {
       this.guessed.incrementCorrectAnswer();
     } else {
       if (this.guessed.getWrongAnswerNumber() == 0) {
-        this.wordService.wrongAnswer(this.guessed.word.id, InterrogationTypeEnum.Writing); // TODO handle globally if something go wrong such a call
+        this.wordService.wrongAnswer(this.guessed.translation.unitContentId, InterrogationTypeEnum.Writing); // TODO handle globally if something go wrong such a call
         this.wrongAnswerCount++;
         //console.log('wrong input for: ' + this.guessed.word.from);
       }
@@ -238,10 +234,10 @@ export class InterrogatorComponent {
     this.removeFromCurrentlyAnswered();
     this.checked = true;
     // play the audio if available
-    if (this.guessed.word.audio) {
+    /*if (this.guessed.translation.audio) {
       const player: any = document.getElementById('audioplayer');
       player.play();
-    }
+    }*/
   }
 
   private interrogateWordsWithWrongAnswer() {
@@ -263,7 +259,7 @@ export class InterrogatorComponent {
   }
 
   private removeWordFromActualArrays(word: GuessedWord): void {
-    let index = this.actualWords.findIndex(x => x.word.id == word.word.id);
+    let index = this.actualWords.findIndex(x => x.translation.unitContentId == word.translation.unitContentId);
     if (index > -1) {
       //console.log(index);
       //console.log(JSON.stringify(word));
@@ -273,7 +269,7 @@ export class InterrogatorComponent {
       console.log(word);
       console.log(this.actualWords);
     }
-    index = this.needToInterrogate.findIndex(x => x.word.id == word.word.id);
+    index = this.needToInterrogate.findIndex(x => x.translation.unitContentId == word.translation.unitContentId);
     if (index > -1) {
       //console.log(index);
       this.needToInterrogate.splice(index, 1);
@@ -302,7 +298,7 @@ export class InterrogatorComponent {
     for (const word of this.actualWords) {
       let found = false;
       for (const answered of this.currentlyAnswered) {
-        if (word.word.id === answered.word.id) {
+        if (word.translation.unitContentId === answered.translation.unitContentId) {
           found = true;
           break;
         }
@@ -322,7 +318,7 @@ export class InterrogatorComponent {
     }
   }
 
-  toString(phrases: Phrase[]) {
+  toString(phrases: TranslationPart[]) {
     return phrases.map(phrase => phrase.phrase).join(',');
   }
 

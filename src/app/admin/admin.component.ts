@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { WordService } from '../services/word-service';
+import { UnitGroup } from '@ataastar/interrogator-api-ts-oa';
 
 
 @Component({
@@ -10,13 +11,13 @@ import { WordService } from '../services/word-service';
 })
 export class AdminComponent {
 
-  public groups;
+  public groups: UnitGroup[];
 
   constructor(private wordService: WordService, private route: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit(): void {
-    this.wordService.getGroups().then(groups => this.groups = groups);
+    this.wordService.getGroups().subscribe(groups => this.groups = groups);
   }
 
   interrogate(key: string): void {

@@ -1,9 +1,9 @@
 import { GuessedWord } from '../models/guessed-word';
-import { Word } from '../models/word';
+import { Translation } from '@ataastar/interrogator-api-ts-oa/model/translation';
 
 export class GuessedWordConverter {
 
-  public convertToGuessed(words: Word[]): GuessedWord[] {
+  public convertToGuessed(words: Translation[]): GuessedWord[] {
     if (words == null) {
       return null;
     }

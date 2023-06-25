@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Word } from 'src/app/models/word';
 import { WordService } from 'src/app/services/word-service';
 import { ActivatedRoute } from '@angular/router';
-import { Phrase } from 'src/app/models/phrase';
-import { TranslationToSave } from 'src/app/models/translation-to-save';
+import { Translation } from '@ataastar/interrogator-api-ts-oa/model/translation';
+import { ReqTranslationSave, TranslationPart } from '@ataastar/interrogator-api-ts-oa';
 
 @Component({
   selector: 'app-add-unit-content',
@@ -13,50 +12,50 @@ import { TranslationToSave } from 'src/app/models/translation-to-save';
 export class AddUnitContentComponent implements OnInit {
 
   unitId: string;
-  unitWords: Word[];
-  fromPhrases: Phrase[] = [new Phrase('')];
-  toPhrases: Phrase[] = [new Phrase('')];
+  unitTranslations: Translation[];
+  fromPhrases: TranslationPart[] = [];
+  toPhrases: TranslationPart[] = [];
   example: string;
   translatedExample: string;
+  fromLanguageId: number;
+  toLanguageId: number;
 
   constructor(private wordService: WordService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.unitWords = this.wordService.getActualWords();
-    if (!this.unitWords) {
-      this.route.paramMap.subscribe((params) => {
-        this.unitId = params.get('id');
-        this.wordService.getWords(this.unitId).then(words => {
-          if (words != null) {
-            this.unitWords = words;
+    this.fromLanguageId = this.wordService.fromLanguageId;
+    this.toLanguageId = this.wordService.toLanguageId
+    this.unitTranslations = this.wordService.getActualWords();
+    this.route.paramMap.subscribe((params) => {
+      this.unitId = params.get('id');
+      if (!this.unitTranslations) {
+        this.wordService.getWords(this.unitId).subscribe(translationsForUnit => {
+          if (translationsForUnit != null) {
+            this.unitTranslations = translationsForUnit.translations;
           } else {
-            this.unitWords = new Array(0);
+            this.unitTranslations = new Array(0);
           }
-        })
-      });
-    } else {
-      this.route.paramMap.subscribe((params) => {
-        this.unitId = params.get('id');
-      })
-    }
+        });
+      }
+    });
   }
 
-  public toString(phraseArray: Phrase[]): string {
+  public toString(phraseArray: TranslationPart[]): string {
     let result = '';
-    for (const phrase of phraseArray) {
-      result = result + ';' + phrase.phrase;
+    for (const translationPart of phraseArray) {
+      result = result + ';' + translationPart.phrase;
     }
-    result = result.substr(1);
+    result = result.substring(1);
     return result;
   }
 
   addFrom() {
-    this.fromPhrases.push(new Phrase(''));
+    this.fromPhrases.push({ translationId: null, phrase: '' });
   }
 
   addTo() {
-    this.toPhrases.push(new Phrase(''));
+    this.toPhrases.push({ translationId: null, phrase: '' });
   }
 
   add(): void {
@@ -64,31 +63,45 @@ export class AddUnitContentComponent implements OnInit {
       return;
     }
 
-    const translation = new TranslationToSave(this.unitId, this.getPhraseStrings(this.fromPhrases),
-      this.getPhraseStrings(this.toPhrases), this.example, this.translatedExample);
+    const translation: ReqTranslationSave = {
+      id: Number(this.unitId),
+      from: this.getPhraseStrings(this.fromPhrases),
+      to: this.getPhraseStrings(this.toPhrases),
+      example: this.example,
+      translatedExample: this.translatedExample
+    };
 
-    this.wordService.addUnitContent(translation).then(unitContentId => {
+    this.wordService.addUnitContent(translation).subscribe(unitContentId => {
       if (unitContentId) {
-        const word = new Word(unitContentId, this.fromPhrases, this.toPhrases, this.example, this.translatedExample);
-        this.unitWords.push(word);
+        const phrasesByLanguageId: { [p: string]: TranslationPart[] } = {};
+        phrasesByLanguageId[this.fromLanguageId] = this.fromPhrases;
+        phrasesByLanguageId[this.toLanguageId] = this.toPhrases;
+        const translation: Translation = {
+          unitContentId: unitContentId,
+          example: this.example,
+          translatedExample: this.translatedExample,
+          translationLinkId: null, // TODO translation link
+          phrasesByLanguageId: phrasesByLanguageId
+        };
+        this.unitTranslations.push(translation);
         // clear the inputs
-        this.fromPhrases = [new Phrase('')];
-        this.toPhrases = [new Phrase('')];
+        this.fromPhrases = [];
+        this.toPhrases = [];
         this.example = '';
         this.translatedExample = '';
       }
     });
   }
 
-  edit(wordToEdit: Word): void {
+  edit(translationToEdit: Translation): void {
 
   }
 
-  remove(wordToRemove: Word): void {
-    this.wordService.removeUnitContent(wordToRemove.id).then(() => {
-      const index = this.unitWords.indexOf(wordToRemove, 0);
+  remove(translationToRemove: Translation): void {
+    this.wordService.removeUnitContent(translationToRemove.unitContentId).subscribe(() => {
+      const index = this.unitTranslations.indexOf(translationToRemove, 0);
       if (index > -1) {
-        this.unitWords.splice(index, 1);
+        this.unitTranslations.splice(index, 1);
       }
     }, error => alert(error));
     return;
@@ -98,21 +111,21 @@ export class AddUnitContentComponent implements OnInit {
     return this.wordService.getSelectedUnitName();
   }
 
-  private getPhraseStrings(phrases: Phrase[]): string[] {
+  private getPhraseStrings(translationParts: TranslationPart[]): string[] {
     const strings: string[] = [];
-    phrases.forEach(phrase => {
-      strings.push(phrase.phrase);
+    translationParts.forEach(translationPart => {
+      strings.push(translationPart.phrase);
     });
     return strings;
   }
 
-  private isPhrasesFilled(phrases: Phrase[]): boolean {
+  private isPhrasesFilled(translationParts: TranslationPart[]): boolean {
     let result = true;
-    phrases.forEach(phrase => {
-      if (phrase === undefined || phrase == null) {
+    translationParts.forEach(translationPart => {
+      if (translationPart === undefined || translationPart == null) {
         result = false;
         return;
-      } else if (phrase.phrase == undefined || phrase.phrase.trim() == '') {
+      } else if (translationPart.phrase == undefined || translationPart.phrase.trim() == '') {
         result = false;
         return;
       }

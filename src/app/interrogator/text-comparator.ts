@@ -1,11 +1,11 @@
 /**
  * Compare the input text with the possible word/sentence
  */
-import { Phrase } from '../models/phrase';
+import { TranslationPart } from '@ataastar/interrogator-api-ts-oa';
 
 export class TextComparator {
 
-  isEqual(expectedArray: Phrase[], actual: string) {
+  isEqual(expectedArray: TranslationPart[], actual: string) {
     if (actual === null) {
       return;
     }

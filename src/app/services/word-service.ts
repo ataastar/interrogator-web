@@ -1,41 +1,49 @@
 import { Injectable } from '@angular/core';
-import { Word } from '../models/word';
-import { TranslationToSave } from '../models/translation-to-save';
 import { environment as env } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Group } from '../models/group';
 import {
   ReqAddAnswer,
+  ReqTranslationSave,
+  ResTranslationsForUnit,
   ResWordTypeTranslation,
   ResWordTypeTranslationRowsInner,
   ResWordTypeUnitTranslation,
   TranslationService,
+  UnitGroup,
   UnitLeaf,
+  UnitService,
   WordTypeService,
   WordTypeUnit
 } from '@ataastar/interrogator-api-ts-oa';
 import { Observable } from 'rxjs';
+import { Translation } from '@ataastar/interrogator-api-ts-oa/model/translation';
 import InterrogationTypeEnum = ReqAddAnswer.InterrogationTypeEnum;
 
 @Injectable()
 export class WordService {
 
   // cache for later use
-  private actualPhrases: Word[];
+  private actualPhrases: Translation[];
   private selectedUnitName: string;
+  fromLanguageId = 1;
+  toLanguageId = 2;
 
-  constructor(private http: HttpClient, private translationService: TranslationService, private wordTypeService: WordTypeService) {
+  constructor(private http: HttpClient, private translationService: TranslationService, private wordTypeService: WordTypeService, private unitService: UnitService) {
   }
 
-  async getWords(key: string) {
+  getWords(key: string): Observable<ResTranslationsForUnit> {
     try {
-      const res = await this.http.get<object>(env.apiUrl + '/word/' + key)
-        .toPromise();
-      const json = res != null ? res : null;
-      const unit = json != null ? (json[0].content != null ? json[0].content : json[0]) : null;
-      this.actualPhrases = unit != null ? unit.words : null;
-      this.selectedUnitName = unit != null ? unit.name : '';
-      return this.actualPhrases;
+      let observable = this.translationService.getUnitTranslations(Number(key));
+      observable.subscribe(translationsForUnit => {
+        if (translationsForUnit) {
+          this.actualPhrases = translationsForUnit.translations;
+          this.selectedUnitName = translationsForUnit.name;
+        } else {
+          this.selectedUnitName = '';
+        }
+        return this.actualPhrases;
+      })
+      return observable;
     } catch (onRejected) {
       console.error(onRejected);
       return null;
@@ -57,7 +65,7 @@ export class WordService {
     }
   }
 
-  getActualWords(): Word[] {
+  getActualWords(): Translation[] {
     return this.actualPhrases;
   }
 
@@ -65,28 +73,26 @@ export class WordService {
     return this.selectedUnitName;
   }
 
-  async getGroups(): Promise<Group[]> {
+  getGroups(): Observable<UnitGroup[]> {
     try {
-      const res = await this.http.get<object>(env.apiUrl + '/units').toPromise();
-      return res[0].groups;
+      return this.unitService.unitTree();
     } catch (onRejected) {
       console.error(onRejected);
       return null;
     }
   }
 
-  async addUnitContent(translation: TranslationToSave) {
+  addUnitContent(translationSave: ReqTranslationSave): Observable<number> {
     try {
-      const res = await this.http.post<any>(env.apiUrl + '/word/', translation).toPromise();
-      return res.unitContentId;
+      return this.translationService.addTranslation(translationSave);
     } catch (onRejected) {
       console.error(onRejected);
       return null;
     }
   }
 
-  async removeUnitContent(unitContentId: number) {
-      return await this.http.delete(env.apiUrl + '/word/' + unitContentId).toPromise();
+  removeUnitContent(unitContentId: number) {
+    return this.translationService.deleteUnitContent(unitContentId);
   }
 
   /*async activateWordTypeLink(linkId: number) {
@@ -173,4 +179,5 @@ export class WordService {
       return null;
     }
   }
+
 }

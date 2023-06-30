@@ -13,8 +13,8 @@ export class AddUnitContentComponent implements OnInit {
 
   unitId: string;
   unitTranslations: Translation[];
-  fromPhrases: TranslationPart[] = [];
-  toPhrases: TranslationPart[] = [];
+  fromPhrases: TranslationPart[] = [{ phrase: '', translationId: null }];
+  toPhrases: TranslationPart[] = [{ phrase: '', translationId: null }];
   example: string;
   translatedExample: string;
   fromLanguageId: number;

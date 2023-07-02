@@ -82,7 +82,7 @@ export class WordService {
     }
   }
 
-  addUnitContent(translationSave: ReqTranslationSave): Observable<number> {
+  addUnitContent(translationSave: ReqTranslationSave): Observable<Translation> {
     try {
       return this.translationService.addTranslation(translationSave);
     } catch (onRejected) {

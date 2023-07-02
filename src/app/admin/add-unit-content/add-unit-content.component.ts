@@ -71,18 +71,8 @@ export class AddUnitContentComponent implements OnInit {
       translatedExample: this.translatedExample
     };
 
-    this.wordService.addUnitContent(translation).subscribe(unitContentId => {
-      if (unitContentId) {
-        const phrasesByLanguageId: { [p: string]: TranslationPart[] } = {};
-        phrasesByLanguageId[this.fromLanguageId] = this.fromPhrases;
-        phrasesByLanguageId[this.toLanguageId] = this.toPhrases;
-        const translation: Translation = {
-          unitContentId: unitContentId,
-          example: this.example,
-          translatedExample: this.translatedExample,
-          translationLinkId: null, // TODO translation link
-          phrasesByLanguageId: phrasesByLanguageId
-        };
+    this.wordService.addUnitContent(translation).subscribe(translation => {
+      if (translation) {
         this.unitTranslations.push(translation);
         // clear the inputs
         this.fromPhrases = [];

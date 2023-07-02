@@ -31,7 +31,7 @@
     "rxjs": "~6.6.7",
     "tslib": "^2.4.1",
     "zone.js": "^0.11.8",
-    "@ataastar/interrogator-api-ts-oa" : "0.0.2"
+    "@ataastar/interrogator-api-ts-oa": "0.0.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^15.2.1",

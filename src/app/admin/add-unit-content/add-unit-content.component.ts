@@ -41,9 +41,9 @@ export class AddUnitContentComponent implements OnInit {
     });
   }
 
-  public toString(phraseArray: TranslationPart[]): string {
+  public toString(translation: Translation, languageId: number): string {
     let result = '';
-    for (const translationPart of phraseArray) {
+    for (const translationPart of translation.phrasesByLanguageId[languageId]) {
       result = result + ';' + translationPart.phrase;
     }
     result = result.substring(1);

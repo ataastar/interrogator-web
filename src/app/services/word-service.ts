@@ -91,27 +91,9 @@ export class WordService {
     }
   }
 
-  removeUnitContent(unitContentId: number) {
+  removeUnitContent(unitContentId: number): Observable<any> {
     return this.translationService.deleteUnitContent(unitContentId);
   }
-
-  /*async activateWordTypeLink(linkId: number) {
-    try {
-      return await this.http.post(env.apiUrl + '/word_type/activate/' + linkId, {}).toPromise();
-    } catch (onRejected) {
-      console.error(onRejected);
-      return null;
-    }
-  }
-
-  async deactivateWordTypeLink(linkId: number) {
-    try {
-      return await this.http.post(env.apiUrl + '/word_type/deactivate/' + linkId, {}).toPromise();
-    } catch (onRejected) {
-      console.error(onRejected);
-      return null;
-    }
-  }*/
 
   getWordTypeContent(wordTypeId: number, fromLanguageId: number, toLanguageId: number): Observable<ResWordTypeTranslation> {
     try {

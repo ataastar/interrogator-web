@@ -1,7 +1,7 @@
 <div>
   <input type="button" (click)="interrogateHere()" value="Kikérdez" class="btn btn-secondary">
   <input type="button" (click)="interrogate()" value="Kikérdez írásban" class="btn btn-secondary">
-  <input type="button" HasRole role="admin" (click)="addNew()" value="Hozzáad" class="btn btn-secondary">
+  <input type="button" HasRole role="admin" (click)="addNew()" value="Szerkeszt" class="btn btn-secondary">
   <table class="table table-sm table-striped table-bordered table-hover">
     <tbody>
     <tr *ngFor="let guessed of words; let i=index" (click)="display(i)">
@@ -23,5 +23,5 @@
   </table>
   <input type="button" (click)="interrogateHere()" value="Kikérdez" class="btn btn-secondary">
   <input type="button" (click)="interrogate()" value="Kikérdez írásban" class="btn btn-secondary">
-  <input type="button" HasRole role="admin" (click)="addNew()" value="Hozzáad" class="btn btn-secondary">
+  <input type="button" HasRole role="admin" (click)="addNew()" value="Szerkeszt" class="btn btn-secondary">
 </div>

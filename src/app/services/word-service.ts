@@ -91,6 +91,15 @@ export class WordService {
     }
   }
 
+  updateTranslation(translation: Translation): Observable<Translation> {
+    try {
+      return this.translationService.updateTranslation(translation);
+    } catch (onRejected) {
+      console.error(onRejected);
+      return null;
+    }
+  }
+
   removeUnitContent(unitContentId: number): Observable<any> {
     return this.translationService.deleteUnitContent(unitContentId);
   }

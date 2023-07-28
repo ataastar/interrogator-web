@@ -20,6 +20,8 @@ export class AddUnitContentComponent implements OnInit {
   fromLanguageId: number;
   toLanguageId: number;
 
+  translationToEdit: Translation;
+
   constructor(private wordService: WordService, private route: ActivatedRoute) {
   }
 
@@ -58,7 +60,15 @@ export class AddUnitContentComponent implements OnInit {
     this.toPhrases.push({ translationId: null, phrase: '' });
   }
 
-  add(): void {
+  addOrEditTranslation(): void {
+    if (this.translationToEdit != null) {
+      this.saveEditedTranslation();
+    } else {
+      this.add();
+    }
+  }
+
+  private add(): void {
     if (!this.isPhrasesFilled(this.fromPhrases) || !this.isPhrasesFilled(this.toPhrases)) {
       return;
     }
@@ -74,17 +84,34 @@ export class AddUnitContentComponent implements OnInit {
     this.wordService.addUnitContent(translation).subscribe(translation => {
       if (translation) {
         this.unitTranslations.push(translation);
-        // clear the inputs
-        this.fromPhrases = [];
-        this.toPhrases = [];
-        this.example = '';
-        this.translatedExample = '';
+        this.clearTheInputs();
       }
     });
   }
 
   edit(translationToEdit: Translation): void {
+    this.fromPhrases = translationToEdit.phrasesByLanguageId[this.fromLanguageId];
+    this.toPhrases = translationToEdit.phrasesByLanguageId[this.toLanguageId];
+    this.translationToEdit = translationToEdit;
+    this.translatedExample = translationToEdit.translatedExample;
+    this.example = translationToEdit.example;
+  }
 
+  private saveEditedTranslation(): void {
+    this.wordService.updateTranslation(this.translationToEdit).subscribe(translation => {
+      if (translation) {
+        //this.unitTranslations.push(translation); TODO find and update
+        this.clearTheInputs();
+        this.translationToEdit = null;
+      }
+    });
+  }
+
+  private clearTheInputs(): void {
+    this.fromPhrases = [];
+    this.toPhrases = [];
+    this.example = '';
+    this.translatedExample = '';
   }
 
   remove(translationToRemove: Translation): void {

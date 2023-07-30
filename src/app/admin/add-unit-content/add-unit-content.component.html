@@ -49,7 +49,7 @@
         </div>
         <div class="col-2">
           <input type="submit" (click)="addOrEditTranslation()" name="add" id="add" class="btn btn-primary"
-                 value="Hozzáad"/>
+                 [value]="addTranslation() ? 'Hozzáad' : 'Módosít'"/>
         </div>
     </div>
 </form>

@@ -108,8 +108,8 @@ export class AddUnitContentComponent implements OnInit {
   }
 
   private clearTheInputs(): void {
-    this.fromPhrases = [];
-    this.toPhrases = [];
+    this.fromPhrases = [{ phrase: '', translationId: null }];
+    this.toPhrases = [{ phrase: '', translationId: null }];
     this.example = '';
     this.translatedExample = '';
   }
@@ -150,4 +150,7 @@ export class AddUnitContentComponent implements OnInit {
     return result;
   }
 
+  public addTranslation(): boolean {
+    return this.translationToEdit == null;
+  }
 }

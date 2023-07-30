@@ -153,4 +153,12 @@ export class AddUnitContentComponent implements OnInit {
   public addTranslation(): boolean {
     return this.translationToEdit == null;
   }
+
+  public deleteTranslationPartTo(index: number) {
+    this.translationToEdit.phrasesByLanguageId[this.toLanguageId].splice(index, 1);
+  }
+
+  public deleteTranslationPartFrom(index: number) {
+    this.translationToEdit.phrasesByLanguageId[this.fromLanguageId].splice(index, 1);
+  }
 }

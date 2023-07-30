@@ -25,15 +25,19 @@
   </div>
   <div class="form-group row">
     <div class="col-4">
-      <div *ngFor="let phrase of fromPhrases; let i=index">
-          <input type="text" [(ngModel)]="fromPhrases[i].phrase" name="from{{i}}" autofocus id="from{{i}}"
-                 class="form-control" #name="ngModel" required/>
+      <div *ngFor="let translationPart of fromPhrases; let i=index">
+        <input type="text" [(ngModel)]="translationPart.phrase" name="from{{i}}" autofocus id="from{{i}}"
+               class="form-control" #name="ngModel" required/>
+        <input *ngIf="i>0" type="button" (click)="deleteTranslationPartFrom(i)" name="deleteFrom" id="deleteFrom"
+               class="btn btn-secondary" value="-"/>
         </div>
       </div>
       <div class="col-4">
-        <div *ngFor="let phrase of toPhrases; let i=index">
-          <input type="text" [(ngModel)]="toPhrases[i].phrase" name="to{{i}}" autofocus id="to{{i}}"
+        <div *ngFor="let translationPart of toPhrases; let i=index">
+          <input type="text" [(ngModel)]="translationPart.phrase" name="to{{i}}" autofocus id="to{{i}}"
                  class="form-control" #name="ngModel" required/>
+          <input *ngIf="i>0" type="button" (click)="deleteTranslationPartTo(i)" name="deleteTo" id="deleteTo"
+                 class="btn btn-secondary" value="-"/>
         </div>
       </div>
     </div>

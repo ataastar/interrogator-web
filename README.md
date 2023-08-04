@@ -12,33 +12,32 @@
  
 # run
 
- - npm install
- - npm run startDev: ng serve
- - npm start: serve static pages
+- `npm install`
+- `npm run startDev`: ng serve
+- `npm start`: serve static pages
    - or "npm start --" with the following params
      - --host=<host>
        - the application will be served on this host
      - -c=home
        - the environment-home.ts will be used with the backend url in it
-   - example for remote use: npm start -- --host=interrogator.mooo.com -c=homeremote --disableHostCheck=true
-   - example for local use: npm start -- --host=192.168.0.81 -c=home
-   - example for local use lan: npm start -- --host=192.168.0.213 -c=home
+   - example for remote use: `npm start -- --host=interrogator.mooo.com -c=homeremote --disableHostCheck=true`
+   - example for local use: `npm start -- --host=192.168.0.81 -c=home`
+   - example for local use lan: `npm start -- --host=192.168.0.213 -c=home`
  - Open a browser window and navigate to http:\\\\localhost:4200 to access the app.
 
 # build
 
- - npm install
- - npm build
+- `npm install`
+- `npm build`
  
 # Production build
 
- - npm run-script build:prod
+- `npm run-script build:prod`
 
 # tasks
 
 ## in progress
 
- - admin page to configure words in DB
  - google oauth
  
 ## TODO tasks
@@ -56,7 +55,6 @@
 
  - focus on created element when adding new phrase to unit content
  - required when no phrases filled and add button pressed
- - edit: phrases, example sentences
 
 # Angular-cli
 
@@ -76,7 +74,7 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `ng test` (`npm test`) to execute the unit tests via [Karma](https://karma-runner.github.io).
 
 ## Running end-to-end tests
 

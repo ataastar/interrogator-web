@@ -1,6 +1,6 @@
 import { InterrogatorComponent } from './interrogator.component';
 import { GuessedWord } from '../models/guessed-word';
-import { Translation, TranslationPart } from '@ataastar/interrogator-api-ts-oa';
+import { TranslationPart } from '@ataastar/interrogator-api-ts-oa';
 
 function setupWordService() {
   const wordServiceSpy =
@@ -162,7 +162,7 @@ describe('InterrogatorComponent', () => {
     spyOn(component, 'getRandomWord').and.returnValue(word1);
     checkAndAssertAnswer(component, word1, word1, 1, 'aa1 is remained in the array', 1, 'One of it was interrogated', 0, 'No any wrongly answered word');
     expect(component.checked).toBeTruthy('to be checked');
-    expect(component.actualWords[0].translation.from[0].phrase).toBe('aa1', 'aa1 is remained in the array');
+    expect(component.actualWords[0].translation.phrasesByLanguageId[0][0].phrase).toBe('aa1', 'aa1 is remained in the array');
 
     // right answer
     checkAndAssertAnswer(component, word2, word2, 0, 'Can not be any word to interrogate', 0, 'all was interrogated', 0, 'No any wrongly answered word');
@@ -375,7 +375,7 @@ describe('InterrogatorComponent', () => {
     const w4 = createTranslation(4);
     const w5 = createTranslation(5);
 
-    spyOn(component, 'getRandomIndex').and.returnValue(w1.word.id);
+    spyOn(component, 'getRandomIndex').and.returnValue(w1.translation.unitContentId);
 
     expect(component.getRandomWord()).toBeNull(); // empty
     component.actualWords.push(w1);
@@ -407,7 +407,7 @@ describe('InterrogatorComponent', () => {
 function checkAndAssertAnswer(c: InterrogatorComponent, nextWord: GuessedWord, answerWord: GuessedWord, expectedActualWordLength: number, expectedActualWordLengthExp: string, needToInterrogateLength: number, needToInterrogateLengthExp: string, expectedCurrentlyAnsweredLength?: number, expectedCurrentlyAnsweredLengthExp?: string) {
   c.getRandomWord = jasmine.createSpy().and.returnValue(nextWord);
   c.next();
-  c.to = answerWord.translation.to[0].phrase;
+  c.to = answerWord.translation.phrasesByLanguageId[0][1].phrase;
   c.check();
   if (answerWord == nextWord) {
     expect(c.wrong).toBeFalsy('Right answer');
@@ -427,18 +427,19 @@ function addWordToArray(words: GuessedWord[], id: number, fromPhrase: string, ti
   return word;
 }
 
-function createTranslation(unitContentId: number, lastAnswerTime?: Date, nextInterrogationTime?: Date, fromPhrase?: string, toPhrase?: string): Translation {
+function createTranslation(unitContentId: number, lastAnswerTime?: Date, nextInterrogationTime?: Date, fromPhrase?: string, toPhrase?: string): GuessedWord {
   const phrasesByLanguageId: { [p: string]: TranslationPart[] } = {};
   if (fromPhrase) {
-    phrasesByLanguageId[1] = [{ fromPhrase }];
+    phrasesByLanguageId[0] = [{ phrase: fromPhrase, translationId: 0 }];
   }
   if (toPhrase) {
-    phrasesByLanguageId[2] = this.toPhrase;
+    phrasesByLanguageId[1] = [{ phrase: toPhrase, translationId: 0 }];
   }
-  return {
+  return new GuessedWord({
     unitContentId: unitContentId,
     lastAnswerTime: lastAnswerTime ? lastAnswerTime.toUTCString() : null,
     nextInterrogationTime: nextInterrogationTime ? nextInterrogationTime.toUTCString() : null,
-    phrasesByLanguageId: phrasesByLanguageId
-  };
+    phrasesByLanguageId: phrasesByLanguageId,
+    translationLinkId: 0
+  });
 }

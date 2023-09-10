@@ -204,6 +204,8 @@ export class InterrogatorComponent {
   }
 
   check(): void {
+    // console.log(this.guessed.translation.phrasesByLanguageId);
+    // console.log(this.toLanguageId);
     if (this.comparator.isEqual(this.guessed.translation.phrasesByLanguageId[this.toLanguageId], this.to)) {
       // if this is the last or the previous answer was also right, then remove from the array
       if (!this.guessed.lastAnswerWrong || this.actualWords.length === 1) {

@@ -15,7 +15,10 @@ function setupMockWordService() {
 }
 
 function setup(wordService?): InterrogatorComponent {
-  return new InterrogatorComponent(wordService, null, null);
+  const component = new InterrogatorComponent(wordService, null, null);
+  component.toLanguageId = 1;
+  component.fromLanguageId = 0;
+  return component;
 }
 
 const _1Minute = 1000 * 60;
@@ -407,7 +410,7 @@ describe('InterrogatorComponent', () => {
 function checkAndAssertAnswer(c: InterrogatorComponent, nextWord: GuessedWord, answerWord: GuessedWord, expectedActualWordLength: number, expectedActualWordLengthExp: string, needToInterrogateLength: number, needToInterrogateLengthExp: string, expectedCurrentlyAnsweredLength?: number, expectedCurrentlyAnsweredLengthExp?: string) {
   c.getRandomWord = jasmine.createSpy().and.returnValue(nextWord);
   c.next();
-  c.to = answerWord.translation.phrasesByLanguageId[0][1].phrase;
+  c.to = answerWord.translation.phrasesByLanguageId[1][0].phrase;
   c.check();
   if (answerWord == nextWord) {
     expect(c.wrong).toBeFalsy('Right answer');

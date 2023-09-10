@@ -9,6 +9,8 @@ export class TextComparator {
     if (actual === null) {
       return;
     }
+    // console.log('expectedArray: ' + expectedArray)
+    // console.log('actual: ' + actual)
     for (const expected of expectedArray) {
       if (expected.phrase === actual) {
         return true;

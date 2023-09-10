@@ -211,7 +211,7 @@ export class InterrogatorComponent {
       if (!this.guessed.lastAnswerWrong || this.actualWords.length === 1) {
         this.removeWordFromActualArrays(this.guessed);
         if (this.guessed.getWrongAnswerNumber() == 0) { // if the first was right, then send it to the server
-          this.wordService.rightAnswer(this.guessed.translation.unitContentId, InterrogationTypeEnum.Writing);
+          this.wordService.rightAnswer(this.guessed.translation.unitContentId, InterrogationTypeEnum.Writing, this.fromLanguageId);
           //console.log('wrongAnswerCount: ' + this.wrongAnswerCount);
           if (this.wrongAnswerCount < 5) { // no need to add new word to interrogate if we reached the maximum wrong answer count
             this.fillWordArrays();
@@ -221,7 +221,7 @@ export class InterrogatorComponent {
       this.guessed.incrementCorrectAnswer();
     } else {
       if (this.guessed.getWrongAnswerNumber() == 0) {
-        this.wordService.wrongAnswer(this.guessed.translation.unitContentId, InterrogationTypeEnum.Writing); // TODO handle globally if something go wrong such a call
+        this.wordService.wrongAnswer(this.guessed.translation.unitContentId, InterrogationTypeEnum.Writing, this.fromLanguageId); // TODO handle globally if something go wrong such a call
         this.wrongAnswerCount++;
         //console.log('wrong input for: ' + this.guessed.word.from);
       }

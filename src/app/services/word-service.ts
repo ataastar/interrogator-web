@@ -52,8 +52,7 @@ export class WordService {
 
   async getTranslationForUnit(code: string) {
     try {
-      const res = await this.http.get<object>(env.apiUrl + '/translation/' + code)
-        .toPromise();
+      const res = await this.http.get<object>(env.apiUrl + '/translation/' + code).toPromise();
       const json = res != null ? res : null;
       const unit = json != null ? (json[0].content != null ? json[0].content : json[0]) : null;
       this.actualPhrases = unit != null ? unit.translations : null;
@@ -150,20 +149,21 @@ export class WordService {
     }
   }
 
-  async wrongAnswer(id: number, type: InterrogationTypeEnum): Promise<object> {
-    return this.sendAnswer(id, false, type);
+  async wrongAnswer(id: number, type: InterrogationTypeEnum, fromLanguageId: number): Promise<object> {
+    return this.sendAnswer(id, false, type, fromLanguageId);
   }
 
-  async rightAnswer(id: number, type: InterrogationTypeEnum): Promise<object> {
-    return this.sendAnswer(id, true, type);
+  async rightAnswer(id: number, type: InterrogationTypeEnum, fromLanguageId: number): Promise<object> {
+    return this.sendAnswer(id, true, type, fromLanguageId);
   }
 
-  async sendAnswer(id: number, right: boolean, type: InterrogationTypeEnum): Promise<object> {
+  async sendAnswer(id: number, right: boolean, type: InterrogationTypeEnum, fromLanguageId: number): Promise<object> {
     try {
       return await this.translationService.storeAnswer({
         unitContentId: id,
         right: right,
-        interrogationType: type
+        interrogationType: type,
+        fromLanguageId: fromLanguageId
       }).toPromise();
     } catch (onRejected) {
       console.error(onRejected);

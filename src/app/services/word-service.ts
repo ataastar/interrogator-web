@@ -171,4 +171,18 @@ export class WordService {
     }
   }
 
+  async cancelAnswer(id: number, right: boolean, type: InterrogationTypeEnum, fromLanguageId: number) {
+    try {
+      return await this.translationService.storeAnswer({
+        unitContentId: id,
+        right: right,
+        interrogationType: type,
+        fromLanguageId: fromLanguageId
+      }).toPromise();
+    } catch (onRejected) {
+      console.error(onRejected);
+      return null;
+    }
+  }
+
 }

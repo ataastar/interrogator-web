@@ -4,7 +4,8 @@ import { GuessedWord } from 'src/app/models/guessed-word';
 import { WordService } from 'src/app/services/word-service';
 import { GuessedWordConverter } from '../guessed-word-converter';
 import { ArrayUtil } from '../../util/array-util';
-import { TranslationPart } from '@ataastar/interrogator-api-ts-oa';
+import { ReqAddAnswer, TranslationPart } from '@ataastar/interrogator-api-ts-oa';
+import InterrogationTypeEnum = ReqAddAnswer.InterrogationTypeEnum;
 
 @Component({
   selector: 'app-show-phrases',
@@ -18,6 +19,7 @@ export class ShowPhrasesComponent implements OnInit {
   key: string;
   fromLanguageId: number;
   toLanguageId: number;
+  lastAnswerWasRight: Boolean = null;
 
   constructor(private wordService: WordService, private route: ActivatedRoute, private router: Router) {
   }
@@ -52,6 +54,16 @@ export class ShowPhrasesComponent implements OnInit {
 
   display(i: number): void {
     this.wordsDisplayed[i] = true;
+  }
+
+  answer(i: number, rightAnswer: boolean): void {
+    this.lastAnswerWasRight = null;
+    this.wordsDisplayed[i] = true;
+    this.wordService.sendAnswer(this.words[i].translation.unitContentId, rightAnswer, InterrogationTypeEnum.ToBeDecided, this.fromLanguageId); // TODO handle globally if something go wrong such a call
+  }
+
+  cancelLast(i: number, lastAnswerWasRight: boolean): void {
+    this.wordService.cancelAnswer(this.words[i].translation.unitContentId, lastAnswerWasRight, InterrogationTypeEnum.ToBeDecided, this.fromLanguageId); // TODO handle globally if something go wrong such a call
   }
 
   addNew(): void {

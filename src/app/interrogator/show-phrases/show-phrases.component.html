@@ -4,16 +4,44 @@
   <input type="button" HasRole role="admin" (click)="addNew()" value="Szerkeszt" class="btn btn-secondary">
   <table class="table table-sm table-striped table-bordered table-hover">
     <tbody>
-    <tr *ngFor="let guessed of words; let i=index" (click)="display(i)">
-      <td style="width: 50%;">{{ toString(guessed.translation.phrasesByLanguageId[fromLanguageId]) }}
-        <label style="font-size: smaller; font-style: italic;"
+    <tr *ngFor="let guessed of words; let i=index">
+      <td
+        style="width: 50%; align-content: center; padding: 1px">
+        <div style="float: left; padding: 3px">
+          {{ toString(guessed.translation.phrasesByLanguageId[fromLanguageId]) }}
+        </div>
+        <label style="font-size: smaller; font-style: italic; margin: 0"
                *ngIf="guessed.translation.example">/{{guessed.translation.example}}
           /</label>
+        <div style="float: right">
+          <button *ngIf="!wordsDisplayed[i]" class="btn btn-outline-success btn-sm"
+                  style="margin-right: 5px; padding: 0; height: 26px; width: 54px" title="Tudom"
+                  (click)="answer(i, true)">
+            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="task_alt"></mat-icon>
+          </button>
+          <button *ngIf="!wordsDisplayed[i]" class="btn btn-outline-danger btn-sm" title="Nem tudom"
+                  style="padding: 0; height: 26px; width: 54px" (click)="answer(i, false)">
+            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="question_mark"></mat-icon>
+          </button>
+
+          <button *ngIf="lastAnswerWasRight != null && lastAnswerWasRight.valueOf()"
+                  class="btn btn-outline-danger btn-sm"
+                  style="margin-right: 5px; padding: 0; height: 26px; width: 54px" title="Mégsem tudom"
+                  (click)="answer(i, true)">
+            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="cancel"></mat-icon>
+          </button>
+          <button *ngIf="lastAnswerWasRight != null && !lastAnswerWasRight.valueOf()"
+                  class="btn btn-outline-danger btn-sm"
+                  style="margin-right: 5px; padding: 0; height: 26px; width: 54px" title="Mégis tudom"
+                  (click)="answer(i, true)">
+            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="check"></mat-icon>
+          </button>
+        </div>
       </td>
-      <td style="width: 50%;">
+      <td style="width: 50%; padding: 1px">
                     <span
                       *ngIf="wordsDisplayed[i]">{{ toString(guessed.translation.phrasesByLanguageId[toLanguageId]) }}
-                      <label style="font-size: smaller; font-style: italic;"
+                      <label style="font-size: smaller; font-style: italic; margin: 0"
                              *ngIf="guessed.translation.translatedExample">/{{guessed.translation.translatedExample}}
                         /</label>
                     </span>

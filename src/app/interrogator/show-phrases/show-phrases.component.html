@@ -24,16 +24,16 @@
             <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="question_mark"></mat-icon>
           </button>
 
-          <button *ngIf="lastAnswerWasRight != null && lastAnswerWasRight.valueOf()"
+          <button *ngIf="i == lastAnswerWordIndex && lastAnswerWasRight != null && lastAnswerWasRight.valueOf()"
                   class="btn btn-outline-danger btn-sm"
                   style="margin-right: 5px; padding: 0; height: 26px; width: 54px" title="Mégsem tudom"
-                  (click)="answer(i, true)">
+                  (click)="cancelLast(i, true)">
             <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="cancel"></mat-icon>
           </button>
-          <button *ngIf="lastAnswerWasRight != null && !lastAnswerWasRight.valueOf()"
+          <button *ngIf="i == lastAnswerWordIndex && lastAnswerWasRight != null && !lastAnswerWasRight.valueOf()"
                   class="btn btn-outline-danger btn-sm"
                   style="margin-right: 5px; padding: 0; height: 26px; width: 54px" title="Mégis tudom"
-                  (click)="answer(i, true)">
+                  (click)="cancelLast(i, false)">
             <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="check"></mat-icon>
           </button>
         </div>

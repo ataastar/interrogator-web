@@ -20,6 +20,7 @@ export class ShowPhrasesComponent implements OnInit {
   fromLanguageId: number;
   toLanguageId: number;
   lastAnswerWasRight: Boolean = null;
+  lastAnswerWordIndex: number;
 
   constructor(private wordService: WordService, private route: ActivatedRoute, private router: Router) {
   }
@@ -46,6 +47,8 @@ export class ShowPhrasesComponent implements OnInit {
   }
 
   interrogateHere(): void {
+    this.lastAnswerWordIndex = null;
+    this.lastAnswerWasRight = null;
     for (let index = 0; index < this.wordsDisplayed.length; index++) {
       this.wordsDisplayed[index] = false;
     }
@@ -58,12 +61,20 @@ export class ShowPhrasesComponent implements OnInit {
 
   answer(i: number, rightAnswer: boolean): void {
     this.lastAnswerWasRight = null;
+    this.lastAnswerWordIndex = i;
     this.wordsDisplayed[i] = true;
-    this.wordService.sendAnswer(this.words[i].translation.unitContentId, rightAnswer, InterrogationTypeEnum.SelfDeclaration, this.fromLanguageId); // TODO handle globally if something go wrong such a call
+    this.wordService.sendAnswer(this.words[i].translation.unitContentId, rightAnswer, InterrogationTypeEnum.SelfDeclaration, this.fromLanguageId)
+      .subscribe(res => {
+        this.lastAnswerWasRight = Boolean(rightAnswer);
+      })
   }
 
   cancelLast(i: number, lastAnswerWasRight: boolean): void {
-    this.wordService.cancelAnswer(this.words[i].translation.unitContentId, lastAnswerWasRight, InterrogationTypeEnum.SelfDeclaration, this.fromLanguageId); // TODO handle globally if something go wrong such a call
+    this.wordService.cancelAnswer(this.words[i].translation.unitContentId, lastAnswerWasRight, InterrogationTypeEnum.SelfDeclaration, this.fromLanguageId)
+      .subscribe(res => {
+        this.lastAnswerWasRight = null;
+        this.lastAnswerWordIndex = null;
+      })
   }
 
   addNew(): void {

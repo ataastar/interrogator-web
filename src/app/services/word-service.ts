@@ -149,36 +149,36 @@ export class WordService {
     }
   }
 
-  async wrongAnswer(id: number, type: InterrogationTypeEnum, fromLanguageId: number): Promise<object> {
+  wrongAnswer(id: number, type: InterrogationTypeEnum, fromLanguageId: number): Observable<any> {
     return this.sendAnswer(id, false, type, fromLanguageId);
   }
 
-  async rightAnswer(id: number, type: InterrogationTypeEnum, fromLanguageId: number): Promise<object> {
+  rightAnswer(id: number, type: InterrogationTypeEnum, fromLanguageId: number): Observable<any> {
     return this.sendAnswer(id, true, type, fromLanguageId);
   }
 
-  async sendAnswer(id: number, right: boolean, type: InterrogationTypeEnum, fromLanguageId: number): Promise<object> {
+  sendAnswer(id: number, right: boolean, type: InterrogationTypeEnum, fromLanguageId: number): Observable<any> {
     try {
-      return await this.translationService.storeAnswer({
+      return this.translationService.storeAnswer({
         unitContentId: id,
         right: right,
         interrogationType: type,
         fromLanguageId: fromLanguageId
-      }).toPromise();
+      });
     } catch (onRejected) {
       console.error(onRejected);
       return null;
     }
   }
 
-  async cancelAnswer(id: number, right: boolean, type: InterrogationTypeEnum, fromLanguageId: number) {
+  cancelAnswer(id: number, right: boolean, type: InterrogationTypeEnum, fromLanguageId: number): Observable<any> {
     try {
-      return await this.translationService.cancelAnswer({
+      return this.translationService.cancelAnswer({
         unitContentId: id,
         right: right,
         interrogationType: type,
         fromLanguageId: fromLanguageId
-      }).toPromise();
+      });
     } catch (onRejected) {
       console.error(onRejected);
       return null;

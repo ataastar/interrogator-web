@@ -41,6 +41,8 @@
  - google oauth
  
 ## TODO tasks
+
+- show the answer on the right when self declaration interrogation is on going
  - show progress when adding unit content
  - load images and audios
  - refactor the equal. these should be equals: I'm-I am; You are-You're, They are-They're;It's-It is; What's-What

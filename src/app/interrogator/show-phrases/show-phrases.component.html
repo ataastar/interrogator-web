@@ -17,24 +17,24 @@
           <button *ngIf="!wordsDisplayed[i]" class="btn btn-outline-success btn-sm"
                   style="margin-right: 5px; padding: 0; height: 26px; width: 54px" title="Tudom"
                   (click)="answer(i, true)">
-            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="task_alt"></mat-icon>
+            <mat-icon aria-hidden="false" fontIcon="task_alt"></mat-icon>
           </button>
           <button *ngIf="!wordsDisplayed[i]" class="btn btn-outline-danger btn-sm" title="Nem tudom"
                   style="padding: 0; height: 26px; width: 54px" (click)="answer(i, false)">
-            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="question_mark"></mat-icon>
+            <mat-icon aria-hidden="false" fontIcon="question_mark"></mat-icon>
           </button>
 
           <button *ngIf="i == lastAnswerWordIndex && lastAnswerWasRight != null && lastAnswerWasRight.valueOf()"
                   class="btn btn-outline-danger btn-sm"
-                  style="margin-right: 5px; padding: 0; height: 26px; width: 54px" title="Mégsem tudom"
+                  style="padding: 0; height: 26px; width: 54px" title="Mégsem tudom"
                   (click)="cancelLast(i, true)">
-            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="cancel"></mat-icon>
+            <mat-icon aria-hidden="false" fontIcon="cancel"></mat-icon>
           </button>
           <button *ngIf="i == lastAnswerWordIndex && lastAnswerWasRight != null && !lastAnswerWasRight.valueOf()"
-                  class="btn btn-outline-danger btn-sm"
-                  style="margin-right: 5px; padding: 0; height: 26px; width: 54px" title="Mégis tudom"
+                  class="btn btn-outline-success btn-sm"
+                  style="padding: 0; height: 26px; width: 54px" title="Mégis tudom"
                   (click)="cancelLast(i, false)">
-            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="check"></mat-icon>
+            <mat-icon aria-hidden="false" fontIcon="check"></mat-icon>
           </button>
         </div>
       </td>

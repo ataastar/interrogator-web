@@ -9,6 +9,15 @@ function requireHTTPS(req, res, next) {
 const express = require('express');
 const app = express();
 
+// set up rate limiter
+const RateLimit = require('express-rate-limit');
+const limiter = RateLimit({
+  windowMs: 1000,
+  max: 1,
+});
+// apply rate limiter to all requests
+app.use(limiter);
+
 app.use(requireHTTPS);
 app.use(express.static('./build'));
 

@@ -59,11 +59,11 @@ export class ShowPhrasesComponent implements OnInit {
   answer(i: number, rightAnswer: boolean): void {
     this.lastAnswerWasRight = null;
     this.wordsDisplayed[i] = true;
-    this.wordService.sendAnswer(this.words[i].translation.unitContentId, rightAnswer, InterrogationTypeEnum.ToBeDecided, this.fromLanguageId); // TODO handle globally if something go wrong such a call
+    this.wordService.sendAnswer(this.words[i].translation.unitContentId, rightAnswer, InterrogationTypeEnum.SelfDeclaration, this.fromLanguageId); // TODO handle globally if something go wrong such a call
   }
 
   cancelLast(i: number, lastAnswerWasRight: boolean): void {
-    this.wordService.cancelAnswer(this.words[i].translation.unitContentId, lastAnswerWasRight, InterrogationTypeEnum.ToBeDecided, this.fromLanguageId); // TODO handle globally if something go wrong such a call
+    this.wordService.cancelAnswer(this.words[i].translation.unitContentId, lastAnswerWasRight, InterrogationTypeEnum.SelfDeclaration, this.fromLanguageId); // TODO handle globally if something go wrong such a call
   }
 
   addNew(): void {

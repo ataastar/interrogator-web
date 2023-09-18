@@ -173,7 +173,7 @@ export class WordService {
 
   async cancelAnswer(id: number, right: boolean, type: InterrogationTypeEnum, fromLanguageId: number) {
     try {
-      return await this.translationService.storeAnswer({
+      return await this.translationService.cancelAnswer({
         unitContentId: id,
         right: right,
         interrogationType: type,

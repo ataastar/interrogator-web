@@ -33,22 +33,22 @@ export class WordService {
 
   getWords(key: string): Observable<ResTranslationsForUnit> {
     try {
-      let observable = this.translationService.getUnitTranslations(Number(key));
-      observable.subscribe(translationsForUnit => {
-        if (translationsForUnit) {
-          this.actualPhrases = translationsForUnit.translations;
-          this.selectedUnitName = translationsForUnit.name;
-        } else {
-          this.selectedUnitName = '';
-        }
-        return this.actualPhrases;
-      })
-      return observable;
+      return this.translationService.getUnitTranslations(Number(key));
     } catch (onRejected) {
       console.error(onRejected);
       return null;
     }
   }
+
+  setTranslations(translationsForUnit: ResTranslationsForUnit): void {
+    if (translationsForUnit) {
+      this.actualPhrases = translationsForUnit.translations;
+      this.selectedUnitName = translationsForUnit.name;
+    } else {
+      this.selectedUnitName = '';
+    }
+  }
+
 
   async getTranslationForUnit(code: string) {
     try {

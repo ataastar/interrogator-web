@@ -4,7 +4,8 @@ import { GuessedWord } from 'src/app/models/guessed-word';
 import { WordService } from 'src/app/services/word-service';
 import { GuessedWordConverter } from '../guessed-word-converter';
 import { ArrayUtil } from '../../util/array-util';
-import { ReqAddAnswer, TranslationPart } from '@ataastar/interrogator-api-ts-oa';
+import { ReqAddAnswer } from '@ataastar/interrogator-api-ts-oa';
+import { Translation } from '@ataastar/interrogator-api-ts-oa/model/translation';
 import InterrogationTypeEnum = ReqAddAnswer.InterrogationTypeEnum;
 
 @Component({
@@ -32,6 +33,7 @@ export class ShowPhrasesComponent implements OnInit {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.key = params.get('id');
       return this.wordService.getWords(this.key).subscribe(translations => {
+        this.wordService.setTranslations(translations);
         this.lastAnswerWordIndex = null;
         this.lastAnswerWasRight = null;
         this.words = new GuessedWordConverter().convertToGuessed(translations.translations);
@@ -89,8 +91,8 @@ export class ShowPhrasesComponent implements OnInit {
     this.router.navigate(['/admin/addUnitContent', this.key]);
   }
 
-  toString(translationParts: TranslationPart[]) { // TODO avoid code duplication
-    return translationParts.map(translationParts => translationParts.phrase).join(',');
+  toString(translation: Translation, languageId: number) {
+    return translation.phrasesByLanguageId[languageId].map(translationParts => translationParts.phrase).join(',');
   }
 
   theAnswerWasRight(index: number): boolean {
@@ -107,5 +109,9 @@ export class ShowPhrasesComponent implements OnInit {
     }
     const answerWasRight = this.answerWasRight[index];
     return answerWasRight != null && !answerWasRight.valueOf();
+  }
+
+  needToInterrogate(translation: Translation): boolean {
+    return new Date(translation.nextInterrogationTime).getTime() <= new Date().getTime();
   }
 }

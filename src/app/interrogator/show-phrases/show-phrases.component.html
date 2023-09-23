@@ -7,7 +7,7 @@
     <tr *ngFor="let guessed of words; let i=index">
       <td style="align-content: center; padding: 1px; border-right: 0">
         <div style="float: left; padding: 3px; white-space: nowrap">
-          {{ toString(guessed.translation.phrasesByLanguageId[fromLanguageId]) }}
+          {{ toString(guessed.translation, fromLanguageId) }}
         </div>
         <label style="font-size: smaller; font-style: italic; margin: 0; white-space: nowrap"
                *ngIf="guessed.translation.example">/{{guessed.translation.example}}
@@ -41,8 +41,10 @@
       <td style="border-right: 0; padding: 1px">
 
         <span style="white-space: nowrap"
-              *ngIf="wordsDisplayed[i]">{{ toString(guessed.translation.phrasesByLanguageId[toLanguageId]) }}
+              [ngClass]=" guessed.translation.nextInterrogationTime == null ? '' :  needToInterrogate(guessed.translation)? 'text-danger' : 'text-success'"
+              *ngIf="wordsDisplayed[i]">{{ toString(guessed.translation, toLanguageId) }}
           <label style="font-size: smaller; font-style: italic; margin: 0; white-space: nowrap"
+                 [ngClass]=" guessed.translation.nextInterrogationTime == null ? '' :  needToInterrogate(guessed.translation)? 'text-danger' : 'text-success'"
                  *ngIf="guessed.translation.translatedExample">/{{guessed.translation.translatedExample}}
             /</label>
         </span>

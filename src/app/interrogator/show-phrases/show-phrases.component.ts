@@ -70,7 +70,7 @@ export class ShowPhrasesComponent implements OnInit {
     this.lastAnswerWordIndex = i;
     this.wordsDisplayed[i] = true;
     this.wordService.sendAnswer(this.words[i].translation.unitContentId, rightAnswer, InterrogationTypeEnum.SelfDeclaration, this.fromLanguageId)
-      .subscribe(res => {
+      .subscribe(() => {
         this.lastAnswerWasRight = Boolean(rightAnswer);
         this.answerWasRight[i] = rightAnswer;
       })
@@ -78,7 +78,7 @@ export class ShowPhrasesComponent implements OnInit {
 
   cancelLast(i: number, lastAnswerWasRight: boolean): void {
     this.wordService.cancelAnswer(this.words[i].translation.unitContentId, lastAnswerWasRight, InterrogationTypeEnum.SelfDeclaration, this.fromLanguageId)
-      .subscribe(res => {
+      .subscribe(() => {
         this.lastAnswerWasRight = null;
         this.lastAnswerWordIndex = null;
         this.answerWasRight[i] = lastAnswerWasRight ? false : null;

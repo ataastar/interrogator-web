@@ -15,6 +15,7 @@ import InterrogationTypeEnum = ReqAddAnswer.InterrogationTypeEnum;
 export class ShowPhrasesComponent implements OnInit {
 
   words: GuessedWord[] = null;
+  answerWasRight: Boolean[] = null;
   wordsDisplayed: boolean[];
   key: string;
   fromLanguageId: number;
@@ -31,11 +32,15 @@ export class ShowPhrasesComponent implements OnInit {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.key = params.get('id');
       return this.wordService.getWords(this.key).subscribe(translations => {
+        this.lastAnswerWordIndex = null;
+        this.lastAnswerWasRight = null;
         this.words = new GuessedWordConverter().convertToGuessed(translations.translations);
         if (this.words != null) {
           this.wordsDisplayed = new Array(this.words.length);
+          this.answerWasRight = new Array(this.words.length);
           for (let index = 0; index < this.wordsDisplayed.length; index++) {
             this.wordsDisplayed[index] = true;
+            this.answerWasRight[index] = null;
           }
         }
       });
@@ -51,6 +56,7 @@ export class ShowPhrasesComponent implements OnInit {
     this.lastAnswerWasRight = null;
     for (let index = 0; index < this.wordsDisplayed.length; index++) {
       this.wordsDisplayed[index] = false;
+      this.answerWasRight[index] = null;
     }
     ArrayUtil.shuffle(this.words);
   }
@@ -66,6 +72,7 @@ export class ShowPhrasesComponent implements OnInit {
     this.wordService.sendAnswer(this.words[i].translation.unitContentId, rightAnswer, InterrogationTypeEnum.SelfDeclaration, this.fromLanguageId)
       .subscribe(res => {
         this.lastAnswerWasRight = Boolean(rightAnswer);
+        this.answerWasRight[i] = rightAnswer;
       })
   }
 
@@ -74,6 +81,7 @@ export class ShowPhrasesComponent implements OnInit {
       .subscribe(res => {
         this.lastAnswerWasRight = null;
         this.lastAnswerWordIndex = null;
+        this.answerWasRight[i] = lastAnswerWasRight ? false : null;
       })
   }
 
@@ -85,4 +93,19 @@ export class ShowPhrasesComponent implements OnInit {
     return translationParts.map(translationParts => translationParts.phrase).join(',');
   }
 
+  theAnswerWasRight(index: number): boolean {
+    if (this.answerWasRight == null) {
+      return false;
+    }
+    const answerWasRight = this.answerWasRight[index];
+    return answerWasRight != null && answerWasRight.valueOf();
+  }
+
+  theAnswerWasFalse(index: number): boolean {
+    if (this.answerWasRight == null) {
+      return false;
+    }
+    const answerWasRight = this.answerWasRight[index];
+    return answerWasRight != null && !answerWasRight.valueOf();
+  }
 }

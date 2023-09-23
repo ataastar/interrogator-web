@@ -1,15 +1,15 @@
 # vocabulary expansion, word learning helper
 
- - interrogate unit words (we can indicate whether we know or not)
- - interrogate unit words randomly (need to write down the words)
- - can manage unit words
- - plain equal check
+- interrogate unit words (we can indicate whether we know or not)
+- interrogate unit words randomly (need to write down the words)
+- can manage unit words
+- plain equal check
 
 # technology
 
- - Angular 8
- - Typescript
- 
+- Angular 8
+- Typescript
+
 # run
 
 - `npm install`
@@ -42,21 +42,20 @@
  
 ## TODO tasks
 
-- show the answer on the right when self declaration interrogation is on going
- - show progress when adding unit content
- - load images and audios
- - refactor the equal. these should be equals: I'm-I am; You are-You're, They are-They're;It's-It is; What's-What
-   is;Isn't-Is not; Aren't-Are not, Don't Do not; Doesn't-Does not
- - authorization
- - need to redesign
- - server side 
-   - get the pronunciation from google translate and store in to the words in database
-   - get the audio file from google translate and store in to the words in database
+- show progress when adding unit content
+- load images and audios
+- refactor the equal. these should be equals: I'm-I am; You are-You're, They are-They're;It's-It is; What's-What
+  is;Isn't-Is not; Aren't-Are not, Don't Do not; Doesn't-Does not
+- authorization
+- need to redesign
+- server side
+  - get the pronunciation from google translate and store in to the words in database
+  - get the audio file from google translate and store in to the words in database
 
 ## TODO missing features
 
- - focus on created element when adding new phrase to unit content
- - required when no phrases filled and add button pressed
+- focus on created element when adding new phrase to unit content
+- required when no phrases filled and add button pressed
 
 # Angular-cli
 

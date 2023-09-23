@@ -5,19 +5,20 @@
   <table class="table table-sm table-striped table-bordered table-hover">
     <tbody>
     <tr *ngFor="let guessed of words; let i=index">
-      <td
-        style="width: 50%; align-content: center; padding: 1px">
-        <div style="float: left; padding: 3px">
+      <td style="align-content: center; padding: 1px; border-right: 0">
+        <div style="float: left; padding: 3px; white-space: nowrap">
           {{ toString(guessed.translation.phrasesByLanguageId[fromLanguageId]) }}
         </div>
-        <label style="font-size: smaller; font-style: italic; margin: 0"
+        <label style="font-size: smaller; font-style: italic; margin: 0; white-space: nowrap"
                *ngIf="guessed.translation.example">/{{guessed.translation.example}}
           /</label>
-        <div style="float: right">
+      </td>
+      <td
+        style="width: 50%; padding: 1px; border-left: 0">
           <button *ngIf="!wordsDisplayed[i]" class="btn btn-outline-success btn-sm"
                   style="margin-right: 5px; padding: 0; height: 26px; width: 54px" title="Tudom"
                   (click)="answer(i, true)">
-            <mat-icon aria-hidden="false" fontIcon="task_alt"></mat-icon>
+            <mat-icon aria-hidden="false" fontIcon="done"></mat-icon>
           </button>
           <button *ngIf="!wordsDisplayed[i]" class="btn btn-outline-danger btn-sm" title="Nem tudom"
                   style="padding: 0; height: 26px; width: 54px" (click)="answer(i, false)">
@@ -36,15 +37,23 @@
                   (click)="cancelLast(i, false)">
             <mat-icon aria-hidden="false" fontIcon="check"></mat-icon>
           </button>
-        </div>
       </td>
-      <td style="width: 50%; padding: 1px">
-                    <span
-                      *ngIf="wordsDisplayed[i]">{{ toString(guessed.translation.phrasesByLanguageId[toLanguageId]) }}
-                      <label style="font-size: smaller; font-style: italic; margin: 0"
-                             *ngIf="guessed.translation.translatedExample">/{{guessed.translation.translatedExample}}
-                        /</label>
-                    </span>
+      <td style="border-right: 0; padding: 1px">
+
+        <span style="white-space: nowrap"
+              *ngIf="wordsDisplayed[i]">{{ toString(guessed.translation.phrasesByLanguageId[toLanguageId]) }}
+          <label style="font-size: smaller; font-style: italic; margin: 0; white-space: nowrap"
+                 *ngIf="guessed.translation.translatedExample">/{{guessed.translation.translatedExample}}
+            /</label>
+        </span>
+      </td>
+      <td style="width: 50%; padding: 1px; border-left: 0">
+        <span *ngIf=" theAnswerWasRight(i)" class="text-success">
+            <mat-icon aria-hidden="false" fontIcon="done"></mat-icon>
+        </span>
+        <span *ngIf="theAnswerWasFalse(i)" class="text-danger">
+            <mat-icon aria-hidden="false" fontIcon="question_mark"></mat-icon>
+        </span>
       </td>
     </tr>
     </tbody>

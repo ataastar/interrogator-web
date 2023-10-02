@@ -16,12 +16,12 @@ import InterrogationTypeEnum = ReqAddAnswer.InterrogationTypeEnum;
 export class ShowPhrasesComponent implements OnInit {
 
   words: GuessedWord[] = null;
-  answerWasRight: Boolean[] = null;
+  answerTypes: AnswerType[] = null;
   wordsDisplayed: boolean[];
   key: string;
   fromLanguageId: number;
   toLanguageId: number;
-  lastAnswerWasRight: Boolean = null;
+  lastAnswerWasType: AnswerType = null;
   lastAnswerWordIndex: number;
 
   constructor(private wordService: WordService, private route: ActivatedRoute, private router: Router) {
@@ -35,14 +35,14 @@ export class ShowPhrasesComponent implements OnInit {
       return this.wordService.getWords(this.key).subscribe(translations => {
         this.wordService.setTranslations(translations);
         this.lastAnswerWordIndex = null;
-        this.lastAnswerWasRight = null;
+        this.lastAnswerWasType = null;
         this.words = new GuessedWordConverter().convertToGuessed(translations.translations);
         if (this.words != null) {
           this.wordsDisplayed = new Array(this.words.length);
-          this.answerWasRight = new Array(this.words.length);
+          this.answerTypes = new Array(this.words.length);
           for (let index = 0; index < this.wordsDisplayed.length; index++) {
             this.wordsDisplayed[index] = true;
-            this.answerWasRight[index] = null;
+            this.answerTypes[index] = null;
           }
         }
       });
@@ -55,10 +55,10 @@ export class ShowPhrasesComponent implements OnInit {
 
   interrogateHere(): void {
     this.lastAnswerWordIndex = null;
-    this.lastAnswerWasRight = null;
+    this.lastAnswerWasType = null;
     for (let index = 0; index < this.wordsDisplayed.length; index++) {
       this.wordsDisplayed[index] = false;
-      this.answerWasRight[index] = null;
+      this.answerTypes[index] = null;
     }
     ArrayUtil.shuffle(this.words);
   }
@@ -68,22 +68,29 @@ export class ShowPhrasesComponent implements OnInit {
   }
 
   answer(i: number, rightAnswer: boolean): void {
-    this.lastAnswerWasRight = null;
+    this.lastAnswerWasType = null;
     this.lastAnswerWordIndex = i;
     this.wordsDisplayed[i] = true;
     this.wordService.sendAnswer(this.words[i].translation.unitContentId, rightAnswer, InterrogationTypeEnum.SelfDeclaration, this.fromLanguageId)
       .subscribe(() => {
-        this.lastAnswerWasRight = Boolean(rightAnswer);
-        this.answerWasRight[i] = rightAnswer;
+        this.lastAnswerWasType = rightAnswer ? AnswerTypeEnum.RIGHT : AnswerTypeEnum.FALSE;
+        this.answerTypes[i] = this.lastAnswerWasType;
       })
+  }
+
+  skip(i: number): void {
+    this.lastAnswerWasType = AnswerTypeEnum.SKIP;
+    this.answerTypes[i] = this.lastAnswerWasType;
+    this.lastAnswerWordIndex = i;
+    this.wordsDisplayed[i] = true;
   }
 
   cancelLast(i: number, lastAnswerWasRight: boolean): void {
     this.wordService.cancelAnswer(this.words[i].translation.unitContentId, lastAnswerWasRight, InterrogationTypeEnum.SelfDeclaration, this.fromLanguageId)
       .subscribe(() => {
-        this.lastAnswerWasRight = null;
+        this.lastAnswerWasType = null;
         this.lastAnswerWordIndex = null;
-        this.answerWasRight[i] = lastAnswerWasRight ? false : null;
+        this.answerTypes[i] = lastAnswerWasRight ? AnswerTypeEnum.FALSE : AnswerTypeEnum.SKIP;
       })
   }
 
@@ -96,22 +103,42 @@ export class ShowPhrasesComponent implements OnInit {
   }
 
   theAnswerWasRight(index: number): boolean {
-    if (this.answerWasRight == null) {
+    if (this.answerTypes == null) {
       return false;
     }
-    const answerWasRight = this.answerWasRight[index];
-    return answerWasRight != null && answerWasRight.valueOf();
+    return AnswerTypeEnum.RIGHT == this.answerTypes[index];
   }
 
   theAnswerWasFalse(index: number): boolean {
-    if (this.answerWasRight == null) {
+    if (this.answerTypes == null) {
       return false;
     }
-    const answerWasRight = this.answerWasRight[index];
-    return answerWasRight != null && !answerWasRight.valueOf();
+    return AnswerTypeEnum.FALSE == this.answerTypes[index];
+  }
+
+  theAnswerWasSkip(index: number): boolean {
+    if (this.answerTypes == null) {
+      return false;
+    }
+    return AnswerTypeEnum.SKIP == this.answerTypes[index];
   }
 
   needToInterrogate(translation: Translation): boolean {
-    return new Date(translation.nextInterrogationTime).getTime() <= new Date().getTime();
+    return translation.nextInterrogationTime == null || new Date(translation.nextInterrogationTime).getTime() <= new Date().getTime();
   }
+
+  showYetDoNotKnow(i: number): boolean {
+    return i == this.lastAnswerWordIndex
+      && (this.lastAnswerWasType == AnswerTypeEnum.RIGHT || this.lastAnswerWasType == AnswerTypeEnum.SKIP && !this.needToInterrogate(this.words[i].translation));
+  }
+
+  showYetKnow(i: number): boolean {
+    return i == this.lastAnswerWordIndex && this.lastAnswerWasType != null && this.lastAnswerWasType == AnswerTypeEnum.FALSE;
+  }
+}
+
+export type AnswerType = 'RIGHT' | 'FALSE' | 'SKIP';
+
+export enum AnswerTypeEnum {
+  RIGHT = 'RIGHT', FALSE = 'FALSE', SKIP = 'SKIP'
 }

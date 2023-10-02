@@ -20,18 +20,23 @@
                   (click)="answer(i, true)">
             <mat-icon aria-hidden="false" fontIcon="done"></mat-icon>
           </button>
+        <button *ngIf="!wordsDisplayed[i]" class="btn btn-outline-secondary btn-sm"
+                style="margin-right: 5px; padding: 0; height: 26px; width: 54px" title="Kihagyom / Megnézem"
+                (click)="skip(i)">
+          <mat-icon aria-hidden="false" fontIcon="last_page"></mat-icon>
+        </button>
           <button *ngIf="!wordsDisplayed[i]" class="btn btn-outline-danger btn-sm" title="Nem tudom"
                   style="padding: 0; height: 26px; width: 54px" (click)="answer(i, false)">
             <mat-icon aria-hidden="false" fontIcon="question_mark"></mat-icon>
           </button>
 
-          <button *ngIf="i == lastAnswerWordIndex && lastAnswerWasRight != null && lastAnswerWasRight.valueOf()"
+        <button *ngIf="showYetDoNotKnow(i)"
                   class="btn btn-outline-danger btn-sm"
                   style="padding: 0; height: 26px; width: 54px" title="Mégsem tudom"
                   (click)="cancelLast(i, true)">
             <mat-icon aria-hidden="false" fontIcon="cancel"></mat-icon>
           </button>
-          <button *ngIf="i == lastAnswerWordIndex && lastAnswerWasRight != null && !lastAnswerWasRight.valueOf()"
+        <button *ngIf="showYetKnow(i)"
                   class="btn btn-outline-success btn-sm"
                   style="padding: 0; height: 26px; width: 54px" title="Mégis tudom"
                   (click)="cancelLast(i, false)">
@@ -55,6 +60,9 @@
         </span>
         <span *ngIf="theAnswerWasFalse(i)" class="text-danger">
             <mat-icon aria-hidden="false" fontIcon="question_mark"></mat-icon>
+        </span>
+        <span *ngIf="theAnswerWasSkip(i)" class="text-secondary">
+            <mat-icon aria-hidden="false" fontIcon="last_page"></mat-icon>
         </span>
       </td>
     </tr>

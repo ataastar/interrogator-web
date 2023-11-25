@@ -83,6 +83,9 @@ export class AddUnitContentComponent implements OnInit {
 
     this.wordService.addUnitContent(translation).subscribe(translation => {
       if (translation) {
+        if (this.unitTranslations == null) {
+          this.unitTranslations = new Array(0);
+        }
         this.unitTranslations.push(translation);
         this.clearTheInputs();
       }
@@ -98,6 +101,8 @@ export class AddUnitContentComponent implements OnInit {
   }
 
   private saveEditedTranslation(): void {
+    this.translationToEdit.example = this.example;
+    this.translationToEdit.translatedExample = this.translatedExample;
     this.wordService.updateTranslation(this.translationToEdit).subscribe(translation => {
       if (translation) {
         //this.unitTranslations.push(translation); TODO find and update

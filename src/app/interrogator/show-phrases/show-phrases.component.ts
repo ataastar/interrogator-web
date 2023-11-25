@@ -71,6 +71,7 @@ export class ShowPhrasesComponent implements OnInit {
     this.lastAnswerWasType = null;
     this.lastAnswerWordIndex = i;
     this.wordsDisplayed[i] = true;
+    this.words[i].translation.lastAnswerRight = rightAnswer;
     this.wordService.sendAnswer(this.words[i].translation.unitContentId, rightAnswer, InterrogationTypeEnum.SelfDeclaration, this.fromLanguageId)
       .subscribe(() => {
         this.lastAnswerWasType = rightAnswer ? AnswerTypeEnum.RIGHT : AnswerTypeEnum.FALSE;
@@ -121,6 +122,16 @@ export class ShowPhrasesComponent implements OnInit {
       return false;
     }
     return AnswerTypeEnum.SKIP == this.answerTypes[index];
+  }
+
+  getPhraseColor(translation: Translation) {
+    if (translation.lastAnswerRight != null && !translation.lastAnswerRight) {
+      return 'text-danger';
+    }
+    if (translation.nextInterrogationTime == null) {
+      return '';
+    }
+    return this.needToInterrogate(translation) ? 'text-info' : 'text-success';
   }
 
   needToInterrogate(translation: Translation): boolean {

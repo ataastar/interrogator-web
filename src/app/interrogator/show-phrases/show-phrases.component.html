@@ -46,16 +46,16 @@
       <td style="border-right: 0; padding: 1px">
 
         <span style="white-space: nowrap"
-              [ngClass]=" guessed.translation.nextInterrogationTime == null ? '' :  needToInterrogate(guessed.translation)? 'text-danger' : 'text-success'"
+              [ngClass]="getPhraseColor(guessed.translation)"
               *ngIf="wordsDisplayed[i]">{{ toString(guessed.translation, toLanguageId) }}
           <label style="font-size: smaller; font-style: italic; margin: 0; white-space: nowrap"
-                 [ngClass]=" guessed.translation.nextInterrogationTime == null ? '' :  needToInterrogate(guessed.translation)? 'text-danger' : 'text-success'"
+                 [ngClass]="getPhraseColor(guessed.translation)"
                  *ngIf="guessed.translation.translatedExample">/{{guessed.translation.translatedExample}}
             /</label>
         </span>
       </td>
       <td style="width: 50%; padding: 1px; border-left: 0">
-        <span *ngIf=" theAnswerWasRight(i)" class="text-success">
+        <span *ngIf="theAnswerWasRight(i)" class="text-success">
             <mat-icon aria-hidden="false" fontIcon="done"></mat-icon>
         </span>
         <span *ngIf="theAnswerWasFalse(i)" class="text-danger">
